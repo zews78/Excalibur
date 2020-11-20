@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title><%= title %></title>
+  <script src="https://kit.fontawesome.com/7d0e898fba.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300&display=swap" rel="stylesheet">
+  <style media="screen">
+
+  *{
+  font-family: 'Zilla Slab', serif;
+  }
+  body{
+    margin: 0;
+    background-color: rgba(0,0,0,0.1);
+  }
+  #heading{
+  background-color: #ffffff;
+  border: 1px solid black;
+  }
+  #heading h1{
+  padding: 20px;
+  margin: 0 auto;
+  font-size: 60px;
+  }
+  h1{
+  text-align: center;
+  }
+  .project{
+  width: 90%;
+  background-color: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  margin: 30px auto;
+  }
+  .threadname{
+  width: 90%;
+  margin: 0 auto;
+  font-size: 40px;
+  padding: 10px;
+  border-bottom: solid 1px black; }
+  .description{
+  width: 90%;
+  margin: 0 auto;
+  margin-top: 10px;
+  font-size: 30px;
+  padding: 10px;
+  line-height: 150%;
+  }
+  .projectbuttons{
+  width: 20%;
+  margin: 10px 20px;
+  margin-left: 0;
+  font-size: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  border:solid 1px black;
+  outline: none;
+  }
+  .buttons{
+  width: 90%;
+  margin: 10px auto;
+  }
+  .domain-difficulty{
+  width: 90%;
+  margin: 10px auto;
+  }
+  .domain{
+  display: inline-block;
+  width: 45%;
+  font-size: 30px;
+  }
+  .difficulty{
+  display: inline-block;
+  width: 45%;
+  font-size: 30px;
+  text-align:right;
+  }
+  #sidebar{
+  float:left;
+  width: 20%;
+  height:74vh;
+  background-color: white;
+  display: inline-block;
+  border: 1px solid black;
+
+  }
+  #projectsection{
+  height: 74vh;
+  overflow-y: scroll;
+  margin: 0 auto;
+  display: inline-block;
+  width: 79%;
+  border: 1px solid black;
+
+  }
+  select{
+  width: 60%;
+  font-size: 25px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  }
+  label{
+  width: 30%;
+  font-size: 25px;
+  margin-right: 10px;
+  }
+
+</style>
+</head>
+<body>
+<!-- Header  -->
+    <div id="heading">
+      <h1>Center List</h1>
+    </div>
+    <div id="sidebar">
+      <h1>Filter by</h1>
+      <label for="">Domain:</label>
+      <select onclick="filter()" id="select1">
+        <option value="All">All</option>
+        <option value="Banks">Banks</option>
+        <option value="Hospitals">Hospitals</option>
+        <option value="Salons/Spa">Salons/Spa</option>
+      </select>
+      <label for="">Difficulty:</label>
+      <select onclick="filter()" id="select2">
+        <option value="All">All</option>
+        <option value="Level-I">Level-I</option>
+        <option value="Level-II">Level-II</option>
+        <option value="Level-III">Level-III</option>
+      </select>
+    </div>
+    <div id="projectsection">
+
+      <%  let projects=[{
+        title:'1st object',
+        type: 'Banks',
+        level: 'Level-I',
+        desc: 'dncjkncjk'
+      },{
+        title:'2st object',
+        type: 'Hospitals',
+        level: 'Level-II',
+        desc: 'dncjkncjk'
+      },{
+        title:'3st object',
+        type: 'Salons/Spa',
+        level: 'Level-III',
+        desc: 'dncjkncjk'
+      }];
+       %>
+
+      <% for(let i=projects.length-1; i>=0; i-- ) { %>
+
+        <div class="project">
+          <p class="threadname"><%= projects[i].title %></p>
+          <div class="domain-difficulty">
+            <p class="domain"><%= projects[i].type %></p>
+            <p class="difficulty"><%= projects[i].level %></p>
+          </div>
+          <p class="description"><%= projects[i].desc %></p>
+          <div class="buttons">
+            <button type="button" name="button" class="projectbuttons"><a href="" type="button">Visit Thread Profile</a>
+            </button>
+
+          </div>
+        </div>
+        <% } %>
+
+          </div>
+
+    <!-- Footer -->
+
+    <script type="text/javascript">
+    function filter(){
+      var select1 = document.getElementById("select1");
+      var domain = select1.options[select1.selectedIndex].value;
+      let getdomain=document.getElementsByClassName('domain');
+
+      var select2 = document.getElementById("select2");
+      var difficulty = select2.options[select2.selectedIndex].value;
+      let getdifficulty=document.getElementsByClassName('difficulty');
+
+      let project=document.getElementsByClassName('project');
+      let filteredproject=[];
+      let filteredgetdifficulty=[];
+      for (var i = 0; i < project.length; i++) {
+        project[i].style.display="block";
+      }
+      if(domain!="All"){
+        for (var i = 0; i < project.length; i++) {
+          if(domain!=getdomain[i].innerHTML)
+          project[i].style.display="none";
+          else{
+            filteredproject.push(project[i]);
+            filteredgetdifficulty.push(getdifficulty[i]);
+          }
+        }
+      }
+      else{
+        filteredproject=project;
+        filteredgetdifficulty=getdifficulty;
+      }
+      if(difficulty!="All"){
+        for (var i = 0; i < filteredproject.length; i++) {
+          if(difficulty!=filteredgetdifficulty[i].innerHTML)
+          filteredproject[i].style.display="none";
+        }
+      }
+      filteredproject.length=0;
+      filteredgetdifficulty.length=0;
+    }
+
+    </script>
+
+    </body>
+    </html>
