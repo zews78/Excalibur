@@ -1,278 +1,315 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <script src="https://kit.fontawesome.com/7d0e898fba.js" crossorigin="anonymous"></script>
-    <style media="screen">
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
+    integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+  <script src="https://kit.fontawesome.com/7d0e898fba.js" crossorigin="anonymous"></script>
+  <style media="screen">
+    .search {
+      outline: none;
+    }
 
-      .search{
-        outline: none;
-      }
-      #categories{
-        list-style-type:none;
-        height: 10vh;
-        overflow: hidden;
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: scroll;
-        overflow-y: hidden;
+    #categories {
+      list-style-type: none;
+      height: 10vh;
+      overflow: hidden;
+      display: flex;
+      flex-wrap: nowrap;
+      overflow-x: scroll;
+      overflow-y: hidden;
 
-      }
-      #categories li{
-        display: inline;
-      }
-      #categories::-webkit-scrollbar {
-                background-color: #007bff;
-            }
-      .color{
-        outline: none;
-        border:none;
-        margin: 0;
-        background-color: white;
-        height:8vh;
-        padding: 0 10px;
-        /*transition-property:border-top-left-radius,border-top-right-radius,background-color,color;
+    }
+
+    #categories li {
+      display: inline;
+    }
+
+    #categories::-webkit-scrollbar {
+      background-color: #007bff;
+    }
+
+    .color {
+      outline: none;
+      border: none;
+      margin: 0;
+      background-color: white;
+      height: 8vh;
+      padding: 0 10px;
+      /*transition-property:border-top-left-radius,border-top-right-radius,background-color,color;
         transition-duration: 0.5s;*/
-      }
-      .animation1{
-        border-top-left-radius: 20px;
-        border-top-right-radius:20px;
-        color: white;
-        background-color: #007bff;
-        transition-property: all;
-        transition-duration: 0.5s;
-      }
-      i{
-        padding: 10px;
-        font-size: 1.5em;
-        color: #007bff;
-      }
-      .ratings-list{
-        list-style-type: none;
-      }
-      .ratings-list li{
-        display: inline;
-        font-size: 1.5rem;
-      }
-        .ratings-list li span{
-          font-size:1.5em;
-        }
-      .active-rating{
-        color:yellow;
-      }
+    }
 
+    .animation1 {
+      border-top-left-radius: 20px;
+      border-top-right-radius: 20px;
+      color: white;
+      background-color: #007bff;
+      transition-property: all;
+      transition-duration: 0.5s;
+    }
 
+    i {
+      padding: 10px;
+      font-size: 1.5em;
+      color: #007bff;
+    }
 
+    .ratings-list {
+      list-style-type: none;
+    }
 
+    .ratings-list li {
+      display: inline;
+      font-size: 1.5rem;
+    }
 
-    </style>
+    .ratings-list li span {
+      font-size: 1.5em;
+    }
 
-    <title>Hello, world!</title>
-  </head>
-  <body>
+    .active-rating {
+      color: yellow;
+    }
+  </style>
+
+  <title>Hello, world!</title>
+</head>
+
+<body>
 
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" id="navbar">
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="navbarText">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-      </li>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        </li>
 
-      <li class="nav-item">
-        <a class="nav-link" href="#">Register</a>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Register</a>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        <a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true" style="color:white;"></i>My Profile</a>
+      </span>
+    </div>
+  </nav>
+  <div class="container w-75 mx-auto my-4">
+    <input type="text" name="searchbar" class="search w-100 rounded-pill p-3" placeholder="Search...">
+  </div>
+
+  <div class="container w-100 mt-3 mb-0 p-0">
+    <ul id="categories" class="m-0 p-0 w-100">
+
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" ;" onclick="change(this)">Banks</button>
       </li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Hospitals</button>
+      </li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Government
+          Offices</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Restraunt</button>
+      </li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color"
+          onclick="change(this)">Salons/Spas</button></li>
+
+
     </ul>
-    <span class="navbar-text">
-      <a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true" style="color:white;"></i>My Profile</a>
-    </span>
   </div>
-</nav>
-<div class="container w-75 mx-auto my-4">
-  <input type="text" name="searchbar" class="search w-100 rounded-pill p-3" placeholder="Search...">
-</div>
-
-<div class="container w-100 mt-3 mb-0 p-0">
-<ul id="categories" class="m-0 p-0 w-100">
-
-  <li class="mx-3 mb-0"><button type="button" name="button" class="color" ;" onclick="change(this)">Banks</button></li>
-  <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Hospitals</button></li>
-  <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Government Offices</button></li>
-  <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Restraunt</button></li>
-  <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Salons/Spas</button></li>
-
-
-</ul>
-</div>
-<div class="container w-100 bg-primary mx-auto mt-0">
-  <div class="card-deck py-5 w-100">
-    <div class="card" >
-      <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Center Name</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content(description).</p>
+  <div class="container w-100 bg-primary mx-auto mt-0">
+    <div class="card-deck py-5 w-100">
+      <% var i =0 %>
+      <% while(Cntr[i]){ %>
+      <div class="card">
+        <%if(Cntr[i].images){ %>
+          <img class="card-img-top ml-2" src="<%= Cntr[i].images[0] %>" alt="Card image cap">
+        <%}
+        else{%>
+        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
+          alt="...">
+        <%}%>
+        <div class="card-body">
+          <h5 class="card-title"><%= Cntr[i].product_name %></h5>
+          <p class="card-text"><%= Cntr[i].desc %></p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i><%= Cntr[i].location %></li>
+          <li class="list-group-item">
+            <ul class="ratings-list">
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span>&starf;</span></li>
+            </ul>
+          </li>
+          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
+        </ul>
+        <div class="card-body">
+          <a href="/center/<%= Cntr[i].id %>" class="btn btn-primary w-100">Book Now</a>
+        </div>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-        <li class="list-group-item">
-        <ul class="ratings-list">
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span >&starf;</span></li>
-      </ul>
-        </li>
-        <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-      </ul>
-      <div class="card-body">
-<a href="#" class="btn btn-primary w-100">Book Now</a>
+      <% i++ %>
+      <% } %>
+      <!-- <div class="card">
+        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
+          alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Center Name</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content(description).</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
+          <li class="list-group-item">
+            <ul class="ratings-list">
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span>&starf;</span></li>
+            </ul>
+          </li>
+          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary w-100">Book Now</a>
+        </div>
+      </div>
+      <div class="card">
+        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
+          alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Center Name</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content(description).</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
+          <li class="list-group-item">
+            <ul class="ratings-list">
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span>&starf;</span></li>
+            </ul>
+          </li>
+          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary w-100">Book Now</a>
+        </div>
       </div>
     </div>
-    <div class="card" >
-      <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Center Name</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content(description).</p>
+    <div class="card-deck">
+      <div class="card">
+        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
+          alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Center Name</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content(description).</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
+          <li class="list-group-item">
+            <ul class="ratings-list">
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span>&starf;</span></li>
+            </ul>
+          </li>
+          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary w-100">Book Now</a>
+        </div>
       </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-        <li class="list-group-item">
-        <ul class="ratings-list">
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span >&starf;</span></li>
-      </ul>
-        </li>
-        <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-      </ul>
-      <div class="card-body">
-  <a href="#" class="btn btn-primary w-100">Book Now</a>
+      <div class="card">
+        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
+          alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Center Name</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content(description).</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
+          <li class="list-group-item">
+            <ul class="ratings-list">
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span>&starf;</span></li>
+            </ul>
+          </li>
+          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary w-100">Book Now</a>
+        </div>
       </div>
-    </div>
-    <div class="card" >
-      <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Center Name</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content(description).</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-        <li class="list-group-item">
-        <ul class="ratings-list">
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span >&starf;</span></li>
-      </ul>
-        </li>
-        <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-      </ul>
-      <div class="card-body">
-<a href="#" class="btn btn-primary w-100">Book Now</a>
-      </div>
+      <div class="card">
+        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
+          alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Center Name</h5>
+          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
+            content(description).</p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
+          <li class="list-group-item">
+            <ul class="ratings-list">
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span class="active-rating">&starf;</span></li>
+              <li><span>&starf;</span></li>
+            </ul>
+          </li>
+          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
+        </ul>
+        <div class="card-body">
+          <a href="#" class="btn btn-primary w-100">Book Now</a>
+        </div>
+      </div> -->
     </div>
   </div>
-  <div class="card-deck">
-    <div class="card" >
-      <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Center Name</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content(description).</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-        <li class="list-group-item">
-        <ul class="ratings-list">
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span >&starf;</span></li>
-      </ul>
-        </li>
-        <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-      </ul>
-      <div class="card-body">
-    <a href="#" class="btn btn-primary w-100">Book Now</a>
-      </div>
-    </div>
-    <div class="card" >
-      <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Center Name</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content(description).</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-        <li class="list-group-item">
-        <ul class="ratings-list">
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span >&starf;</span></li>
-      </ul>
-        </li>
-        <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-      </ul>
-      <div class="card-body">
-    <a href="#" class="btn btn-primary w-100">Book Now</a>
-      </div>
-    </div>
-    <div class="card">
-      <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top" alt="...">
-      <div class="card-body">
-        <h5 class="card-title">Center Name</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content(description).</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-        <li class="list-group-item">
-        <ul class="ratings-list">
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span class="active-rating">&starf;</span></li>
-      <li><span >&starf;</span></li>
-      </ul>
-        </li>
-        <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-      </ul>
-      <div class="card-body">
-    <a href="#" class="btn btn-primary w-100">Book Now</a>
-      </div>
-    </div>
-</div>
-</div>
 
-<script type="text/javascript">
-function change(a) {
-let list=document.getElementsByClassName('color');
-for (var i = 0; i < list.length; i++) {
-  list[i].classList.remove('animation1')
+  <script type="text/javascript">
+    function change(a) {
+      let list = document.getElementsByClassName('color');
+      for (var i = 0; i < list.length; i++) {
+        list[i].classList.remove('animation1')
 
-  list[i].style.outline='none';
+        list[i].style.outline = 'none';
 
-}
-a.classList.add('animation1')
-}
-</script>
-    <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+      }
+      a.classList.add('animation1')
+    }
+  </script>
+  <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+    crossorigin="anonymous"></script>
 
 
-  </body>
+</body>
+
 </html>

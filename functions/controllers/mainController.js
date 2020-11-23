@@ -3,7 +3,7 @@ const firebase = require('../firebase');
 // const keywordGenerator = require('../utils/keywordGenerator');
 
 
-exports.getHome = async(req, res) => {
+exports.getCenter = async (req, res) => {
 	// const auth = (await isAuth(req))[0];
 	try {
 		// const auth = (await isAuth(req))[0];
@@ -18,10 +18,10 @@ exports.getHome = async(req, res) => {
 				...doc.data()
 			});
 		});
-		console.log(Cntr);
-		res.render('main/home.ejs', {
+		// console.log(Cntr);
+		res.render('main/Center-list-user-logged-in.ejs', {
 			// auth,
-			pageTitle: 'Home',
+			pageTitle: 'Center-list',
 			Cntr
 		});
 	} catch (err) {
@@ -29,24 +29,71 @@ exports.getHome = async(req, res) => {
 	}
 };
 
-exports.getHelp = async(req, res) => {
-	try {
-		const auth = (await isAuth(req))[0];
+// exports.getHelp = async(req, res) => {
+// 	try {
+// 		const auth = (await isAuth(req))[0];
 
-		var Cntr = [];
-		const CntrRef = firebase.firestore()
-			.collection('centres')
-		const snapshot = await CntrRef.get();
-		snapshot.forEach(doc => {
-			Cntr.push({
-				id: doc.id,
-				...doc.data()
-			});
-		});
-		console.log(Cntr);
+// 		var Cntr = [];
+// 		const CntrRef = firebase.firestore()
+// 			.collection('centres')
+// 		const snapshot = await CntrRef.get();
+// 		snapshot.forEach(doc => {
+// 			Cntr.push({
+// 				id: doc.id,
+// 				...doc.data()
+// 			});
+// 		});
+// 		console.log(Cntr);
+// 		res.render('main/home.ejs', {
+// 			pageTitle: 'Home',
+// 			Cntr
+// 		});
+// 	} catch (err) {
+// 		console.log(err);
+// 	}
+// };
+exports.getHome = async (req, res) => {
+	try {
+		// const auth = (await isAuth(req))[0];
+
+		// var Cntr = [];
+		// const CntrRef = firebase.firestore()
+		// 	.collection('centres')
+		// const snapshot = await CntrRef.get();
+		// snapshot.forEach(doc => {
+		// 	Cntr.push({
+		// 		id: doc.id,
+		// 		...doc.data()
+		// 	});
+		// });
+		// console.log(Cntr);
 		res.render('main/home.ejs', {
 			pageTitle: 'Home',
-			Cntr
+			// Cntr
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
+exports.getOneCenter = async (req, res) => {
+	try {
+		// const auth = (await isAuth(req))[0];
+
+		const center = await firebase.firestore()
+			.collection('centres')
+			.doc(req.params.centerId)
+			.get();
+		// const reqUser = await firebase.firestore()
+		// 	.collection('users')
+		// 	.doc(requirement.data().uid)
+		// 	.get();
+		console.log(center.data());
+		// console.log(req.params.centerId);
+
+		res.render('main/oneCenter.ejs', {
+			pageTitle: 'Center',
+			
 		});
 	} catch (err) {
 		console.log(err);

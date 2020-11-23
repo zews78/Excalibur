@@ -4,9 +4,9 @@ const mainController = require('../controllers/mainController');
 // const redirectTo = require('../middlewares/redirectTo');
 
 const router = express.Router();
-
 router.get('/', mainController.getHome);
-
+router.get('/center', mainController.getCenter);
+router.get('/center/:centerId', mainController.getOneCenter);
 
 
 
