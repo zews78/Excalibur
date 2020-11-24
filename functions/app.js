@@ -22,7 +22,7 @@ app.set('views', 'views');
 
 const mainRouter = require('./routes/mainRouter');
 const authRouter = require('./routes/authRouter');
-// const userRouter = require('./routes/userRouter');
+const userRouter = require('./routes/userRouter');
 // const adminRouter = require('./routes/adminRouter');
 
 const redirectTo = require('./middlewares/redirectTo');
@@ -33,7 +33,10 @@ const isAuth = require('./middlewares/isAuth');
 // app.use(viewRouter); // Comment me during backend development
 app.use(mainRouter);
 app.use(authRouter);
+// app.use(userRouter);
 // app.use('/user', redirectTo, isAuth, userRouter);
+// app.use('/user', userRouter);
+
 // app.use('/admin', isAdmin, adminRouter);
 
 module.exports = app;

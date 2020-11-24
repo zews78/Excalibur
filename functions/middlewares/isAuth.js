@@ -5,7 +5,7 @@ module.exports = async(req, res, next) => {
 	const [auth, decodedToken] = await isAuth(req);
 	if (auth) {
 		req.uid = decodedToken.uid;
-		// req.gstVerification = false;
+		req.gstVerification = false;
 		const userData = await firebase.firestore()
 			.collection('users')
 			.doc(req.uid)

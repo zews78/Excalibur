@@ -6,13 +6,13 @@ module.exports = async(req) => {
 	try {
 		const [auth, decodedToken] = await isAuth(req);
 		if (auth) {
-			// const user = await firebase
-			// 	.firestore()
-			// 	.collection('users')
-			// 	.doc(decodedToken.uid)
-			// 	.get();
+			const user = await firebase
+				.firestore()
+				.collection('users')
+				.doc(decodedToken.uid)
+				.get();
 			// if (user.data()) {
-			// 	console.log(user.data().name);
+				console.log(user.data());
 			// 	return 3;
 			// } else {
 			return 2;

@@ -16,7 +16,7 @@ exports.getLogin = async (req, res) => {
         		auth: false
         	});
         } else if (page === 2) {
-        	res.render('auth/login2.ejs', {
+        	res.render('auth/SignUp.ejs', {
         		pageTitle: 'Enter some details',
         		auth: true
             });
