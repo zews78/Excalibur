@@ -1,5 +1,5 @@
 const firebase = require('../firebase');
-// const isAuth = require('../utils/isAuth');
+const isAuth = require('../utils/isAuth');
 // const keywordGenerator = require('../utils/keywordGenerator');
 
 
@@ -92,7 +92,7 @@ exports.getOneCenter = async (req, res) => {
 		// console.log(req.params.centerId);
 
 		res.render('main/oneCenter.ejs', {
-			pageTitle: 'Center',
+			pageTitle: 'Centre',
 			
 		});
 	} catch (err) {
