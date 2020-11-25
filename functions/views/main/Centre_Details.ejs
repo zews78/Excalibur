@@ -167,7 +167,7 @@
 </nav>
 
 <div class="container-fluid">
-  <h2><B>Centre Name</b></h2>
+  <h2><B><%=cntr.centre_name%></b></h2>
   <p>Click on below links to learn more about the centre.</p>
 
   <ul class="nav nav-tabs">
@@ -188,7 +188,7 @@
 </div>
 <div class="col-md-4">
     <p>  <b>Domain:</b> Hospital\bank\restaurant</p>
-    <p><b>Overview:</b>Among the finest Dermatologists in the city, Dr. Mukadams Laser Cure in Bandra West, Mumbai is known for offering excellent patient care. The doctor holds an experience of 8 years and has extensive knowledge in the respective field of medicine. </p>    
+    <p><b>Overview:</b><%=cntr.centre_desc%></p>    
 <p><b>Established:</b> 1997</p>
 
 </div>
@@ -196,13 +196,15 @@
 </div>
     <div id="menu2" class="tab-pane fade">
       <h3><b>Lists of Departments</b></h3>
+      <%for(i=0;i< cntr.avDept.length;i++){%>
       <p> Department 1</p>
-  <p>Department 2</p>
-  <p>Department 3</p>
-  <p>Department 4</p>
-  <p>Department 5</p>
-  <p>Department 6</p>
-  <p>Department 7</p>
+      
+      <p>Department 2</p>
+      <p>Department 3</p>
+      <p>Department 4</p>
+      <p>Department 5</p>
+      <p>Department 6</p>
+      <p>Department 7</p>
     </div>
     <div id="menu3" class="tab-pane fade">
       <h3><b>Opening Hours</b></h3>

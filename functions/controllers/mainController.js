@@ -92,7 +92,7 @@ exports.getOneCenter = async (req, res) => {
 		console.log(center.data());
 		// console.log(req.params.centerId);
 
-		res.render('main/Centre_details.ejs', {
+		res.render('main/Centre_Details.ejs', {
 			cntr_data: center.data(),
 			pageTitle: 'Centre',
 			
