@@ -139,6 +139,10 @@
   textarea {
     resize: none;
   }
+  .btnAuth{
+    line-height: 2.3;
+    margin: 9px;
+  }
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -159,7 +163,18 @@
         <li><a href="/center">CENTRE</a></li>
         <li><a href="">REGISTER</a></li>
       <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+        <li>
+
+        <% if(auth) { %>
+          <form action="/logout" method="POST">
+            <button type="submit" class="btnAuth">Logout</button>
+          </form>
+        <% } else { %>
+          <form action="/login" method="GET">
+            <button type="submit" class="btnAuth"></submit>Login</a>
+          </form>
+        <% } %></li>
+
         <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
       </ul>
     </div>
