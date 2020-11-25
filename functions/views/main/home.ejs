@@ -161,19 +161,25 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="">HOME</a></li>
         <li><a href="/center">CENTRE</a></li>
+        <li><a href="/user/profile">PROFILE</a></li>
         <li><a href="">REGISTER</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li>
 
         <% if(auth) { %>
+        <li>
+
           <form action="/logout" method="POST">
             <button type="submit" class="btnAuth">Logout</button>
           </form>
+        </li>
         <% } else { %>
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+
+        <li>
           <form action="/login" method="GET">
             <button type="submit" class="btnAuth"></submit>Login</a>
           </form>
-        <% } %></li>
+        </li>
+        <% } %>
 
         <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
       </ul>
