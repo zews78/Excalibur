@@ -1,8 +1,3 @@
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,12 +14,12 @@
 
   body {
     font: 400 15px/1.8 Lato, sans-serif;
-    padding-top: 65px; 
+    padding-top: 65px;
     color: #777;
   }
   h3, h4 {
     margin: 10px 0 30px 0;
-    letter-spacing: 10px;      
+    letter-spacing: 10px;
     font-size: 20px;
     color: #111;
   }
@@ -42,14 +37,14 @@
     margin-bottom: 25px;
     width: 80%;
     height: 80%;
-    
+
   }
   .person:hover {
     border-color: #f1f1f1;
   }
   .carousel-inner img {
-   
-    /* filter: ; make all photos black and white  */
+
+    /* filter: ; make all photos black and white */
     width: 100%; /* Set width to 100% */
     margin: auto;
   }
@@ -76,11 +71,11 @@
     color: #ffffff;
   }
   .bg-3 {
-    background-color: #f1f1f1; 
+    background-color: #f1f1f1;
     color: #ffffff;
   }
   .bg-4 {
-    background-color: #ffffff; 
+    background-color: #ffffff;
     color: #ffffff;
   }
   .list-group-item:last-child {
@@ -122,7 +117,7 @@
     letter-spacing: 4px;
     opacity: 0.9;
   }
-  .navbar li a, .navbar .navbar-brand { 
+  .navbar li a, .navbar .navbar-brand {
     color: #d5d5d5 !important;
   }
   .navbar-nav li a:hover {
@@ -141,8 +136,6 @@
       background-color: #f1f1f1;
       height: 100%;
     }
-    
-
   footer {
     background-color: #2d2d30;
     color: #f5f5f5;
@@ -154,16 +147,40 @@
   footer a:hover {
     color: #777;
     text-decoration: none;
-  }  
+  }
   .form-control {
     border-radius: 0;
   }
   textarea {
     resize: none;
   }
+  .userdetails{
+    color:black;
+    font-size: 1.5em;
+    font-weight: bold;
+  }
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="font-size:1.5em;">Are You sure You want to cancel this Appointment?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-success">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
@@ -171,7 +188,7 @@
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
+        <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="#myPage">EXCELERENTUM</a>
     </div>
@@ -187,12 +204,15 @@
     </div>
   </div>
 </nav>
-  <div class="container-fluid bg-4 text-center">    
+  <div class="container-fluid bg-4 text-center">
   <div class="row">
     <div class="col-sm-3 well bg-2">
       <div class="well bg-3">
         <p><a href="#">My Profile</a></p>
-        <img src="https://image.freepik.com/free-vector/people-profile-icon_24877-40756.jpg" class="img-circle" height="65" width="65" alt="Avatar">
+        <img src="https://image.freepik.com/free-vector/people-profile-icon_24877-40756.jpg" class="img-circle" height="100" width="100" alt="Avatar">
+        <p class="userdetails"><%=user.name%></p>
+        <small style="color: #000;"><%=user.mobile%></small>
+
       </div>
       <div class="alert alert-success fade in ">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
@@ -201,17 +221,17 @@
       </div>
       </div>
     <div class="col-sm-7">
-    
+
       <div class="row">
         <div class="col-sm-12 ">
           <div class="panel panel-default text-left">
             <div class="panel-body bg-2">
-              <p><h2>My Appointments</h2></p>     
+              <p><h2>My Appointments</h2></p>
             </div>
           </div>
         </div>
       </div>
-      
+
       <div class="row">
         <div class="col-sm-3">
           <div class="well bg-2">
@@ -221,7 +241,10 @@
         </div>
         <div class="col-sm-9">
           <div class="well bg-2">
-            <p>Appointment date and time. </p><p>Success status</p>
+            <p>24 Nov</p>                           <!--date of Appointment-->
+            <p>Radiology</p>
+            <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
           </div>
         </div>
       </div>
@@ -234,7 +257,10 @@
         </div>
         <div class="col-sm-9">
           <div class="well bg-2">
-            <p>Date and time</p><p>status</p>
+            <p>24 Nov</p>                           <!--date of Appointment-->
+            <p>Radiology</p>
+            <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
           </div>
         </div>
       </div>
@@ -247,7 +273,10 @@
         </div>
         <div class="col-sm-9">
           <div class="well bg-2">
-            <p>Date and Time</p><p>status</p>
+            <p>24 Nov</p>                           <!--date of Appointment-->
+            <p>Radiology</p>
+            <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
           </div>
         </div>
       </div>
@@ -260,22 +289,26 @@
         </div>
         <div class="col-sm-9">
           <div class="well bg-2">
-           <p>Date and Time</p><p>status</p>
+            <p>24 Nov</p>                           <!--date of Appointment-->
+            <p>Radiology</p>
+            <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
           </div>
         </div>
-      </div>     
+      </div>
     </div>
 <div class="row">
-  
+
     <div class="col-sm-2 well bg-2">
       <div class="thumbnail bg-3">
 
         <p>Upcoming Appointments:</p>
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwRlGdLYySZZYg5MEX0KaWowPf9WBaLgQIg&usqp=CAU" alt="Paris" width="100" height="100">
-        <p><strong>Centre Name</strong></p>
-        <p>Appointment Date</p>
-        <button class="btn btn-primary">Info</button>
-      </div>      
+        <p><strong>Today</strong></p>
+        <p><strong>at Centre Name</strong></p>
+        <p>Estimated Time: 4:00 PM</p>
+        <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+      </div>
   </div>
     </div>
   </div>
@@ -287,14 +320,14 @@
   <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a><br><br>
-  <p>All Rights Reserved @Excelerentum</p> 
+  <p>All Rights Reserved @Excelerentum</p>
 </footer>
 
 <script>
 $(document).ready(function(){
   // Initialize Tooltip
-  $('[data-toggle="tooltip"]').tooltip(); 
-  
+  $('[data-toggle="tooltip"]').tooltip();
+
   // Add smooth scrolling to all links in navbar + footer link
   $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
 
@@ -312,7 +345,7 @@ $(document).ready(function(){
       $('html, body').animate({
         scrollTop: $(hash).offset().top
       }, 900, function(){
-   
+
         // Add hash (#) to URL when done scrolling (default click behavior)
         window.location.hash = hash;
       });

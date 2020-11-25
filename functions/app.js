@@ -33,9 +33,8 @@ const isAuth = require('./middlewares/isAuth');
 // app.use(viewRouter); // Comment me during backend development
 app.use(mainRouter);
 app.use(authRouter);
+app.use('/user', redirectTo, isAuth, userRouter);
 // app.use(userRouter);
-// app.use('/user', redirectTo, isAuth, userRouter);
-// app.use('/user', userRouter);
 
 // app.use('/admin', isAdmin, adminRouter);
 
