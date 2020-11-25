@@ -6,7 +6,7 @@ const isAuth = require('../utils/isAuth');
 exports.getCenter = async (req, res) => {
 	// const auth = (await isAuth(req))[0];
 	try {
-		// const auth = (await isAuth(req))[0];
+		const auth = (await isAuth(req))[0];
 
 		var Cntr = [];
 		const CntrRef = firebase.firestore()
@@ -20,7 +20,7 @@ exports.getCenter = async (req, res) => {
 		});
 		// console.log(Cntr);
 		res.render('main/Center-list-user-logged-in.ejs', {
-			// auth,
+			auth,
 			pageTitle: 'Center-list',
 			Cntr
 		});
@@ -54,7 +54,7 @@ exports.getCenter = async (req, res) => {
 // };
 exports.getHome = async (req, res) => {
 	try {
-		// const auth = (await isAuth(req))[0];
+		const auth = (await isAuth(req))[0];
 
 		// var Cntr = [];
 		// const CntrRef = firebase.firestore()
@@ -69,6 +69,7 @@ exports.getHome = async (req, res) => {
 		// console.log(Cntr);
 		res.render('main/home.ejs', {
 			pageTitle: 'Home',
+			auth
 			// Cntr
 		});
 	} catch (err) {
