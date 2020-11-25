@@ -63,6 +63,13 @@
     .active-rating{
       color:yellow;
     }
+    .cardText{
+      height: 30vh;
+      overflow-x:scroll;
+    }
+    .cardText::-webkit-scrollbar {
+              background-color: white;
+          }
 
     </style>
 
@@ -160,7 +167,7 @@
       <%}%>
       <div class="card-body">
         <h5 class="card-title"><%= Cntr[i].product_name %></h5>
-        <p class="card-text"><%= Cntr[i].desc %></p>
+        <p class="card-text cardText"><%= Cntr[i].desc %></p>
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i><%= Cntr[i].location %></li>

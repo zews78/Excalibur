@@ -76,6 +76,13 @@
     .active-rating {
       color: yellow;
     }
+    .cardText{
+      height: 30vh;
+      overflow-x:scroll;
+    }
+    .cardText::-webkit-scrollbar {
+              background-color: white;
+          }
   </style>
 
   <!-- <title>Hello, world!</title> -->
@@ -130,7 +137,7 @@
       <% while(Cntr[i]){ %>
       <div class="card">
         <%if(Cntr[i].images){ %>
-          <img class="card-img-top ml-2" src="<%= Cntr[i].images[0] %>" alt="Card image cap">
+          <img class="card-img-top" src="<%= Cntr[i].images[0] %>" alt="Card image cap">
         <%}
         else{%>
         <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
@@ -159,133 +166,7 @@
       </div>
       <% i++ %>
       <% } %>
-      <!-- <div class="card">
-        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
-          alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Center Name</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content(description).</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-          <li class="list-group-item">
-            <ul class="ratings-list">
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span>&starf;</span></li>
-            </ul>
-          </li>
-          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary w-100">Book Now</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
-          alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Center Name</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content(description).</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-          <li class="list-group-item">
-            <ul class="ratings-list">
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span>&starf;</span></li>
-            </ul>
-          </li>
-          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary w-100">Book Now</a>
-        </div>
-      </div>
-    </div>
-    <div class="card-deck">
-      <div class="card">
-        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
-          alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Center Name</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content(description).</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-          <li class="list-group-item">
-            <ul class="ratings-list">
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span>&starf;</span></li>
-            </ul>
-          </li>
-          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary w-100">Book Now</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
-          alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Center Name</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content(description).</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-          <li class="list-group-item">
-            <ul class="ratings-list">
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span>&starf;</span></li>
-            </ul>
-          </li>
-          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary w-100">Book Now</a>
-        </div>
-      </div>
-      <div class="card">
-        <img src="https://images.livemint.com/img/2019/06/16/600x338/banks_1560706191442.jpg" class="card-img-top"
-          alt="...">
-        <div class="card-body">
-          <h5 class="card-title">Center Name</h5>
-          <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-            content(description).</p>
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"><i class="fa fa-map-marker" aria-hidden="true"></i>Address</li>
-          <li class="list-group-item">
-            <ul class="ratings-list">
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span class="active-rating">&starf;</span></li>
-              <li><span>&starf;</span></li>
-            </ul>
-          </li>
-          <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
-        </ul>
-        <div class="card-body">
-          <a href="#" class="btn btn-primary w-100">Book Now</a>
-        </div>
-      </div> -->
+
     </div>
   </div>
 
