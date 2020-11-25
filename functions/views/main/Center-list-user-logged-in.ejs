@@ -83,6 +83,23 @@
     .cardText::-webkit-scrollbar {
               background-color: white;
           }
+
+    #cardContainer{
+            display: flex;
+          flex-wrap: wrap;
+            justify-content: space-around;
+          }
+    .Cards{
+      width: 30%;
+    }
+  @media only screen and (max-width: 600px) {
+  #cardContainer{
+    display: block;
+  }
+  .Cards{
+    width: auto;
+  }
+    }
   </style>
 
   <!-- <title>Hello, world!</title> -->
@@ -132,10 +149,10 @@
     </ul>
   </div>
   <div class="container w-100 bg-primary mx-auto mt-0">
-    <div class="card-deck py-5 w-100">
+    <div class="py-5 w-100" id="cardContainer">
       <% var i =0 %>
       <% while(Cntr[i]){ %>
-      <div class="card">
+      <div class="card mb-4 Cards"  >
         <%if(Cntr[i].images){ %>
           <img class="card-img-top" src="<%= Cntr[i].images[0] %>" alt="Card image cap">
         <%}
