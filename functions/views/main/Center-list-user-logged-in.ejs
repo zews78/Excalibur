@@ -31,7 +31,7 @@
     }
 
     #categories::-webkit-scrollbar {
-      background-color: #007bff;
+      background-color: rgba(41, 43, 44,0.9);
     }
 
     .color {
@@ -49,7 +49,7 @@
       border-top-left-radius: 20px;
       border-top-right-radius: 20px;
       color: white;
-      background-color: #007bff;
+      background-color:rgba(41, 43, 44,0.9);
       transition-property: all;
       transition-duration: 0.5s;
     }
@@ -101,7 +101,7 @@
     }
   </style>
 
-  <!-- <title>Hello, world!</title> -->
+
 </head>
 
 <body>
@@ -160,7 +160,7 @@
 
     </ul>
   </div>
-  <div class="container w-100 bg-primary mx-auto mt-0">
+  <div class="container w-100  mx-auto mt-0" style="background-color: rgba(41, 43, 44,0.9);">
     <div class="py-5 w-100" id="cardContainer">
       <% var i =0 %>
       <% while(Cntr[i]){ %>
@@ -190,7 +190,7 @@
           <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
         </ul>
         <div class="card-body">
-          <a href="/center/<%= Cntr[i].id %>" class="btn btn-primary w-100">Book Now</a>
+          <a href="/center/<%= Cntr[i].id %>" class="btn w-100" style="background-color: rgba(41, 43, 44,0.9);color:white;">Book Now</a>
         </div>
       </div>
       <% i++ %>
@@ -211,6 +211,8 @@
       a.classList.add('animation1')
     }
   </script>
+
+
   <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
     integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
