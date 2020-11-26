@@ -219,7 +219,7 @@
   </nav>
 
   <div class="container-fluid">
-    <h2><B>Centre Name</b></h2>
+    <h2><B><%=cntr_data.centre_name%></b></h2>
     <p>Click on below links to learn more about the centre.</p>
 
     <ul class="nav nav-tabs">
@@ -232,14 +232,14 @@
 
     <div class="tab-content">
       <div id="menu1" class="tab-pane fade in active">
-        <h3><b><%=cntr_data.centre_name%></b></h3>
+        <h3><b>General Info</b></h3>
         <div class="row">
           <div class="col-md-4">
             <img src="<%=cntr_data.images[0]%>" class="img-responsive" alt="Photo" height="245" width="255"><br>
           </div>
           <div class="col-md-4">
 
-            <p> <b>Domain:</b> Hospital\bank\restaurant</p>
+            <p> <b>Domain:</b> <%=cntr_data.domain%></p>
             <p><b>Overview:</b><%=cntr_data.centre_desc%> </p>
             <p><b>Established:</b> 1997</p>
             <h3><b>Opening Hours</b></h3>
@@ -303,15 +303,15 @@
             <div class="row">
               <div class="col-sm-3">
                 <div class="well bg-2">
-                 <p>Centre 1</p>
+                 <p>Dept 1</p>
                  <img src="https://cdn0.iconfinder.com/data/icons/buildings-1/128/40-512.png" class="img-circle" height="55" width="55" alt="Avatar">
                 </div>
               </div>
               <div class="col-sm-9">
                 <div class="well bg-2">
-                  <p>24 Nov</p>                           <!--date of Appointment-->
+                  <p>22 Nov</p>                           <!--date of Appointment-->
                   <p>Radiology</p>
-                  <p>at Center Name</p>
+                  <!-- <p>at Center Name</p> -->
                   <div class="col">
                     <h2>Select Timeslot</h2>
                     <div class="form-group">
@@ -405,7 +405,7 @@
             <div class="row">
               <div class="col-sm-3">
                 <div class="well bg-2">
-                 <p>Center 2</p>
+                 <p>Dept 2</p>
                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYIjbHTxX_VmC2CWBu6aTytt11dCI0WPeJl91dQzNiFEUW4A1Rmq92mvC9Rbn9z2zZohj4n8B2EBdH1aBo4YHDagMwJVI6oL4&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55" alt="Avatar">
                 </div>
               </div>
@@ -413,7 +413,7 @@
                 <div class="well bg-2">
                   <p>24 Nov</p>                           <!--date of Appointment-->
                   <p>Radiology</p>
-                  <p>at Center Name</p>
+                  <!-- <p>at Center Name</p> -->
                     <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
                 </div>
               </div>
@@ -421,7 +421,7 @@
             <div class="row">
               <div class="col-sm-3">
                 <div class="well bg-2">
-                 <p>Centre 3</p>
+                 <p>Dept 3</p>
                  <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTmQUdpb1rl8Mh18RkQD0qknPw-v5p0yoz-XnaXsMCj-wjlBmI-NkgMmNZAYsk-DFWJi1EYF-zgMAXjfCs8SjNwauoEEa2KQk&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55" alt="Avatar">
                 </div>
               </div>
@@ -429,7 +429,7 @@
                 <div class="well bg-2">
                   <p>24 Nov</p>                           <!--date of Appointment-->
                   <p>Radiology</p>
-                  <p>at Center Name</p>
+                  <!-- <p>at Center Name</p> -->
                     <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
                 </div>
               </div>

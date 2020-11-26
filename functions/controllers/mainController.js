@@ -85,10 +85,25 @@ exports.getOneCenter = async (req, res) => {
 			.collection('centres')
 			.doc(req.params.centerId)
 			.get();
-		// const reqUser = await firebase.firestore()
-		// 	.collection('users')
-		// 	.doc(requirement.data().uid)
+
+		const userId = req.uid;
+		const reqUser = await firebase.firestore()
+			.collection('users')
+			.doc(req.uid)
+			.get();
+
+		// let dept = [];
+		// const reqDept = await firebase.firestore()
+		// 	.collection('departments')
+		// 	.where('deptId', 'array-contains-any', center.data().avDept)
 		// 	.get();
+
+		// 	reqDept.forEach(product => {
+		// 		let productData = product.data();
+		// 		productData.id = product.id;
+		// 		dept.push(productData);
+		// 	});
+		// console.log(dept);
 		console.log({...center.data(), centreId});
 		// console.log(req.params.centerId);
 
