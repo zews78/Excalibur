@@ -159,10 +159,10 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="">HOME</a></li>
+        <li><a href="/">HOME</a></li>
         <li><a href="/center">CENTRE</a></li>
         <li><a href="/user/profile">PROFILE</a></li>
-        <li><a href="">REGISTER</a></li>
+        <li><a href="/register">REGISTER</a></li>
 
         <% if(auth) { %>
         <li>
@@ -172,11 +172,11 @@
           </form>
         </li>
         <% } else { %>
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+        <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 
         <li>
           <form action="/login" method="GET">
-            <button type="submit" class="btnAuth"></submit>Login</a>
+            <button type="submit" class="btnAuth">Login</button>
           </form>
         </li>
         <% } %>
@@ -237,10 +237,10 @@
 <div id="band" class="container-fluid">
   <h3>EXCELERENTUM</h3>
 <div class="row">
-      
+
 <div class="col-md-8">
  <p><em>We love speed!</em></p>
-  <p> Spend hours waiting in line?So what if there was a way to save all this time? 
+  <p> Spend hours waiting in line?So what if there was a way to save all this time?
 Sounds crazy but it isn't impossible.Excelerentum is the solution to your problems, not only does it allows you to book appointments smoothly, but it also tells you your waiting time.</p>
   <br>
 <button type="button" class="btn">Book Now</button>

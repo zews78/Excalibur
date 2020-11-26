@@ -159,6 +159,10 @@
     font-size: 1.5em;
     font-weight: bold;
   }
+  .btnAuth{
+    line-height: 2.3;
+    margin: 9px;
+  }
   </style>
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
@@ -194,21 +198,27 @@
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="">HOME</a></li>
+        <li><a href="/">HOME</a></li>
         <li><a href="/center">CENTRE</a></li>
-        <li><a href="">REGISTER</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li>
+        <li><a href="/user/profile">PROFILE</a></li>
+        <li><a href="/register">REGISTER</a></li>
 
         <% if(auth) { %>
+        <li>
+
           <form action="/logout" method="POST">
             <button type="submit" class="btnAuth">Logout</button>
           </form>
+        </li>
         <% } else { %>
+        <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+
+        <li>
           <form action="/login" method="GET">
-            <button type="submit" class="btnAuth"></submit>Login</a>
+            <button type="submit" class="btnAuth">Login</button>
           </form>
-        <% } %></li>
+        </li>
+        <% } %>
 
         <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
       </ul>

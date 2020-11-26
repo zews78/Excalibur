@@ -173,9 +173,12 @@
     .form-control {
       border-radius: 0;
     }
-
     textarea {
       resize: none;
+    }
+    .btnAuth{
+      line-height: 2.3;
+      margin: 9px;
     }
 
     /* vertical line */
@@ -198,19 +201,25 @@
         <ul class="nav navbar-nav navbar-right">
           <li><a href="/">HOME</a></li>
           <li><a href="/center">CENTRE</a></li>
-          <li><a href="">REGISTER</a></li>
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="/user/profile">PROFILE</a></li>
+          <li><a href="/register">REGISTER</a></li>
+
+          <% if(auth) { %>
           <li>
 
-            <% if(auth) { %>
             <form action="/logout" method="POST">
               <button type="submit" class="btnAuth">Logout</button>
             </form>
-            <% } else { %>
+          </li>
+          <% } else { %>
+          <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+
+          <li>
             <form action="/login" method="GET">
-              <button type="submit" class="btnAuth"></submit>Login</a>
+              <button type="submit" class="btnAuth">Login</button>
             </form>
-            <% } %></li>
+          </li>
+          <% } %>
 
           <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
         </ul>
@@ -285,7 +294,7 @@
                 </div>
               </div>
             </div>
-      
+
 
 
 
@@ -295,7 +304,7 @@
                 <h2>Select Date</h2>
                 </p>
               </label>
-  
+
               <p><input type="date" id="start" name="trip-start" value="2018-07-22" min="2000-01-01" max="2050-12-31"></p>
             </div>
             <br><br>
@@ -316,8 +325,8 @@
                     <h2>Select Timeslot</h2>
                     <div class="form-group">
                       <div class="items-collection">
-        
-        
+
+
                         <div class="info-block block-info clearfix">
                           <div data-toggle="buttons" class="btn-group bizmoduleselect">
                             <label class="btn btn-default">
@@ -326,7 +335,7 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 1</h5>
                               </div>
-        
+
                             </label>
                             <label class="btn btn-default">
                               <div class="itemcontent">
@@ -334,7 +343,7 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 2</h5>
                               </div>
-        
+
                             </label>
                             <label class="btn btn-default">
                               <div class="itemcontent">
@@ -342,7 +351,7 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 3</h5>
                               </div>
-        
+
                             </label>
                             <label class="btn btn-default">
                               <div class="itemcontent">
@@ -350,7 +359,7 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 4</h5>
                               </div>
-        
+
                             </label>
                           </div>
                         </div>
@@ -358,8 +367,8 @@
                     </div>
                     <div class="form-group">
                       <div class="items-collection">
-        
-        
+
+
                         <div class="info-block block-info clearfix">
                           <div data-toggle="buttons" class="btn-group bizmoduleselect">
                             <label class="btn btn-default">
@@ -368,7 +377,7 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 5</h5>
                               </div>
-        
+
                             </label>
                             <label class="btn btn-default">
                               <div class="itemcontent">
@@ -376,7 +385,7 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 6</h5>
                               </div>
-        
+
                             </label>
                             <label class="btn btn-default">
                               <div class="itemcontent">
@@ -384,7 +393,7 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 7</h5>
                               </div>
-        
+
                             </label>
                             <label class="btn btn-default">
                               <div class="itemcontent">
@@ -392,13 +401,13 @@
                                 <span class="fa fa-car fa-2x"></span>
                                 <h5>Slot 8</h5>
                               </div>
-        
+
                             </label>
                           </div>
                         </div>
                       </div>
                     </div>
-         
+
                 </div>
               </div>
             </div>
@@ -465,7 +474,7 @@
           <div class="form-group">
             <div class="items-collection">
 
-              
+
               <div class="info-block block-info clearfix">
                 <div data-toggle="buttons" class="btn-group bizmoduleselect">
                   <%for(i=0; i< cntr_data.avDept.length; i++){%>
