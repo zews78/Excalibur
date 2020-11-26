@@ -128,7 +128,7 @@ exports.getOneCenter = async (req, res) => {
 exports.postTicket = async(req, res)=>{
 
 	try {
-
+     console.log(req.uid);
 		await firebase.firestore()
 			.collection('ticket')
 			.add({
