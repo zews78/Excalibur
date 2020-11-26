@@ -120,3 +120,44 @@ exports.getOneCenter = async (req, res) => {
 		console.log(err);
 	}
 };
+
+
+exports.getSignup = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/signup.ejs', {
+		pageTitle: 'Signup',
+		auth
+		
+	});
+};
+
+exports.getRegistered = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/center-registeration-form.ejs', {
+		pageTitle: 'Register',
+		auth
+		
+	});
+};
+
+exports.getAppt = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/booking.ejs', {
+		pageTitle: 'Appointment',
+		auth
+		
+	});
+};
+
+exports.getBooked = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/booking-confirmation.ejs', {
+		pageTitle: 'Booking Confirmed',
+		auth
+		
+	});
+};
