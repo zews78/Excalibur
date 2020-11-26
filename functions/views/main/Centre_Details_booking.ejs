@@ -19,7 +19,7 @@ padding-top: 45px;
   }
   h3, h4 {
     margin: 10px 0 30px 0;
-    letter-spacing: 10px;      
+    letter-spacing: 10px;
     font-size: 20px;
     color: #111;
   }
@@ -31,14 +31,14 @@ padding-top: 45px;
     margin-bottom: 25px;
     width: 80%;
     height: 80%;
-    
+
   }
   .person:hover {
     border-color: #f1f1f1;
   }
   .carousel-inner img {
-   
-    filter: ; /* make all photos black and white */ 
+
+    filter: ; /* make all photos black and white */
     width: 100%; /* Set width to 100% */
     margin: auto;
   }
@@ -99,7 +99,7 @@ padding-top: 45px;
     letter-spacing: 4px;
     opacity: 0.9;
   }
-  .navbar li a, .navbar .navbar-brand { 
+  .navbar li a, .navbar .navbar-brand {
     color: #d5d5d5 !important;
   }
   .navbar-nav li a:hover {
@@ -133,7 +133,7 @@ padding-top: 45px;
   footer a:hover {
     color: #777;
     text-decoration: none;
-  }  
+  }
   .form-control {
     border-radius: 0;
   }
@@ -146,28 +146,39 @@ padding-top: 45px;
 </head>
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>                        
-      </button>
-      <a class="navbar-brand" href="#myPage">EXCELERENTUM</a>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#myPage">EXCELERENTUM</a>
+      </div>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="">HOME</a></li>
+          <li><a href="/center">CENTRE</a></li>
+          <li><a href="">REGISTER</a></li>
+        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li>
+
+          <% if(auth) { %>
+            <form action="/logout" method="POST">
+              <button type="submit" class="btnAuth">Logout</button>
+            </form>
+          <% } else { %>
+            <form action="/login" method="GET">
+              <button type="submit" class="btnAuth"></submit>Login</a>
+            </form>
+          <% } %></li>
+
+          <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+        </ul>
+      </div>
     </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="">HOME</a></li>
-        <li><a href="">CENTRE</a></li>
-        <li><a href="">REGISTER</a></li>
-      <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+  </nav>
 
 <div class="container-fluid">
   <h2><B>Centre Name</b></h2>
@@ -191,7 +202,7 @@ padding-top: 45px;
 <div class="col-md-4">
 
     <p>  <b>Domain:</b> Hospital\bank\restaurant</p>
-    <p><b>Overview:</b>Among the finest Dermatologists in the city, Dr. Mukadams Laser Cure in Bandra West, Mumbai is known for offering excellent patient care. The doctor holds an experience of 8 years and has extensive knowledge in the respective field of medicine. </p>    
+    <p><b>Overview:</b>Among the finest Dermatologists in the city, Dr. Mukadams Laser Cure in Bandra West, Mumbai is known for offering excellent patient care. The doctor holds an experience of 8 years and has extensive knowledge in the respective field of medicine. </p>
 <p><b>Established:</b> 1997</p>
    <h3><b>Opening Hours</b></h3>
       <p><b>The establishment is functional on</b></p>
@@ -220,14 +231,14 @@ padding-top: 45px;
 
 
 <form action="/action_page.php">
-  
+
 <h2>Select Department</h2>
 
       <div class="col">
   <div class="form-group">
             <div class="items-collection">
 
-          
+
                     <div class="info-block block-info clearfix">
                         <div data-toggle="buttons" class="btn-group bizmoduleselect">
                             <label class="btn btn-default">
@@ -279,7 +290,7 @@ padding-top: 45px;
 <div class="form-group">
             <div class="items-collection">
 
-          
+
                     <div class="info-block block-info clearfix">
                         <div data-toggle="buttons" class="btn-group bizmoduleselect">
                             <label class="btn btn-default">
@@ -321,7 +332,7 @@ padding-top: 45px;
 <div class="form-group">
             <div class="items-collection">
 
-          
+
                     <div class="info-block block-info clearfix">
                         <div data-toggle="buttons" class="btn-group bizmoduleselect">
                             <label class="btn btn-default">
@@ -364,7 +375,7 @@ padding-top: 45px;
 <div class="form-group">
             <div class="items-collection">
 
-          
+
                     <div class="info-block block-info clearfix">
                         <div data-toggle="buttons" class="btn-group bizmoduleselect">
                             <label class="btn btn-default">
@@ -471,7 +482,7 @@ padding-top: 45px;
            <p>Review</p>
           </div>
         </div>
-      </div>     
+      </div>
     </div>
   </div>
 </div>
@@ -483,14 +494,14 @@ padding-top: 45px;
   <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
     <span class="glyphicon glyphicon-chevron-up"></span>
   </a><br><br>
-  <p>All Rights Reserved @Excelerentum</p> 
+  <p>All Rights Reserved @Excelerentum</p>
 </footer>
 
 <script>
 $(document).ready(function(){
   // Initialize Tooltip
-  $('[data-toggle="tooltip"]').tooltip(); 
-  
+  $('[data-toggle="tooltip"]').tooltip();
+
   // Add smooth scrolling to all links in navbar + footer link
   $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
 
@@ -508,7 +519,7 @@ $(document).ready(function(){
       $('html, body').animate({
         scrollTop: $(hash).offset().top
       }, 900, function(){
-   
+
         // Add hash (#) to URL when done scrolling (default click behavior)
         window.location.hash = hash;
       });

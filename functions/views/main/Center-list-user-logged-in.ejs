@@ -15,6 +15,7 @@
       outline: none;
     }
 
+
     #categories {
       list-style-type: none;
       overflow: hidden;
@@ -54,9 +55,8 @@
     }
 
     i {
-      padding: 10px;
-      font-size: 1.5em;
-      color: #007bff;
+      padding-right: 10px;
+      color: #948772;
     }
 
     .ratings-list {
@@ -106,27 +106,37 @@
 
 <body>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0" id="navbar">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-      aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
+    <a class="navbar-brand" href="#">EXCELERENTUM</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarText">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+        <li class="nav-item ">
+          <a class="nav-link" href="#">HOME</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">CENTRE</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">REGISTER</a>
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="#">Centre</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
-        </li>
+        <li>
+        <% if(auth) { %>
+            <li><a href="#" class="nav-link"><i class="fa fa-user" aria-hidden="true" ></i>My Profile</a></li>
+          <form action="/logout" method="POST">
+            <button type="submit" class="btnAuth">Logout</button>
+          </form>
+
+        <% } else { %>
+            <li><a href="#" class="nav-link"><i class="fa fa-user" aria-hidden="true" ></i>Sign Up</a></li>
+          <form action="/login" method="GET">
+            <button type="submit" class="btnAuth"></submit>Login</a>
+          </form>
+        <% } %></li>
       </ul>
-      <span class="navbar-text">
-        <a class="nav-link" href="#"><i class="fa fa-user" aria-hidden="true" style="color:white;"></i>MY PROFILE</a>
-      </span>
     </div>
   </nav>
   <div class="container w-75 mx-auto my-4">
