@@ -122,38 +122,24 @@
   </nav>
 <div class="container" id="primaryContainer">
 
-  <form >
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Center Name</label>
-      <input type="text" class="form-control" id="exampleFormControlInput1" >
-    </div>
+  <form method="POST" action="/appointment">
+
     <div class="form-group">
       <label for="exampleFormControlInput1">Date</label>
-      <input type="date" class="form-control" id="exampleFormControlInput2" >
+      <input type="date" class="form-control" id="exampleFormControlInput2" name="date">
     </div>
-    <div class="form-group">
-      <label for="exampleFormControlInput1">Select Time Slot</label>
-      <div id="timeslot">
-        <button type="button" name="button">10Am</button>
-        <button type="button" name="button">11Am</button>
-        <button type="button" name="button">12Am</button>
-        <button type="button" name="button">2Pm</button>
-        <button type="button" name="button">3Pm</button>
-        <button type="button" name="button">4Pm</button>
-        <button type="button" name="button">5Pm</button>
-        <button type="button" name="button">6Pm</button>
-        <button type="button" name="button">7Pm</button>
+
+      <div class="form-group">
+        <label for="exampleFormControlSelect1">Select Category</label>
+        <select class="form-control" id="category" name="slot">
+          <option value='10AM'>10AM</option>
+          <option value='11AM'>11AM</option>
+          <option value='12AM'>12AM</option>
+          <option value='1PM'>1PM</option>
+          <option value='2PM'>2PM</option>
+        </select>
       </div>
-    </div>
-    <div class="form-group">
-      <label for="exampleFormControlSelect2">Select Departments</label>
-      <select class="form-control" id="exampleFormControlSelect2">
-        <option>Radiology</option>
-        <option>X-ray center</option>
-        <option>OPD</option>
-        <option>CT-scan</option>
-      </select>
-    </div>
+
     <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
   </form>
 
