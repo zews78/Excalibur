@@ -16,7 +16,7 @@ router.get('/register', mainController.getRegistered);
 router.get('/booking', mainController.getAppt);
 router.get('/booked', mainController.getBooked);
 
-router.post('/appoint', mainController.postTicket);
+router.post('/appointment', mainController.postTicket);
 router.post('/submitCenter',mainController.postCenter);
 
 
