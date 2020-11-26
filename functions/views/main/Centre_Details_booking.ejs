@@ -3,7 +3,7 @@
 
 <head>
 
-  <title>Home</title>
+  <!-- <title>Home</title> -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -269,6 +269,7 @@
             <p><b>Address:</b><%=cntr_data.location%></p>
             <p><b>Phone:</b><%=cntr_data.PhoneNo%></p>
             <p><b>Email:</b>email@gmail.com</p>
+            <!-- <p><%=cntr_data.id%></p> -->
           </div>
         </div>
       </div>
@@ -277,7 +278,7 @@
 
 
 
-        <form action="/appoint">
+        <!-- <form action="/appoint">
 
           <!-- <h2>Select Department</h2> -->
 
@@ -293,13 +294,13 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> 
 
 
 
 
             <form method="POST" action="/appointment">
-              <input type="text" value="<%cntr_data.centreId%>" style="display: none;" name="centreId">
+              <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
               <div class="form-group">
                 <label for="exampleFormControlInput1">Date</label>
                 <input type="date" class="form-control" id="exampleFormControlInput2" name="date">
