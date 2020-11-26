@@ -170,7 +170,7 @@ exports.postCenter=async (req,res)=>{
 		centerData.doamin = req.body.domain;
 		centerData.centre_name=req.body.centerName;
 		centerData.centre_desc=req.body.desc;
-		centerData.PhoneNo='9112586789';
+		centerData.PhoneNo=req.body.pNo;
 		centerData.location='Ambala,Haryana'
 
 				firebase.firestore()
