@@ -79,8 +79,8 @@ exports.getHome = async (req, res) => {
 
 exports.getOneCenter = async (req, res) => {
 	try {
-		// const auth = (await isAuth(req))[0];
-
+		const auth = (await isAuth(req))[0];
+		const centreId = req.params.centerId;
 		const center = await firebase.firestore()
 			.collection('centres')
 			.doc(req.params.centerId)
@@ -89,12 +89,16 @@ exports.getOneCenter = async (req, res) => {
 		// 	.collection('users')
 		// 	.doc(requirement.data().uid)
 		// 	.get();
-		console.log(center.data());
+		console.log({...center.data(), centreId});
 		// console.log(req.params.centerId);
 
 		res.render('main/Centre_Details_booking.ejs', {
-			cntr_data: center.data(),
+			cntr_data: {
+				...center.data(),
+				id: centreId
+			},
 			pageTitle: 'Centre',
+			auth
 			
 		});
 	} catch (err) {
