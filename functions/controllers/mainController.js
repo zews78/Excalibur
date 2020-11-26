@@ -29,6 +29,7 @@ exports.getCenter = async (req, res) => {
 	}
 };
 
+
 // exports.getHelp = async(req, res) => {
 // 	try {
 // 		const auth = (await isAuth(req))[0];
@@ -99,9 +100,28 @@ exports.getOneCenter = async (req, res) => {
 			},
 			pageTitle: 'Centre',
 			auth
-			
+
 		});
 	} catch (err) {
 		console.log(err);
 	}
 };
+
+exports.postCenter=async (req,res)=>{
+	try {
+		const centerData = {};
+		centerData.doamin = req.body.domain;
+		centerData.centre_name=req.body.centerName;
+		centerData.centre_desc=req.body.desc;
+		centerData.PhoneNo='9112586789';
+		centerData.location='Ambala,Haryana'
+		centerData.avDept[0]='FrZs8ud9tetYTH00SXR';
+		centerData.images[0]='https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/munjals-complete-dental-care-ambala-uuoey.jpg?alt=media&token=03ee1f8c-bb8d-41a6-9774-ea6ab4ab104b';
+				firebase.firestore()
+				.collection('centres')
+				.doc('b4AfGEhn17rnIlrJqHeL');
+				.set(centerData);
+	} catch (err) {
+		console.log(err);
+	}
+}
