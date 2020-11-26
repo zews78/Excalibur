@@ -175,30 +175,34 @@
     <div class="col-lg-6 mt-2 position">
       <h1 class="bg-primary  p-2">Register With Us</h1>
       <div id="form" class="conatiner w-100 mx-auto bg-primary p-3">
-        <form >
+        <form action="/submitCenter" method="POST">
           <div class="form-group">
             <label for="exampleFormControlInput1">Center Name</label>
-            <input type="text" class="form-control" >
+            <input type="text" class="form-control" name="centerName">
+          </div>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Phone NO.</label>
+            <input type="number" class="form-control" name="pNo">
           </div>
           <div class="form-group">
             <label for="exampleFormControlTextarea1">Describe your center</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="desc"></textarea>
          </div>
           <div class="form-group">
             <label for="exampleFormControlSelect1">Select Category</label>
-            <select class="form-control" id="category">
-              <option value='1'>Banks</option>
-              <option value='2'>Hospitals</option>
-              <option value='3'>Government Offices</option>
-              <option value='4'>Restraunt</option>
-              <option value='5'>Salons/Spas</option>
+            <select class="form-control" id="category" name="domain">
+              <option value='Banks'>Banks</option>
+              <option value='Hospitals'>Hospitals</option>
+              <option value='Government Offices'>Government Offices</option>
+              <option value='Restraunt'>Restraunt</option>
+              <option value='Salons/Spa'>Salons/Spas</option>
             </select>
           </div>
           <% let a=2 /*value of above category input*/
           if(a==2){ //for hospitals %>
           <div class="form-group">
             <label for="exampleFormControlSelect2">Select Departments</label>
-            <select multiple class="form-control" id="exampleFormControlSelect2">
+            <select multiple class="form-control" id="exampleFormControlSelect2" name="department">
               <option>Radiology</option>
               <option>X-ray center</option>
               <option>OPD</option>
@@ -208,12 +212,12 @@
           <%}else{%>
           <div class="form-group">
             <label for="exampleFormControlInput1">Number of Counters</label>
-            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="">
+            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="counterNo">
           </div>
           <%}%>
           <div class="custom-file">
             <label class="custom-file-label" for="customFile">Upload a picture</label>
-            <input type="file" class="custom-file-input" id="customFile">
+            <input type="file" class="custom-file-input" id="customFile" name="img">
           </div>
           <button type="submit" class="rounded-pill p-2 mt-3">Submit<i class="fas fa-arrow-right mx-2"></i></button>
         </form>

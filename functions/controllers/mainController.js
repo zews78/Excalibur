@@ -29,6 +29,7 @@ exports.getCenter = async (req, res) => {
 	}
 };
 
+
 // exports.getHelp = async(req, res) => {
 // 	try {
 // 		const auth = (await isAuth(req))[0];
@@ -117,7 +118,7 @@ exports.getOneCenter = async (req, res) => {
 			},
 			pageTitle: 'Centre',
 			auth
-			
+
 		});
 	} catch (err) {
 		console.log(err);
@@ -129,7 +130,7 @@ exports.postTicket = async(req, res)=>{
 	try {
 
 		await firebase.firestore()
-			.collection('tickets')
+			.collection('ticket')
 			.add({
 				uid: req.uid,
 				centre_name: req.body.centre_name,
@@ -153,7 +154,7 @@ exports.getSignup = async (req, res) => {
 	res.render('main/signup.ejs', {
 		pageTitle: 'Signup',
 		auth
-		
+
 	});
 };
 
@@ -163,7 +164,7 @@ exports.getRegistered = async (req, res) => {
 	res.render('main/center-registeration-form.ejs', {
 		pageTitle: 'Register',
 		auth
-		
+
 	});
 };
 
@@ -173,7 +174,7 @@ exports.getAppt = async (req, res) => {
 	res.render('main/booking.ejs', {
 		pageTitle: 'Appointment',
 		auth
-		
+
 	});
 };
 
@@ -183,6 +184,42 @@ exports.getBooked = async (req, res) => {
 	res.render('main/Delta/booking-confirmation.ejs', {
 		pageTitle: 'Booking Confirmed',
 		auth
-		
+
 	});
 };
+exports.postCenter=async (req,res)=>{
+	try {
+		const centerData = {
+			avDept:[],
+		};
+		centerData.doamin = req.body.domain;
+		centerData.centre_name=req.body.centerName;
+		centerData.centre_desc=req.body.desc;
+		centerData.PhoneNo=req.body.pNo;
+		centerData.location='Ambala,Haryana'
+
+				firebase.firestore()
+				.collection('centres')
+				.doc('b4AfGEhn17rnIlrJqHeL')
+				.set(centerData);
+const auth = (await isAuth(req))[0];
+var Cntr = [];
+const CntrRef = firebase.firestore()
+	.collection('centres')
+const snapshot = await CntrRef.get();
+snapshot.forEach(doc => {
+	Cntr.push({
+		id: doc.id,
+		...doc.data()
+	});
+});
+// console.log(Cntr);
+res.render('main/Center-list-user-logged-in.ejs', {
+	auth,
+	pageTitle: 'Center-list',
+	Cntr
+});
+	} catch (err) {
+		console.log(err);
+	}
+}
