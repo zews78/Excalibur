@@ -86,10 +86,25 @@ exports.getOneCenter = async (req, res) => {
 			.collection('centres')
 			.doc(req.params.centerId)
 			.get();
-		// const reqUser = await firebase.firestore()
-		// 	.collection('users')
-		// 	.doc(requirement.data().uid)
+
+		const userId = req.uid;
+		const reqUser = await firebase.firestore()
+			.collection('users')
+			.doc(req.uid)
+			.get();
+
+		// let dept = [];
+		// const reqDept = await firebase.firestore()
+		// 	.collection('departments')
+		// 	.where('deptId', 'array-contains-any', center.data().avDept)
 		// 	.get();
+
+		// 	reqDept.forEach(product => {
+		// 		let productData = product.data();
+		// 		productData.id = product.id;
+		// 		dept.push(productData);
+		// 	});
+		// console.log(dept);
 		console.log({...center.data(), centreId});
 		// console.log(req.params.centerId);
 
@@ -107,20 +122,78 @@ exports.getOneCenter = async (req, res) => {
 	}
 };
 
+
+exports.getSignup = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/signup.ejs', {
+		pageTitle: 'Signup',
+		auth
+
+	});
+};
+
+exports.getRegistered = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/center-registeration-form.ejs', {
+		pageTitle: 'Register',
+		auth
+
+	});
+};
+
+exports.getAppt = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/booking.ejs', {
+		pageTitle: 'Appointment',
+		auth
+
+	});
+};
+
+exports.getBooked = async (req, res) => {
+	const auth = (await isAuth(req))[0];
+
+	res.render('main/booking-confirmation.ejs', {
+		pageTitle: 'Booking Confirmed',
+		auth
+
+	});
+};
 exports.postCenter=async (req,res)=>{
 	try {
-		const centerData = {};
+		const centerData = {
+			avDept:[],
+		};
 		centerData.doamin = req.body.domain;
 		centerData.centre_name=req.body.centerName;
 		centerData.centre_desc=req.body.desc;
 		centerData.PhoneNo='9112586789';
 		centerData.location='Ambala,Haryana'
-		centerData.avDept[0]='FrZs8ud9tetYTH00SXR';
-		centerData.images[0]='https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/munjals-complete-dental-care-ambala-uuoey.jpg?alt=media&token=03ee1f8c-bb8d-41a6-9774-ea6ab4ab104b';
+
 				firebase.firestore()
 				.collection('centres')
-				.doc('b4AfGEhn17rnIlrJqHeL');
+				.doc('b4AfGEhn17rnIlrJqHeL')
 				.set(centerData);
+const auth = (await isAuth(req))[0];
+var Cntr = [];
+const CntrRef = firebase.firestore()
+	.collection('centres')
+const snapshot = await CntrRef.get();
+snapshot.forEach(doc => {
+	Cntr.push({
+		id: doc.id,
+		...doc.data()
+	});
+});
+// console.log(Cntr);
+res.render('main/Center-list-user-logged-in.ejs', {
+	auth,
+	pageTitle: 'Center-list',
+	Cntr
+});
 	} catch (err) {
 		console.log(err);
 	}
