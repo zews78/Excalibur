@@ -8,6 +8,6 @@ router.get('/', mainController.getHome);
 router.get('/center', mainController.getCenter);
 router.get('/center/:centerId', isAuth, mainController.getOneCenter);
 
-
+//signup /register/ /booking  ke routes likh de
 
 module.exports = router;
