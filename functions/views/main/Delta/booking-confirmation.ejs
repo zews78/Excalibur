@@ -41,13 +41,16 @@
   img{
     margin-left:10vw;
   }
-  @media only screen and (max-width: 300px) {
-    img{
-      margin:0vw;
-      width: 350px;
-      height:500px;
-    }
+
+  /* On screens that are 992px or less*/
+@media screen and (max-width: 992px) {
+  img{
+    margin:0vw;
+    padding: 0;
+    width: 350px;
+    height:500px;
   }
+}
 
     strong{
       color:black;
@@ -88,7 +91,7 @@
   <h2>Thanks for registering with us</h2>
 
 </div>
-<div class="container mt-5 w-100">
+<div class="container mt-5 w-100 mx-auto">
   <div class="row w-100">
 <div class="col-sm-6">
   <h1><strong>Appointment Details</strong></h1>
