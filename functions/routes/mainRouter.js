@@ -14,6 +14,6 @@ router.get('/register', mainController.getRegistered);
 router.get('/booking', mainController.getAppt);
 router.get('/booked', mainController.getBooked);
 
-
+router.post('/appointment', mainController.postTicket);
 
 module.exports = router;

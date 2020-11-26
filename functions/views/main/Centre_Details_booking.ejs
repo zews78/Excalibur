@@ -277,7 +277,7 @@
 
 
 
-        <form action="/action_page.php">
+        <form action="/appoint">
 
           <!-- <h2>Select Department</h2> -->
 
@@ -305,11 +305,102 @@
                 </p>
               </label>
 
-              <p><input type="date" id="start" name="trip-start" value="2018-07-22" min="2000-01-01" max="2050-12-31"></p>
+              <p><input type="date" id="start" name="apt_date" value="2018-07-27" min="2000-01-01" max="2050-12-31"></p>
             </div>
             <br><br>
 
-            <div class="row">
+            <div class="col">
+              <h2>Select Timeslot</h2>
+              <div class="form-group">
+                <div class="items-collection">
+
+
+                  <div class="info-block block-info clearfix">
+                    <div data-toggle="buttons" class="btn-group bizmoduleselect">
+                      <%for(i=8; i<=14; i++){%>
+                      <a href="centre/<%=cntr_data.centreId%>/booked"></a><label class="btn btn-default">
+                        <div class="itemcontent">
+                          <!-- <input type="checkbox" name="var_id[]" autocomplete="off" value=""> -->
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5><%=i%>:00</h5>
+                        </div>
+
+                      </label></a>
+                      <%}%>
+                      <!-- <label class="btn btn-default">
+                        <div class="itemcontent">
+                          <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5>9 am</h5>
+                        </div>
+
+                      </label>
+                      <label class="btn btn-default">
+                        <div class="itemcontent">
+                          <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5>10 am</h5>
+                        </div>
+
+                      </label>
+                      <label class="btn btn-default">
+                        <div class="itemcontent">
+                          <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5>11 am</h5>
+                        </div>
+
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="items-collection">
+
+
+                  <div class="info-block block-info clearfix">
+                    <div data-toggle="buttons" class="btn-group bizmoduleselect">
+                      <label class="btn btn-default">
+                        <div class="itemcontent">
+                          <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5>12 am</h5>
+                        </div>
+
+                      </label>
+                      <label class="btn btn-default">
+                        <div class="itemcontent">
+                          <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5>1 pm</h5>
+                        </div>
+
+                      </label>
+                      <label class="btn btn-default">
+                        <div class="itemcontent">
+                          <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5>2 pm</h5>
+                        </div>
+
+                      </label>
+                      <label class="btn btn-default">
+                        <div class="itemcontent">
+                          <input type="checkbox" name="var_id[]" autocomplete="off" value="">
+                          <span class="fa fa-car fa-2x"></span>
+                          <h5>3 am</h5>
+                        </div>
+
+                      </label> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+          </div>
+
+            <!-- <div class="row">
               <div class="col-sm-3">
                 <div class="well bg-2">
                  <p>Dept 1</p>
@@ -319,9 +410,9 @@
               <div class="col-sm-9">
                 <div class="well bg-2">
                   <p>22 Nov</p>                           <!--date of Appointment-->
-                  <p>Radiology</p>
+                  <!-- <p>Radiology</p> -->
                   <!-- <p>at Center Name</p> -->
-                  <div class="col">
+                  <!-- <div class="col">
                     <h2>Select Timeslot</h2>
                     <div class="form-group">
                       <div class="items-collection">
@@ -421,9 +512,9 @@
               <div class="col-sm-9">
                 <div class="well bg-2">
                   <p>24 Nov</p>                           <!--date of Appointment-->
-                  <p>Radiology</p>
+                  <!-- <p>Radiology</p> -->
                   <!-- <p>at Center Name</p> -->
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+                    <!-- <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
                 </div>
               </div>
             </div>
@@ -437,9 +528,9 @@
               <div class="col-sm-9">
                 <div class="well bg-2">
                   <p>24 Nov</p>                           <!--date of Appointment-->
-                  <p>Radiology</p>
+                  <!-- <p>Radiology</p>  -->
                   <!-- <p>at Center Name</p> -->
-                    <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+                    <!-- <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
                 </div>
               </div>
             </div>
@@ -452,26 +543,26 @@
               </div>
               <div class="col-sm-9">
                 <div class="well bg-2">
-                  <p>24 Nov</p>                           <!--date of Appointment-->
-                  <p>Radiology</p>
+                  <p>24 Nov</p>                           date of Appointment -->
+                  <!-- <p>Radiology</p>
                   <p>at Center Name</p>
                     <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
                 </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
 
 
-          <div class="col">
-            <p>
+          <!-- <div class="col"> -->
+            <!-- <p> -->
               <!-- <%for(i=0; i< cntr_data.avDept.length; i++){%>
       <button type="button" class="btn">cntr_data.avDept[i]</button>
        <%}%>
       <!-- <button type="button" class="btn">Department 2</button>
     <button type="button" class="btn">Department 3</button></p> -->
-          </div> -->
-          <div class="form-group">
+          <!-- </div> -->
+          <!-- <div class="form-group">
             <div class="items-collection">
 
 
@@ -484,8 +575,8 @@
                       <span class="fa fa-car fa-2x"></span>
                       <h5></h5>
                     </div>
-                  </label>
-                  <%}%>
+                  </label> -->
+                  <!-- <%}%> -->
                   <!-- <label class="btn btn-default">
                     <div class="itemcontent">
                       <input type="checkbox" name="var_id[]" autocomplete="off" value="">
@@ -510,10 +601,10 @@
                     </div>
 
                   </label> -->
-                </div>
+                <!-- </div>
               </div>
             </div>
-          </div>
+          </div> -->
 
 
 
