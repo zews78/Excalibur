@@ -153,6 +153,36 @@ exports.getOneCenter = async (req, res) => {
 	}
 };
 
+exports.getOneCenterEymplyees = async (req, res) => {
+	try {
+		const auth = (await isAuth(req))[0];
+		const centreId = req.params.centerId;
+		const center = await firebase.firestore()
+			.collection('centres')
+			.doc(req.params.centerId)
+			.get();
+
+		console.log(
+			{
+				...center.data(),
+
+				id: centreId
+			});
+		// console.log(reqDept.data());
+		// console.log(req.params.centerId);
+
+		res.render('main/CentreEmploy.ejs', {
+			center: {
+				...center.data(),
+				id: centreId
+			},
+			pageTitle: 'Centre-List',
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+
 exports.postTicket = async (req, res) => {
 
 	try {

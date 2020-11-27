@@ -335,10 +335,9 @@
                   <%for(i=0; i< cntr_data.avDept.length ; i++){%>
                     <%if(cntr_data.avDept[i]){%>
                       <option value="<%cntr_data.avDept[i]%>"><%cntr_data.avDept[i]%></option>
-                    }else{%>
+                    <%}else{%>
                       <option value="Radiology">Radiology</option>
-                  <%}
-                }%>
+                  <%}}%>
                     </select>
                     <button type="button" name="button" data-toggle="modal" data-target="#exampleModal">Select</button>
                   </div>
@@ -349,9 +348,7 @@
           <div id="menu4" class="tab-pane fade">
 
               <div class="col-sm-7">
-                <form class="" action="/center/:centerId method="GET">  <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
-
-
+                <form class="" action="/center/centerEymployees/<%= cntr_data.id%>" method="GET">  <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
                 <div class="form-group">
                   <label for="exampleFormControlTextarea1">Enter Center email</label>
                   <input type="email" >
