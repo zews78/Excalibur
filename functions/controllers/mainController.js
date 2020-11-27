@@ -1,6 +1,8 @@
 const { request } = require('express');
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
+const QRCode = require('qrcode');
+
 // const keywordGenerator = require('../utils/keywordGenerator');
 
 
@@ -215,6 +217,16 @@ exports.getBooked = async (req, res) => {
 			.doc(req.params.bookingId)
 			.get();
 
+		// below is the code to generate a qr code
+
+		qr_code=[];
+		QRCode.toDataURL(req.params.bookingId, function (err, url) {
+			console.log(url);        //'url' stores the url of the generated qr code
+			qr_code.push(url);
+		})
+
+
+
 		const centre = await firebase.firestore()
 			.collection('centres')
 			.doc(ticket.data().centre_uid)
@@ -232,6 +244,7 @@ exports.getBooked = async (req, res) => {
 		res.render('main/Delta/booking-confirmation.ejs', {
 			ticket_data: {
 				...ticket.data(),
+				img_url: qr_code[0],
 				ticketId: req.params.bookingId,
 				centreName: centre.data().centre_name,
 				userName: user.data().name
@@ -249,18 +262,20 @@ exports.postCenter = async (req, res) => {
 	try {
 		const auth = (await isAuth(req))[0];
 		const centerData = {};
+		const images=[];
+		images.push(req.body.img);
 		centerData.doamin = req.body.domain;
 		centerData.centre_name = req.body.centerName;
 		centerData.centre_desc = req.body.desc;
 		centerData.PhoneNo = req.body.pNo;
-		centerData.location = req.body.address;  // take this input auto matically via an Appointment for now i have added a field in the form asking for it
-		// centerData.images  =wil store the file uploaded
-		//centerData.avDept= req.body.department; //will store the available departments
+		centerData.location = req.body.address;  // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
+	  centerData.images  =['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];           //i dont know how to store images
+		centerData.avDept= req.body.department;
 
-		firebase.firestore()
+	await	firebase.firestore()
 			.collection('centres').add(centerData);
 
-		//	res.redirect('main/Center-list-user-logged-in.ejs');  //I want to redirect to this page but its not working
+			res.render('main/CentreEmploy.ejs', {});
 	} catch (err) {
 		console.log(err);
 	}
