@@ -187,6 +187,48 @@
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Select Date and Slot</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form method="POST" action="/appointment">
+            <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
+            <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
+
+            <div class="form-group">
+              <label for="exampleFormControlInput1">Date</label>
+              <input type="date" class="form-control" id="exampleFormControlInput2" name="date">
+            </div>
+
+              <div class="form-group">
+                <label for="exampleFormControlSelect1">Select Time Slot</label>
+                <select class="form-control" id="category" name="slot">
+                  <option value='10AM'>10AM</option>
+                  <option value='11AM'>11AM</option>
+                  <option value='12AM'>12AM</option>
+                  <option value='1PM'>1PM</option>
+                  <option value='2PM'>2PM</option>
+                </select>
+              </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
+    </div>
+  </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -236,6 +278,7 @@
       <li><a data-toggle="tab" href="#menu1">General Information</a></li>
       <li><a data-toggle="tab" href="#menu2">Book An Appointment</a></li>
       <li><a data-toggle="tab" href="#menu3">Reviews</a></li>
+      <li><a data-toggle="tab" href="#menu4">For Center Eymployee</a></li>
 
     </ul>
 
@@ -247,7 +290,6 @@
             <img src="<%=cntr_data.images[0]%>" class="img-responsive" alt="Photo" height="245" width="255"><br>
           </div>
           <div class="col-md-4">
-
             <p> <b>Domain:</b> <%=cntr_data.domain%></p>
             <p><b>Overview:</b><%=cntr_data.centre_desc%> </p>
             <p><b>Established:</b> 1997</p>
@@ -260,10 +302,7 @@
             <p><b>Friday:- </b>10:00 Am - 7:00 Pm</p>
             <p><b>Saturday:- </b>10:00 Am - 7:00 Pm</p>
             <p><b>Sunday:- </b>Closed</p>
-
-
           </div>
-
           <div class="col-sm-2">
             <h3><b>Contact Information</b></h3>
             <p><b>Address:</b><%=cntr_data.location%></p>
@@ -275,15 +314,8 @@
       </div>
       <div id="menu2" class="tab-pane fade">
         <!-- <h3><b>Fill Out The Form</b></h3> -->
-
-
-
           <!-- <h2>Select Department</h2> -->
-
-
-
           <div class="col-sm-7">
-
             <div class="row">
               <div class="col-sm-12 ">
                 <div class="panel panel-default text-left">
@@ -293,48 +325,46 @@
                 </div>
               </div>
             </div>
-
-
+          </div>
             <div class="row">
               <div class="col-sm-12 ">
                 <div class="panel panel-default text-left">
-                  <%for(i=0; i< cntr_data.avDept.length ; i++){%>
                   <div class="panel-body bg-2">
-                    <div style="background-color: rgb(0, 0, 0);">
-                      <p><h2><%=dept_data.dept_name%></h2></p>
-
-                    </div>
+                    <p> <h2>Select Department</h2>  </p>
+                    <select  name="Department">
+                  <%for(i=0; i< cntr_data.avDept.length ; i++){%>
+                    <%if(cntr_data.avDept[i]){%>
+                      <option value="<%cntr_data.avDept[i]%>"><%cntr_data.avDept[i]%></option>
+                    }else{%>
+                      <option value="Radiology">Radiology</option>
+                  <%}
+                }%>
+                    </select>
+                    <button type="button" name="button" data-toggle="modal" data-target="#exampleModal">Select</button>
                   </div>
-                  <%}%>
                 </div>
               </div>
             </div>
+          </div>
+          <div id="menu4" class="tab-pane fade">
 
+              <div class="col-sm-7">
+                <form class="" action="/center/:centerId method="GET">  <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
 
-
-
-            <form method="POST" action="/appointment">
-              <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
-              <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
-
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Date</label>
-                <input type="date" class="form-control" id="exampleFormControlInput2" name="date">
-              </div>
 
                 <div class="form-group">
-                  <label for="exampleFormControlSelect1">Select Time Slot</label>
-                  <select class="form-control" id="category" name="slot">
-                    <option value='10AM'>10AM</option>
-                    <option value='11AM'>11AM</option>
-                    <option value='12AM'>12AM</option>
-                    <option value='1PM'>1PM</option>
-                    <option value='2PM'>2PM</option>
-                  </select>
-                </div>
+                  <label for="exampleFormControlTextarea1">Enter Center email</label>
+                  <input type="email" >
+               </div>
+               <div class="form-group">
+                 <label for="exampleFormControlTextarea1">password</label>
+                 <input type="password">
+              </div>
+              <button type="submit" name="button">Submit</button>
+                  </form>
+              </div>
+            </div>
 
-              <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
-            </form>
   <!-- Footer -->
   <footer class="text-center">
     <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
