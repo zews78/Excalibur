@@ -236,8 +236,8 @@ exports.getBooked = async (req, res) => {
 			.collection('users')
 			.doc(ticket.data().userId)
 			.get();
-		
-		
+
+
 		// console.log(ticket.data());
 		// console.log(centre.data().centre_name);
 
