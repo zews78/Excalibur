@@ -195,6 +195,14 @@ exports.getAppt = async (req, res) => {
 exports.getBooked = async (req, res) => {
 	const auth = (await isAuth(req))[0];
 
+//sharique below is the code to generate a qr code
+
+/*	var QRCode = require('qrcode')
+
+	QRCode.toDataURL('whatever we need to store as a string', function (err, url) {
+	  console.log(url)        //'url' stores the url of the generated qr code
+	})
+*/
 	res.render('main/Delta/booking-confirmation.ejs', {
 		pageTitle: 'Booking Confirmed',
 		auth
@@ -212,7 +220,7 @@ exports.postCenter = async (req, res) => {
 		centerData.centre_desc = req.body.desc;
 		centerData.PhoneNo = req.body.pNo;
 		centerData.location = req.body.address;  // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
-	  //centerData.images  =images;           //i dont know how to store images
+	  centerData.images  =['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];           //i dont know how to store images
 		centerData.avDept= req.body.department;
 
 	await	firebase.firestore()
