@@ -1,3 +1,4 @@
+const { request } = require('express');
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 // const keywordGenerator = require('../utils/keywordGenerator');
@@ -87,7 +88,6 @@ exports.getOneCenter = async (req, res) => {
 			.doc(req.params.centerId)
 			.get();
 
-		const dept = center.data().avDept[0];
 		// console.log(typeof JSON.parse(dept));
 		const userId = req.uid;
 		const reqUser = await firebase.firestore()
@@ -95,14 +95,26 @@ exports.getOneCenter = async (req, res) => {
 			.doc(req.uid)
 			.get();
 		// console.log(userId);
+		let dept = center.data().avDept[0];
 
-		// let dept = [];
+
+		// let Depart = [];
+		// for(i=0; i< center.data().avDept.length; i++){
+		// 	let dept = center.data().avDept[i];
+		// 	let reqDept = await firebase.firestore()
+		// 		.collection('departments')
+		// 		.doc(dept)
+		// 		.get();
+		// 	Depart.push(reqDept.data());
+		// 	console.log(Depart);
+		// }
+		// console.log(Depart);
 		const reqDept = await firebase.firestore()
 			.collection('departments')
 			.doc(dept)
 			.get();
 
-		console.log(reqDept.data());
+		// console.log(reqDept.data());
 		// console.log(center.data().avDept[0]);
 
 
@@ -111,12 +123,12 @@ exports.getOneCenter = async (req, res) => {
 		// 		productData.id = product.id;
 		// 		dept.push(productData);
 		// 	});
-			console.log(
-				{
-					...center.data(),
-					userId: userId,
-					id: centreId
-				});
+		console.log(
+			{
+				...center.data(),
+				userId: userId,
+				id: centreId
+			});
 		// console.log(reqDept.data());
 		// console.log(req.params.centerId);
 
@@ -142,8 +154,8 @@ exports.getOneCenter = async (req, res) => {
 exports.postTicket = async (req, res) => {
 
 	try {
-     console.log(req.uid);
-		await firebase.firestore()
+		console.log(req.uid);
+		const ticket = await firebase.firestore()
 			.collection('ticket')
 			.add({
 				userId: req.body.userId,
@@ -153,7 +165,8 @@ exports.postTicket = async (req, res) => {
 				slot: req.body.slot
 			});
 		console.log(req.body);
-		res.redirect('/booked');
+		console.log(ticket.id);
+		res.redirect('/booked/' + ticket.id);
 	} catch (err) {
 		console.log(err);
 	}
@@ -163,6 +176,7 @@ exports.postTicket = async (req, res) => {
 
 
 exports.getSignup = async (req, res) => {
+
 	const auth = (await isAuth(req))[0];
 
 	res.render('main/signup.ejs', {
@@ -193,14 +207,44 @@ exports.getAppt = async (req, res) => {
 };
 
 exports.getBooked = async (req, res) => {
-	const auth = (await isAuth(req))[0];
+	try {
+		const auth = (await isAuth(req))[0];
 
-	res.render('main/Delta/booking-confirmation.ejs', {
-		pageTitle: 'Booking Confirmed',
-		auth
+		const ticket = await firebase.firestore()
+			.collection('ticket')
+			.doc(req.params.bookingId)
+			.get();
 
-	});
+		const centre = await firebase.firestore()
+			.collection('centres')
+			.doc(ticket.data().centre_uid)
+			.get();
+
+		const user= await firebase.firestore()
+			.collection('users')
+			.doc(ticket.data().userId)
+			.get();
+		
+		
+		// console.log(ticket.data());
+		// console.log(centre.data().centre_name);
+
+		res.render('main/Delta/booking-confirmation.ejs', {
+			ticket_data: {
+				...ticket.data(),
+				ticketId: req.params.bookingId,
+				centreName: centre.data().centre_name,
+				userName: user.data().name
+			},
+			pageTitle: 'Booking Confirmed',
+			auth
+
+		});
+	} catch (err) {
+		console.log(err);
+	}
 };
+
 exports.postCenter = async (req, res) => {
 	try {
 		const auth = (await isAuth(req))[0];
