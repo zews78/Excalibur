@@ -220,13 +220,19 @@ exports.postCenter = async (req, res) => {
 		centerData.centre_desc = req.body.desc;
 		centerData.PhoneNo = req.body.pNo;
 		centerData.location = req.body.address;  // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
-	  centerData.images  =['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];           //i dont know how to store images
+	 /*i dont know how to store images*/
+	 centerData.images  =['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
 		centerData.avDept= req.body.department;
 
 	await	firebase.firestore()
 			.collection('centres').add(centerData);
 
-			res.render('main/CentreEmploy.ejs', {});
+let tickets=[];         //find by finding filtering tickets by center id and date
+
+			res.render('main/CentreEmploy.ejs', {
+				center:centerData,
+				tickets:tickets,
+			});
 	} catch (err) {
 		console.log(err);
 	}
