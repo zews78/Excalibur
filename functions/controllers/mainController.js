@@ -97,7 +97,45 @@ exports.getOneCenter = async (req, res) => {
 			.doc(req.uid)
 			.get();
 		// console.log(userId);
-		let dept = center.data().avDept[0];
+		let dept = center.data().avDept;
+
+
+
+		// const uids = ['abcde...', 'klmno...', 'wxyz...'];
+
+		const promises = dept.map(u => firebase.firestore().collection("departments").doc(u).get());
+
+		let req_dept = [];
+		Promise.all(promises).then(results => {
+
+			//results is an array of DocumentSnapshots
+			//use anny array method, like map or forEach      
+
+			results.map(docSnapshot => {
+				// console.log(docSnapshot.data());
+				let dept_Data = docSnapshot.data();
+				dept_Data.id = dept;
+				req_dept.push(docSnapshot.data())
+			});
+			console.log(req_dept);
+
+			// if (!promises.empty) {
+			// 	results.forEach(depart => {
+			// 		let deptData = depart.data();
+			// 		deptData.id = dept.id;
+			// 		req_dept.push(deptData);
+			// 	});
+			// }
+		});
+
+		// let req_prod = [];
+		// if (!reqSnapshot.empty) {
+		// 	reqSnapshot.forEach(product => {
+		// 		let productData = product.data();
+		// 		productData.id = product.id;
+		// 		req_prod.push(productData);
+		// 	});
+		// }
 
 
 		// let Depart = [];
@@ -111,10 +149,11 @@ exports.getOneCenter = async (req, res) => {
 		// 	console.log(Depart);
 		// }
 		// console.log(Depart);
-		const reqDept = await firebase.firestore()
-			.collection('departments')
-			.doc(dept)
-			.get();
+
+		// const reqDept = await firebase.firestore()
+		// 	.collection('departments')
+		// 	.doc(dept)
+		// 	.get();
 
 		// console.log(reqDept.data());
 		// console.log(center.data().avDept[0]);
@@ -140,10 +179,10 @@ exports.getOneCenter = async (req, res) => {
 				userId,
 				id: centreId
 			},
-			dept_data: {
-				...reqDept.data(),
-				deptId: dept
-			},
+			// dept_data: {
+			// 	...reqDept.data(),
+			// 	deptId: dept
+			// },
 			pageTitle: 'Centre-List',
 			auth
 
@@ -167,7 +206,7 @@ exports.postTicket = async (req, res) => {
 				slot: req.body.slot
 			});
 		console.log(req.body);
-		console.log(ticket.id);
+		// console.log(ticket.id);
 		res.redirect('/booked/' + ticket.id);
 	} catch (err) {
 		console.log(err);
@@ -219,9 +258,9 @@ exports.getBooked = async (req, res) => {
 
 		// below is the code to generate a qr code
 
-		qr_code=[];
+		qr_code = [];
 		QRCode.toDataURL(req.params.bookingId, function (err, url) {
-			console.log(url);        //'url' stores the url of the generated qr code
+			//'url' stores the url of the generated qr code
 			qr_code.push(url);
 		})
 
@@ -232,12 +271,12 @@ exports.getBooked = async (req, res) => {
 			.doc(ticket.data().centre_uid)
 			.get();
 
-		const user= await firebase.firestore()
+		const user = await firebase.firestore()
 			.collection('users')
 			.doc(ticket.data().userId)
 			.get();
-		
-		
+
+
 		// console.log(ticket.data());
 		// console.log(centre.data().centre_name);
 
@@ -262,26 +301,26 @@ exports.postCenter = async (req, res) => {
 	try {
 		const auth = (await isAuth(req))[0];
 		const centerData = {};
-		const images=[];
+		const images = [];
 		images.push(req.body.img);
 		centerData.doamin = req.body.domain;
 		centerData.centre_name = req.body.centerName;
 		centerData.centre_desc = req.body.desc;
 		centerData.PhoneNo = req.body.pNo;
 		centerData.location = req.body.address;  // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
-	 /*i dont know how to store images*/
-	 centerData.images  =['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
-		centerData.avDept= req.body.department;
+		/*i dont know how to store images*/
+		centerData.images = ['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
+		centerData.avDept = req.body.department;
 
-	await	firebase.firestore()
+		await firebase.firestore()
 			.collection('centres').add(centerData);
 
-let tickets=[];         //find by finding filtering tickets by center id and date
+		let tickets = [];         //find by finding filtering tickets by center id and date
 
-			res.render('main/CentreEmploy.ejs', {
-				center:centerData,
-				tickets:tickets,
-			});
+		res.render('main/CentreEmploy.ejs', {
+			center: centerData,
+			tickets: tickets,
+		});
 	} catch (err) {
 		console.log(err);
 	}
