@@ -292,13 +292,31 @@
                   </div>
                 </div>
               </div>
-            </div> 
+            </div>
+
+
+            <div class="row">
+              <div class="col-sm-12 ">
+                <div class="panel panel-default text-left">
+                  <%for(i=0; i< cntr_data.avDept.length ; i++){%>
+                  <div class="panel-body bg-2">
+                    <div style="background-color: rgb(0, 0, 0);">
+                      <p><h2><%=dept_data.dept_name%></h2></p>
+
+                    </div>
+                  </div>
+                  <%}%>
+                </div>
+              </div>
+            </div>
 
 
 
 
             <form method="POST" action="/appointment">
               <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
+              <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
+
               <div class="form-group">
                 <label for="exampleFormControlInput1">Date</label>
                 <input type="date" class="form-control" id="exampleFormControlInput2" name="date">

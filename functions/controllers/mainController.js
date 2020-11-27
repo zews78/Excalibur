@@ -87,20 +87,24 @@ exports.getOneCenter = async (req, res) => {
 			.doc(req.params.centerId)
 			.get();
 
-		// const dept = await center.data().avDept[0];
+		const dept = center.data().avDept[0];
+		// console.log(typeof JSON.parse(dept));
 		const userId = req.uid;
 		const reqUser = await firebase.firestore()
 			.collection('users')
 			.doc(req.uid)
 			.get();
+		// console.log(userId);
 
 		// let dept = [];
-		// const reqDept = await firebase.firestore()
-		// 	.collection('departments')
-		// 	.doc(dept)
-		// 	.get();
+		const reqDept = await firebase.firestore()
+			.collection('departments')
+			.doc(dept)
+			.get();
 
+		console.log(reqDept.data());
 		// console.log(center.data().avDept[0]);
+
 
 		// 	reqDept.forEach(product => {
 		// 		let productData = product.data();
@@ -110,6 +114,7 @@ exports.getOneCenter = async (req, res) => {
 			console.log(
 				{
 					...center.data(),
+					userId: userId,
 					id: centreId
 				});
 		// console.log(reqDept.data());
@@ -118,7 +123,12 @@ exports.getOneCenter = async (req, res) => {
 		res.render('main/Centre_Details_booking.ejs', {
 			cntr_data: {
 				...center.data(),
+				userId,
 				id: centreId
+			},
+			dept_data: {
+				...reqDept.data(),
+				deptId: dept
 			},
 			pageTitle: 'Centre-List',
 			auth
@@ -136,7 +146,7 @@ exports.postTicket = async (req, res) => {
 		await firebase.firestore()
 			.collection('ticket')
 			.add({
-				// uid: req.uid,
+				userId: req.body.userId,
 				// centre_name: req.body.centre_name,
 				centre_uid: req.body.centreId,
 				date: req.body.date,
