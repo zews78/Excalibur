@@ -193,36 +193,20 @@ exports.getBooked = async (req, res) => {
 };
 exports.postCenter = async (req, res) => {
 	try {
-		const centerData = {
-			avDept: [],
-		};
+		const auth = (await isAuth(req))[0];
+		const centerData = {};
 		centerData.doamin = req.body.domain;
 		centerData.centre_name = req.body.centerName;
 		centerData.centre_desc = req.body.desc;
 		centerData.PhoneNo = req.body.pNo;
-		centerData.location = 'Ambala,Haryana'
+		centerData.location = req.body.address;  // take this input auto matically via an Appointment for now i have added a field in the form asking for it
+		// centerData.images  =wil store the file uploaded
+		//centerData.avDept= req.body.department; //will store the available departments
 
 		firebase.firestore()
-			.collection('centres')
-			.doc('b4AfGEhn17rnIlrJqHeL')
-			.set(centerData);
-		const auth = (await isAuth(req))[0];
-		var Cntr = [];
-		const CntrRef = firebase.firestore()
-			.collection('centres')
-		const snapshot = await CntrRef.get();
-		snapshot.forEach(doc => {
-			Cntr.push({
-				id: doc.id,
-				...doc.data()
-			});
-		});
-		// console.log(Cntr);
-		res.render('main/Center-list-user-logged-in.ejs', {
-			auth,
-			pageTitle: 'Center-list',
-			Cntr
-		});
+			.collection('centres').add(centerData);
+
+		//	res.redirect('main/Center-list-user-logged-in.ejs');  //I want to redirect to this page but its not working
 	} catch (err) {
 		console.log(err);
 	}
