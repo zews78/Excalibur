@@ -97,28 +97,29 @@ exports.getOneCenter = async (req, res) => {
 			.doc(req.uid)
 			.get();
 		// console.log(userId);
-		let dept = center.data().avDept;
-
-		const getItems = (x, callback) => {
-			let itemRefs = x.map(id => {
-			  return firebase.firestore().collection('departments').doc(id).get();
-			});
-			Promise.all(itemRefs)
-			.then(docs => {
-			  let items = docs.map(doc => doc.data());
-			  callback(items);
-			})
-			.catch(error => console.log(error))
-		}
+		let dept = center.data().avDept[0];
 		var req_dept = [];
 
-		getItems(dept, items => {
-			// console.log(items);
-			return items;
-			req_dept.push(items);
+		// const getItems = (x, callback) => {
+		// 	let itemRefs = x.map(id => {
+		// 	  return firebase.firestore().collection('departments').doc(id).get();
+		// 	});
+		// 	Promise.all(itemRefs)
+		// 	.then(docs => {
+		// 	  let items = docs.map(doc => doc.data());
+		// 	  callback(items);
+
+		// 	})
+		// 	.catch(error => console.log(error))
+		// }
+
+		// getItems(dept, items => {
+		// 	// console.log(items);
+		// 	req_dept.push(items);
+		// 	// return items;
 			
-		});
-		console.log(xdept);;
+		// });
+		// console.log(xdept);;
 
 
 		// const uids = ['abcde...', 'klmno...', 'wxyz...'];
@@ -170,10 +171,10 @@ exports.getOneCenter = async (req, res) => {
 		// let Depart = [];
 		// for(i=0; i< center.data().avDept.length; i++){
 		// 	let dept = center.data().avDept[i];
-		// 	let reqDept = await firebase.firestore()
-		// 		.collection('departments')
-		// 		.doc(dept)
-		// 		.get();
+			let reqDept = await firebase.firestore()
+				.collection('departments')
+				.doc(dept)
+				.get();
 		// 	Depart.push(reqDept.data());
 		// 	console.log(Depart);
 		// }
@@ -208,7 +209,7 @@ exports.getOneCenter = async (req, res) => {
 				userId,
 				id: centreId
 			},
-			// req_dept,
+			reqDept: reqDept.data(),
 			pageTitle: 'Centre-List',
 			auth
 
@@ -217,6 +218,54 @@ exports.getOneCenter = async (req, res) => {
 		console.log(err);
 	}
 };
+
+exports.getOneCenterEymplyees = async (req, res) => {
+	try {
+		const auth = (await isAuth(req))[0];
+		const centreId = req.params.centerId;
+		const center = await firebase.firestore()
+			.collection('centres')
+			.doc(req.params.centerId)
+			.get();
+
+		console.log(
+			{
+				...center.data(),
+
+				id: centreId
+			});
+		// console.log(reqDept.data());
+		// console.log(req.params.centerId);
+
+		res.render('main/input-id.ejs', {
+			center: {
+				...center.data(),
+				id: centreId
+			},
+			pageTitle: 'enter ticket id',
+		});
+	} catch (err) {
+		console.log(err);
+	}
+};
+exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
+	try {
+		const centreId = req.params.centerId;
+
+		const tickets=await Ticket.find({centre_uid:centreId});
+		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
+    const ticket=await Ticket.findById(req.params.ticketId)
+		const currentToken=tickets.findIndex(x => x==ticket);
+		const ticketObject={
+			tickets:tickets,
+			currentTicket:ticket,
+			token:currentToken,
+		}
+		res.render('main/CentreEmploy.ejs',ticketObject)
+	} catch (e) {
+
+	}
+}
 
 exports.postTicket = async (req, res) => {
 
@@ -229,7 +278,8 @@ exports.postTicket = async (req, res) => {
 				// centre_name: req.body.centre_name,
 				centre_uid: req.body.centreId,
 				date: req.body.date,
-				slot: req.body.slot
+				slot: req.body.slot,
+				department: req.body.Department
 			});
 		console.log(req.body);
 		// console.log(ticket.id);

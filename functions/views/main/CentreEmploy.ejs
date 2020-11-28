@@ -174,51 +174,23 @@ textarea {
       </div>
     </div>
   </nav>
-<!--      <%   let center=locals.center;
-            let tickets=locals.tickets;  /contain all the tickets for the day %>
--->
+
 <div class="container">
 <div class="a">
-<h3><b>Centre Name:<%center.centre_name </b></h3></div>
-<input type="text" name="ticketId" >
-<!--
-//make an xml request i cant to get input value
-<% let ticketId =input value;
 
-var ticket = tickets.find(obj => {
-  return obj._id === ticketId            //filter by id
-})%>
-
-<p><b>Department Name:ticket.dept</b></p>
-<p><b>Total Custumers today:tickets.length</b></p>
+<p><b>Total Custumers today:<%ticketObject.tickets.length%></b></p>
 <br>
-<p><b>Current Token:ticket.token</b></p>
-//for(var i=0;i<tickets.length;i++){
-tickets[i].current-token=ticket.token;
-}
-//just send this to the database now
+<p><b>Current Token:<%ticketObject.token%></b></p>
 <br>
--->
-<p><button type="button" class="cancelbtn" onclick="measure()">Stop Queue Button</button></p>
+<p><button type="button" class="cancelbtn" >Stop Queue Button</button></p>
 </div>
 
 <!-- // i thought of an idea for live updates
+<script type="text/javascript">
 let k=0;
 let a=0; //will store time elaspsed
-function measure(){
-if(k==0){
-// start a counter that measure the time elaspsed until its pressed again storing it in a
-k=k+1;
-}if(k==1){
-//end that counter
-and
-for(var i=0;i<tickets.length;i++){
-tickets[i].expected-time+=a;
-a=0;
-k=0;
-}
-}
-}
+</script>
+
 //just store the above updated array in database
 
 <!- Footer -->

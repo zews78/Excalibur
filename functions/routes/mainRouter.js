@@ -7,9 +7,9 @@ const router = express.Router();
 router.get('/', mainController.getHome);
 router.get('/center', mainController.getCenter);
 router.get('/center/:centerId', isAuth, mainController.getOneCenter);
-
+router.get('/center/centerEymployees/:centerId', isAuth, mainController.getOneCenterEymplyees);
+router.get('/center/centerEymployees/ticketId/:centerId', isAuth, mainController.getOneCenterEymplyeesTicketId);
 router.post('/submitCenter',mainController.postCenter);
-
 //signup /register/ /booking  ke routes likh de
 router.get('/signup', mainController.getSignup);
 router.get('/register', mainController.getRegistered);
