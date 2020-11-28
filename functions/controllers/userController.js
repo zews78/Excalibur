@@ -23,19 +23,19 @@ exports.getUserProfile = async (req, res) => {
 		// 		throw new Error('user not found');
 		// 	}
 
-		// 	const reqSnapshot = await firebase.firestore()
-		// 		.collection('requirements')
-		// 		.where('uid', '==', userId)
-		// 		.get();
-		// 	let req_prod = [];
-		// 	if (!reqSnapshot.empty) {
-		// 		reqSnapshot.forEach(product => {
-		// 			let productData = product.data();
-		// 			productData.id = product.id;
-		// 			req_prod.push(productData);
-		// 		});
-		// 	}
-			// console.log(req_prod);
+			const reqTicket = await firebase.firestore()
+				.collection('ticket')
+				.where('userId', '==', userId)
+				.get();
+			let req_ticket = [];
+			if (!reqTicket.empty) {
+				reqTicket.forEach(ticket => {
+					let ticketData = ticket.data();
+					ticketData.id = ticket.id;
+					req_ticket.push(ticketData);
+				});
+			}
+			console.log(req_ticket);
 
 			// const productsSnapshot = await firebase.firestore()
 			// 	.collection('products')
@@ -65,9 +65,11 @@ exports.getUserProfile = async (req, res) => {
 			// 	}
 			// }
 
+
 			res.render('users/profile.ejs', {
 				pageTitle: 'Profile',
 				auth: true,
+				req_ticket,
 				// authorized: userId === req.uid,
 				user: {
 					...userSnapshot.data(),
