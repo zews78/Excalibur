@@ -252,6 +252,7 @@ exports.getOneCenterEymplyees = async (req, res) => {
 exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 	try {
 		const centreId = req.params.centerId;
+<<<<<<< HEAD
 
 		const tickets= await firebase.firestore()
 			.collection(ticket)
@@ -260,6 +261,11 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 
 		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
     	const ticket = await tickets.findById(req.body.ticketId) 
+=======
+		const tickets=await Ticket.find({centre_uid:centreId});
+		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
+    const ticket=await Ticket.findById(req.body.ticketId)
+>>>>>>> 0e3f94843cbc425bd9a9e0ebc30967b745373bf4
 		const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
 			tickets:tickets,
