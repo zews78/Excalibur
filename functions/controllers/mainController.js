@@ -252,7 +252,6 @@ exports.getOneCenterEymplyees = async (req, res) => {
 exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 	try {
 		const centreId = req.params.centerId;
-<<<<<<< HEAD
 
 		const tickets= await firebase.firestore()
 			.collection(ticket)
@@ -261,11 +260,6 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 
 		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
     	const ticket = await tickets.findById(req.body.ticketId) 
-=======
-		const tickets=await Ticket.find({centre_uid:centreId});
-		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
-    const ticket=await Ticket.findById(req.body.ticketId)
->>>>>>> 0e3f94843cbc425bd9a9e0ebc30967b745373bf4
 		const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
 			tickets:tickets,
@@ -273,8 +267,9 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 			token:req.body.ticketId,
 		}
 		console.log(ticketObject);
-		// res.render('main/CentreEmploy.ejs',ticketObject)
-	} catch (e) {
+		res.render('main/CentreEmploy.ejs',ticketObject)
+	} catch (err) {
+		console.log(err);
 
 	}
 }
@@ -405,10 +400,7 @@ exports.postCenter = async (req, res) => {
 
 		let tickets = [];         //find by finding filtering tickets by center id and date
 
-		res.render('main/CentreEmploy.ejs', {
-			center: centerData,
-			tickets: tickets,
-		});
+		res.redirect('/');
 	} catch (err) {
 		console.log(err);
 	}

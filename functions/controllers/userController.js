@@ -26,6 +26,8 @@ exports.getUserProfile = async (req, res) => {
 			const reqTicket = await firebase.firestore()
 				.collection('ticket')
 				.where('userId', '==', userId)
+				// .orderBy("timestamp", "desc")
+				.limit(3)
 				.get();
 			let req_ticket = [];
 			if (!reqTicket.empty) {
@@ -35,6 +37,7 @@ exports.getUserProfile = async (req, res) => {
 					req_ticket.push(ticketData);
 				});
 			}
+
 			console.log(req_ticket);
 
 			// const productsSnapshot = await firebase.firestore()
