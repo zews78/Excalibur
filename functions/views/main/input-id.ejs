@@ -174,89 +174,52 @@ textarea {
       </div>
     </div>
   </nav>
-
-<div class="container">
-<div class="a">
-
-
-
-<!--
-//make an xml request i cant to get input value
-<% let ticketId =input value;%>
-
-<%var ticket = tickets.find(obj => { %>
-  return obj.id === ticketId            //filter by id
-})%>
-
-<p><b>Department Name:ticket.dept</b></p>
-<p><b>Total Custumers today:tickets.length</b></p>
-<br>
-<p><b>Current Token:ticket.token</b></p>
-or(var i=0;i<tickets.length;i++
-
-
-//just send this to the database now
-<br>
--->
-<p><button type="button" class="cancelbtn" onclick="measure()">Stop Queue Button</button></p>
+  <div class="container w-75">
+<h3><b>Centre Name:<%center.centre_name </b></h3>
+<form  action="/center/centerEymployee/ticketId/<%=center.id%>" method="POST">
+  <div class="form-group">
+    <label for="exampleFormControlTextarea1">Scan your QR code</label>
+  <input type="text" name="ticketId" >
+ </div>
+ <button type="submit" name="button">Enter</button>
+</form>
 </div>
+  <footer class="text-center">
+    <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+      <span class="glyphicon glyphicon-chevron-up"></span>
+    </a><br><br>
+    <p>All Rights Reserved @Excelerentum</p>
+  </footer>
+  <script>
+  $(document).ready(function(){
+    // Initialize Tooltip
+    $('[data-toggle="tooltip"]').tooltip();
 
-<!-- // i thought of an idea for live updates
-let k=0;
-let a=0; //will store time elaspsed
-function measure(){
-if(k==0){
-// start a counter that measure the time elaspsed until its pressed again storing it in a
-k=k+1;
-}if(k==1){
-//end that counter
-and
-for(var i=0;i<tickets.length;i++){
-tickets[i].expected-time+=averagetime*i+a;
-a=0;
-k=0;
-}
-}
-}
-//just store the above updated array in database
+    // Add smooth scrolling to all links in navbar + footer link
+    $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
 
-<!- Footer -->
-<footer class="text-center">
-  <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
-    <span class="glyphicon glyphicon-chevron-up"></span>
-  </a><br><br>
-  <p>All Rights Reserved @Excelerentum</p>
-</footer>
-<script>
-$(document).ready(function(){
-  // Initialize Tooltip
-  $('[data-toggle="tooltip"]').tooltip();
+      // Make sure this.hash has a value before overriding default behavior
+      if (this.hash !== "") {
 
-  // Add smooth scrolling to all links in navbar + footer link
-  $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+        // Prevent default anchor click behavior
+        event.preventDefault();
 
-    // Make sure this.hash has a value before overriding default behavior
-    if (this.hash !== "") {
+        // Store hash
+        var hash = this.hash;
 
-      // Prevent default anchor click behavior
-      event.preventDefault();
+        // Using jQuery's animate() method to add smooth page scroll
+        // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+        $('html, body').animate({
+          scrollTop: $(hash).offset().top
+        }, 900, function(){
 
-      // Store hash
-      var hash = this.hash;
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = hash;
+        });
+      } // End if
+    });
+  })
+  </script>
 
-      // Using jQuery's animate() method to add smooth page scroll
-      // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-      $('html, body').animate({
-        scrollTop: $(hash).offset().top
-      }, 900, function(){
-
-        // Add hash (#) to URL when done scrolling (default click behavior)
-        window.location.hash = hash;
-      });
-    } // End if
-  });
-})
-</script>
-
-</body>
-</html>
+  </body>
+  </html>

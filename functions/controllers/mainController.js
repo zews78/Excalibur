@@ -171,17 +171,33 @@ exports.getOneCenterEymplyees = async (req, res) => {
 		// console.log(reqDept.data());
 		// console.log(req.params.centerId);
 
-		res.render('main/CentreEmploy.ejs', {
+		res.render('main/input-id.ejs', {
 			center: {
 				...center.data(),
 				id: centreId
 			},
-			pageTitle: 'Centre-List',
+			pageTitle: 'enter ticket id',
 		});
 	} catch (err) {
 		console.log(err);
 	}
 };
+exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
+	try {
+		const centreId = req.params.centerId;
+
+		const tickets=await Ticket.find({centre_uid:centreId});
+		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
+    const ticket=await Ticket.findById(req.params.ticketId)
+		const ticketObject={
+			tickets:tickets,
+			currentTicket:ticket,
+		}
+		res.render('main/CentreEmploy.ejs',ticketObject)
+	} catch (e) {
+
+	}
+}
 
 exports.postTicket = async (req, res) => {
 
