@@ -189,9 +189,11 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 		const tickets=await Ticket.find({centre_uid:centreId});
 		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
     const ticket=await Ticket.findById(req.params.ticketId)
+		const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
 			tickets:tickets,
 			currentTicket:ticket,
+			token:currentToken,
 		}
 		res.render('main/CentreEmploy.ejs',ticketObject)
 	} catch (e) {
