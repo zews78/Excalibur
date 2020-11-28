@@ -228,12 +228,12 @@ exports.getOneCenterEymplyees = async (req, res) => {
 			.doc(req.params.centerId)
 			.get();
 
-		console.log(
-			{
-				...center.data(),
+		// console.log(
+		// 	{
+		// 		...center.data(),
 
-				id: centreId
-			});
+		// 		id: centreId
+		// 	});
 		// console.log(reqDept.data());
 		// console.log(req.params.centerId);
 
@@ -248,20 +248,26 @@ exports.getOneCenterEymplyees = async (req, res) => {
 		console.log(err);
 	}
 };
+
 exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 	try {
 		const centreId = req.params.centerId;
 
-		const tickets=await Ticket.find({centre_uid:centreId});
+		const tickets= await firebase.firestore()
+			.collection(ticket)
+			.where('centre_uid', '==', centreId)
+			.get();
+
 		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
-    const ticket=await Ticket.findById(req.params.ticketId)
+    	const ticket = await tickets.findById(req.body.ticketId) 
 		const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
 			tickets:tickets,
 			currentTicket:ticket,
-			token:currentToken,
+			token:req.body.ticketId,
 		}
-		res.render('main/CentreEmploy.ejs',ticketObject)
+		console.log(ticketObject);
+		// res.render('main/CentreEmploy.ejs',ticketObject)
 	} catch (e) {
 
 	}
@@ -278,7 +284,7 @@ exports.postTicket = async (req, res) => {
 				// centre_name: req.body.centre_name,
 				centre_uid: req.body.centreId,
 				date: req.body.date,
-				slot: req.body.slot,
+				// slot: req.body.slot,
 				department: req.body.Department
 			});
 		console.log(req.body);

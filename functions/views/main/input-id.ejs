@@ -37,7 +37,7 @@ padding-top: 45px;
   }
   .carousel-inner img {
 
-    filter: ; /* make all photos black and white */
+    /* filter: ; make all photos black and white */
     width: 100%; /* Set width to 100% */
     margin: auto;
   }
@@ -176,7 +176,7 @@ textarea {
   </nav>
   <div class="container w-75">
 <h3><b>Centre Name:<%center.centre_name%></b></h3>
-<form  action="/center/centerEymployee/ticketId/<%=center.id%>" method="POST">
+<form  action="/center/centerEymployee/ticketId/<%=center.id%>" method="GET">
   <div class="form-group">
     <label for="exampleFormControlTextarea1">Scan your QR code</label>
   <input type="text" name="ticketId" >
