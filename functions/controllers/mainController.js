@@ -99,34 +99,63 @@ exports.getOneCenter = async (req, res) => {
 		// console.log(userId);
 		let dept = center.data().avDept;
 
+		const getItems = (x, callback) => {
+			let itemRefs = x.map(id => {
+			  return firebase.firestore().collection('departments').doc(id).get();
+			});
+			Promise.all(itemRefs)
+			.then(docs => {
+			  let items = docs.map(doc => doc.data());
+			  callback(items);
+			})
+			.catch(error => console.log(error))
+		}
+		var req_dept = [];
+
+		getItems(dept, items => {
+			// console.log(items);
+			return items;
+			req_dept.push(items);
+			
+		});
+		console.log(xdept);;
 
 
 		// const uids = ['abcde...', 'klmno...', 'wxyz...'];
 
-		const promises = dept.map(u => firebase.firestore().collection("departments").doc(u).get());
+		// const promises = dept.map(u => firebase.firestore().collection("departments").doc(u).get());
+		// // console.log(promises);
+		// Promise.all(promises).then(results => {
 
-		let req_dept = [];
-		Promise.all(promises).then(results => {
+		// 	//results is an array of DocumentSnapshots
+		// 	//use anny array method, like map or forEach      
+		// 	// var i = 0;
+		// 	results.map(docSnapshot =>{
+		// 		console.log(docSnapshot.data());
+		// 		req_dept.push(docSnapshot.data());
+		// 	});
+				
+		// 			// console.log(docSnapshot.data());
+		// 			// let dept_Data = docSnapshot.data();
+		// 			// dept_Data.DeptId = dept[i];
+		// 			// i++;
+		// 			// docSnapshot.data()
+		// 			// req_dept.push(docSnapshot.data());
 
-			//results is an array of DocumentSnapshots
-			//use anny array method, like map or forEach      
+	
 
-			results.map(docSnapshot => {
-				// console.log(docSnapshot.data());
-				let dept_Data = docSnapshot.data();
-				dept_Data.id = dept;
-				req_dept.push(docSnapshot.data())
-			});
-			console.log(req_dept);
+		// 	// console.log(req_dept);
+		// 	// cosnsole.log(depart);
 
-			// if (!promises.empty) {
-			// 	results.forEach(depart => {
-			// 		let deptData = depart.data();
-			// 		deptData.id = dept.id;
-			// 		req_dept.push(deptData);
-			// 	});
-			// }
-		});
+		// 	// if (!promises.empty) {
+		// 	// 	results.forEach(depart => {
+		// 	// 		let deptData = depart.data();
+		// 	// 		deptData.id = dept.id;
+		// 	// 		req_dept.push(deptData);
+		// 	// 	});
+		// 	// }
+		// });
+
 
 		// let req_prod = [];
 		// if (!reqSnapshot.empty) {
@@ -179,10 +208,7 @@ exports.getOneCenter = async (req, res) => {
 				userId,
 				id: centreId
 			},
-			// dept_data: {
-			// 	...reqDept.data(),
-			// 	deptId: dept
-			// },
+			// req_dept,
 			pageTitle: 'Centre-List',
 			auth
 

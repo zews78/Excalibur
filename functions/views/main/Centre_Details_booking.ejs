@@ -330,15 +330,9 @@
               <div class="col-sm-12 ">
                 <div class="panel panel-default text-left">
                   <div class="panel-body bg-2">
-                    <p> <h2>Select Department</h2>  </p>
+                    <p> <h2><%=req_dept[0].dept_name%></h2>  </p>
                     <select  name="Department">
-                  <%for(i=0; i< cntr_data.avDept.length ; i++){%>
-                    <%if(cntr_data.avDept[i]){%>
-                      <option value="<%cntr_data.avDept[i]%>"><%cntr_data.avDept[i]%></option>
-                    }else{%>
-                      <option value="Radiology">Radiology</option>
-                  <%}
-                }%>
+
                     </select>
                     <button type="button" name="button" data-toggle="modal" data-target="#exampleModal">Select</button>
                   </div>
