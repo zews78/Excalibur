@@ -185,10 +185,9 @@ exports.getOneCenterEymplyees = async (req, res) => {
 exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 	try {
 		const centreId = req.params.centerId;
-
 		const tickets=await Ticket.find({centre_uid:centreId});
 		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
-    const ticket=await Ticket.findById(req.params.ticketId)
+    const ticket=await Ticket.findById(req.body.ticketId)
 		const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
 			tickets:tickets,
