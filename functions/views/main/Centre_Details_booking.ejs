@@ -323,7 +323,9 @@
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Select Department</label>
                     <select  name="Department">
-                      <option value="<%=reqDept.dept_name%>"><%=reqDept.dept_name%></option>
+                      <%reqDept.forEach(dept=>{%>
+                        <option value="<%=dept.dept_name%>"><%=dept.dept_name%></option>
+                      <%})%>
                     </select>
                   </div>
   <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>

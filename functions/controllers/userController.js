@@ -38,7 +38,7 @@ exports.getUserProfile = async (req, res) => {
 				});
 			}
 
-			console.log(req_ticket);
+			// console.log(req_ticket);
 
 			// const productsSnapshot = await firebase.firestore()
 			// 	.collection('products')

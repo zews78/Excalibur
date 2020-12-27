@@ -97,7 +97,7 @@ exports.getOneCenter = async (req, res) => {
 			.doc(req.uid)
 			.get();
 		// console.log(userId);
-		let dept = center.data().avDept[0];
+		let dept = center.data().avDept;
 		var req_dept = [];
 
 		// const getItems = (x, callback) => {
@@ -113,6 +113,16 @@ exports.getOneCenter = async (req, res) => {
 		// 	.catch(error => console.log(error))
 		// }
 
+		// getItems(dept, items =>{
+		// 	// req_dept.push(items);
+		// 	req_dept = items;
+		// 	console.log(items, "hello");
+		// });
+		// setTimeout(()=>{
+		// 	console.log(req_dept, "pleeeeeezze"), 15000
+		// })
+		// console.log(getItems(dept, items));
+
 		// getItems(dept, items => {
 		// 	// console.log(items);
 		// 	req_dept.push(items);
@@ -124,26 +134,48 @@ exports.getOneCenter = async (req, res) => {
 
 		// const uids = ['abcde...', 'klmno...', 'wxyz...'];
 
-		// const promises = dept.map(u => firebase.firestore().collection("departments").doc(u).get());
-		// // console.log(promises);
+		const promises = dept.map(u => firebase.firestore().collection("departments").doc(u).get());
+		// const promises = await firebase.firestore()
+		// 	.collection('departments')
+		// 	.doc(dept)
+		// 	.get()
+		// 	.then(function(querySnapshot) {
+		// 		querySnapshot.forEach(function(doc) {
+		// 			// doc.data() is never undefined for query doc snapshots
+		// 			console.log(doc.id, " => ", doc.data());
+		// 		});
+		// 	})
+
+		// promises.map(docSnapshot =>{
+		// 	// req_dept.push(docSnapshot.data());
+		// 	console.log(docSnapshot);
+		// })
+		// console.log(promises);
+		// function getAllItems()
+		// console.log(promises.data());
+		var results = await Promise.all(promises);
+		results.map(docSnapshot =>{
+			req_dept.push(docSnapshot.data());
+			console.log(docSnapshot.data(), "shiit");
+		});
 		// Promise.all(promises).then(results => {
 
 		// 	//results is an array of DocumentSnapshots
 		// 	//use anny array method, like map or forEach      
 		// 	// var i = 0;
 		// 	results.map(docSnapshot =>{
-		// 		console.log(docSnapshot.data());
 		// 		req_dept.push(docSnapshot.data());
+		// 		console.log(docSnapshot.data(), "fuckedup");
 		// 	});
 				
-		// 			// console.log(docSnapshot.data());
-		// 			// let dept_Data = docSnapshot.data();
-		// 			// dept_Data.DeptId = dept[i];
-		// 			// i++;
-		// 			// docSnapshot.data()
-		// 			// req_dept.push(docSnapshot.data());
+		// // 			// console.log(docSnapshot.data());
+		// // 			// let dept_Data = docSnapshot.data();
+		// // 			// dept_Data.DeptId = dept[i];
+		// // 			// i++;
+		// // 			// docSnapshot.data()
+		// // 			// req_dept.push(docSnapshot.data());
 
-	
+		// });
 
 		// 	// console.log(req_dept);
 		// 	// cosnsole.log(depart);
@@ -156,6 +188,9 @@ exports.getOneCenter = async (req, res) => {
 		// 	// 	});
 		// 	// }
 		// });
+		setTimeout(()=>{
+			console.log(req_dept, 'pleeeeeeease');
+		})
 
 
 		// let req_prod = [];
@@ -171,10 +206,14 @@ exports.getOneCenter = async (req, res) => {
 		// let Depart = [];
 		// for(i=0; i< center.data().avDept.length; i++){
 		// 	let dept = center.data().avDept[i];
-			let reqDept = await firebase.firestore()
-				.collection('departments')
-				.doc(dept)
-				.get();
+
+
+			// let reqDept = await firebase.firestore()
+			// 	.collection('departments')
+			// 	.doc(dept)
+			// 	.get();
+
+
 		// 	Depart.push(reqDept.data());
 		// 	console.log(Depart);
 		// }
@@ -209,7 +248,7 @@ exports.getOneCenter = async (req, res) => {
 				userId,
 				id: centreId
 			},
-			reqDept: reqDept.data(),
+			reqDept: req_dept,
 			pageTitle: 'Centre-List',
 			auth
 
@@ -360,7 +399,7 @@ exports.getBooked = async (req, res) => {
 			.get();
 
 
-		// console.log(ticket.data());
+		// console.log(user.data());
 		// console.log(centre.data().centre_name);
 
 		res.render('main/Delta/booking-confirmation.ejs', {
