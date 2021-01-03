@@ -178,12 +178,16 @@ textarea {
 <div class="container">
 <div class="a">
 
-<p><b>Total Custumers today:<%ticketObject.tickets.length%></b></p>
+<p><b>Total Custumers today:<span style="font-size: 1.5em;"> <%=tickets.length%></span></b></p>
 <br>
-<p><b>Current Token:<%ticketObject.token%></b></p>
+<p><b>Current Token:<span style="font-size: 1.5em;"><%=ticketObject.token%></span></b></p>
 <br>
-<p>b</p>
-<p><button type="button" class="cancelbtn" >Stop Queue Button</button></p>
+<ul class="list-group">
+  <%for(var i=0; i< tickets.length; i++){%>
+  <li class="list-group-item" style="padding: 0px;"><%=tickets[i].id%></li>
+  <%}%>
+</ul>
+<p><button type="button" class="cancelbtn" >Stop Queue</button></p>
 </div>
 
 <!-- // i thought of an idea for live updates

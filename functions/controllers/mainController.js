@@ -156,83 +156,15 @@ exports.getOneCenter = async (req, res) => {
 		var results = await Promise.all(promises);
 		results.map(docSnapshot =>{
 			req_dept.push(docSnapshot.data());
-			console.log(docSnapshot.data(), "shiit");
+			// console.log(docSnapshot.data(), "shiit");
 		});
-		// Promise.all(promises).then(results => {
 
-		// 	//results is an array of DocumentSnapshots
-		// 	//use anny array method, like map or forEach      
-		// 	// var i = 0;
-		// 	results.map(docSnapshot =>{
-		// 		req_dept.push(docSnapshot.data());
-		// 		console.log(docSnapshot.data(), "fuckedup");
-		// 	});
-				
-		// // 			// console.log(docSnapshot.data());
-		// // 			// let dept_Data = docSnapshot.data();
-		// // 			// dept_Data.DeptId = dept[i];
-		// // 			// i++;
-		// // 			// docSnapshot.data()
-		// // 			// req_dept.push(docSnapshot.data());
-
-		// });
-
-		// 	// console.log(req_dept);
-		// 	// cosnsole.log(depart);
-
-		// 	// if (!promises.empty) {
-		// 	// 	results.forEach(depart => {
-		// 	// 		let deptData = depart.data();
-		// 	// 		deptData.id = dept.id;
-		// 	// 		req_dept.push(deptData);
-		// 	// 	});
-		// 	// }
-		// });
-		setTimeout(()=>{
-			console.log(req_dept, 'pleeeeeeease');
-		})
+		// setTimeout(()=>{
+		// 	console.log(req_dept, 'pleeeeeeease');
+		// })
 
 
-		// let req_prod = [];
-		// if (!reqSnapshot.empty) {
-		// 	reqSnapshot.forEach(product => {
-		// 		let productData = product.data();
-		// 		productData.id = product.id;
-		// 		req_prod.push(productData);
-		// 	});
-		// }
 
-
-		// let Depart = [];
-		// for(i=0; i< center.data().avDept.length; i++){
-		// 	let dept = center.data().avDept[i];
-
-
-			// let reqDept = await firebase.firestore()
-			// 	.collection('departments')
-			// 	.doc(dept)
-			// 	.get();
-
-
-		// 	Depart.push(reqDept.data());
-		// 	console.log(Depart);
-		// }
-		// console.log(Depart);
-
-		// const reqDept = await firebase.firestore()
-		// 	.collection('departments')
-		// 	.doc(dept)
-		// 	.get();
-
-		// console.log(reqDept.data());
-		// console.log(center.data().avDept[0]);
-
-
-		// 	reqDept.forEach(product => {
-		// 		let productData = product.data();
-		// 		productData.id = product.id;
-		// 		dept.push(productData);
-		// 	});
 		console.log(
 			{
 				...center.data(),
@@ -267,6 +199,7 @@ exports.getOneCenterEymplyees = async (req, res) => {
 			.doc(req.params.centerId)
 			.get();
 
+
 		// console.log(
 		// 	{
 		// 		...center.data(),
@@ -292,21 +225,33 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 	try {
 		const centreId = req.params.centerId;
 
-		const tickets= await firebase.firestore()
-			.collection(ticket)
+		const ticketsSnapshot = await firebase.firestore()
+			.collection('ticket')
 			.where('centre_uid', '==', centreId)
 			.get();
 
+		tickets = [];
+		ticketsSnapshot.forEach(doc => {
+			tickets.push({
+				id: doc.id,
+				...doc.data()
+			});
+		});
 		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
-    	const ticket = await tickets.findById(req.body.ticketId) 
-		const currentToken=tickets.findIndex(x => x==ticket);
+    	// const ticket = await tickets.findById(req.body.ticketId)
+		// const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
-			tickets:tickets,
-			currentTicket:ticket,
+			// tickets:tickets,
+			// currentTicket:ticket,
 			token:req.body.ticketId,
 		}
+		console.log(tickets);
 		console.log(ticketObject);
-		res.render('main/CentreEmploy.ejs',ticketObject)
+		// console.log(req.body.ticketId);
+		res.render('main/CentreEmploy.ejs',{
+			tickets,
+			ticketObject
+		});
 	} catch (err) {
 		console.log(err);
 
