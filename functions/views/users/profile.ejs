@@ -250,72 +250,25 @@
           </div>
         </div>
       </div>
-
+      <%for(var i=0; i< req_ticket.length; i++){%>
       <div class="row">
         <div class="col-sm-3">
           <div class="well bg-2">
-           <p>Centre 1</p>
+           <p>Centre <%=i%></p>
            <img src="https://cdn0.iconfinder.com/data/icons/buildings-1/128/40-512.png" class="img-circle" height="55" width="55" alt="Avatar">
           </div>
         </div>
         <div class="col-sm-9">
           <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
+            <p>Date: <%=req_ticket[i].date%></p>                           <!--date of Appointment-->
+            <p><%=req_ticket[i].department%></p>
+            <p>at Centre ID: <%=req_ticket[i].centre_uid%></p>
               <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well bg-2">
-           <p>Center 2</p>
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYIjbHTxX_VmC2CWBu6aTytt11dCI0WPeJl91dQzNiFEUW4A1Rmq92mvC9Rbn9z2zZohj4n8B2EBdH1aBo4YHDagMwJVI6oL4&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well bg-2">
-           <p>Centre 3</p>
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTmQUdpb1rl8Mh18RkQD0qknPw-v5p0yoz-XnaXsMCj-wjlBmI-NkgMmNZAYsk-DFWJi1EYF-zgMAXjfCs8SjNwauoEEa2KQk&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well bg-2">
-           <p>Centre 4</p>
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrvqXd8pNsYHg0zqmGrcN1DNgUYYVryimOw&usqp=CAU" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <%}%>
+    
 <div class="row">
 
     <div class="col-sm-2 well bg-2">

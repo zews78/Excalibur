@@ -97,34 +97,74 @@ exports.getOneCenter = async (req, res) => {
 			.doc(req.uid)
 			.get();
 		// console.log(userId);
-		let dept = center.data().avDept[0];
+		let dept = center.data().avDept;
+		var req_dept = [];
 
-
-		// let Depart = [];
-		// for(i=0; i< center.data().avDept.length; i++){
-		// 	let dept = center.data().avDept[i];
-		// 	let reqDept = await firebase.firestore()
-		// 		.collection('departments')
-		// 		.doc(dept)
-		// 		.get();
-		// 	Depart.push(reqDept.data());
-		// 	console.log(Depart);
-		// }
-		// console.log(Depart);
-		const reqDept = await firebase.firestore()
-			.collection('departments')
-			.doc(dept)
-			.get();
-
-		// console.log(reqDept.data());
-		// console.log(center.data().avDept[0]);
-
-
-		// 	reqDept.forEach(product => {
-		// 		let productData = product.data();
-		// 		productData.id = product.id;
-		// 		dept.push(productData);
+		// const getItems = (x, callback) => {
+		// 	let itemRefs = x.map(id => {
+		// 	  return firebase.firestore().collection('departments').doc(id).get();
 		// 	});
+		// 	Promise.all(itemRefs)
+		// 	.then(docs => {
+		// 	  let items = docs.map(doc => doc.data());
+		// 	  callback(items);
+
+		// 	})
+		// 	.catch(error => console.log(error))
+		// }
+
+		// getItems(dept, items =>{
+		// 	// req_dept.push(items);
+		// 	req_dept = items;
+		// 	console.log(items, "hello");
+		// });
+		// setTimeout(()=>{
+		// 	console.log(req_dept, "pleeeeeezze"), 15000
+		// })
+		// console.log(getItems(dept, items));
+
+		// getItems(dept, items => {
+		// 	// console.log(items);
+		// 	req_dept.push(items);
+		// 	// return items;
+			
+		// });
+		// console.log(xdept);;
+
+
+		// const uids = ['abcde...', 'klmno...', 'wxyz...'];
+
+		const promises = dept.map(u => firebase.firestore().collection("departments").doc(u).get());
+		// const promises = await firebase.firestore()
+		// 	.collection('departments')
+		// 	.doc(dept)
+		// 	.get()
+		// 	.then(function(querySnapshot) {
+		// 		querySnapshot.forEach(function(doc) {
+		// 			// doc.data() is never undefined for query doc snapshots
+		// 			console.log(doc.id, " => ", doc.data());
+		// 		});
+		// 	})
+
+		// promises.map(docSnapshot =>{
+		// 	// req_dept.push(docSnapshot.data());
+		// 	console.log(docSnapshot);
+		// })
+		// console.log(promises);
+		// function getAllItems()
+		// console.log(promises.data());
+		var results = await Promise.all(promises);
+		results.map(docSnapshot =>{
+			req_dept.push(docSnapshot.data());
+			// console.log(docSnapshot.data(), "shiit");
+		});
+
+		// setTimeout(()=>{
+		// 	console.log(req_dept, 'pleeeeeeease');
+		// })
+
+
+
 		console.log(
 			{
 				...center.data(),
@@ -140,10 +180,7 @@ exports.getOneCenter = async (req, res) => {
 				userId,
 				id: centreId
 			},
-			dept_data: {
-				...reqDept.data(),
-				deptId: dept
-			},
+			reqDept: req_dept,
 			pageTitle: 'Centre-List',
 			auth
 
@@ -162,12 +199,13 @@ exports.getOneCenterEymplyees = async (req, res) => {
 			.doc(req.params.centerId)
 			.get();
 
-		console.log(
-			{
-				...center.data(),
 
-				id: centreId
-			});
+		// console.log(
+		// 	{
+		// 		...center.data(),
+
+		// 		id: centreId
+		// 	});
 		// console.log(reqDept.data());
 		// console.log(req.params.centerId);
 
@@ -182,20 +220,40 @@ exports.getOneCenterEymplyees = async (req, res) => {
 		console.log(err);
 	}
 };
+
 exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 	try {
 		const centreId = req.params.centerId;
-		const tickets=await Ticket.find({centre_uid:centreId});
+
+		const ticketsSnapshot = await firebase.firestore()
+			.collection('ticket')
+			.where('centre_uid', '==', centreId)
+			.get();
+
+		tickets = [];
+		ticketsSnapshot.forEach(doc => {
+			tickets.push({
+				id: doc.id,
+				...doc.data()
+			});
+		});
 		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
-    const ticket=await Ticket.findById(req.body.ticketId)
-		const currentToken=tickets.findIndex(x => x==ticket);
+    	// const ticket = await tickets.findById(req.body.ticketId)
+		// const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
-			tickets:tickets,
-			currentTicket:ticket,
-			token:currentToken,
+			// tickets:tickets,
+			// currentTicket:ticket,
+			token:req.body.ticketId,
 		}
-		res.render('main/CentreEmploy.ejs',ticketObject)
-	} catch (e) {
+		console.log(tickets);
+		console.log(ticketObject);
+		// console.log(req.body.ticketId);
+		res.render('main/CentreEmploy.ejs',{
+			tickets,
+			ticketObject
+		});
+	} catch (err) {
+		console.log(err);
 
 	}
 }
@@ -211,10 +269,11 @@ exports.postTicket = async (req, res) => {
 				// centre_name: req.body.centre_name,
 				centre_uid: req.body.centreId,
 				date: req.body.date,
-				slot: req.body.slot
+				// slot: req.body.slot,
+				department: req.body.Department
 			});
 		console.log(req.body);
-		console.log(ticket.id);
+		// console.log(ticket.id);
 		res.redirect('/booked/' + ticket.id);
 	} catch (err) {
 		console.log(err);
@@ -266,9 +325,9 @@ exports.getBooked = async (req, res) => {
 
 		// below is the code to generate a qr code
 
-		qr_code=[];
+		qr_code = [];
 		QRCode.toDataURL(req.params.bookingId, function (err, url) {
-			console.log(url);        //'url' stores the url of the generated qr code
+			//'url' stores the url of the generated qr code
 			qr_code.push(url);
 		})
 
@@ -279,13 +338,13 @@ exports.getBooked = async (req, res) => {
 			.doc(ticket.data().centre_uid)
 			.get();
 
-		const user= await firebase.firestore()
+		const user = await firebase.firestore()
 			.collection('users')
 			.doc(ticket.data().userId)
 			.get();
 
 
-		// console.log(ticket.data());
+		// console.log(user.data());
 		// console.log(centre.data().centre_name);
 
 		res.render('main/Delta/booking-confirmation.ejs', {
@@ -309,26 +368,23 @@ exports.postCenter = async (req, res) => {
 	try {
 		const auth = (await isAuth(req))[0];
 		const centerData = {};
-		const images=[];
+		const images = [];
 		images.push(req.body.img);
 		centerData.doamin = req.body.domain;
 		centerData.centre_name = req.body.centerName;
 		centerData.centre_desc = req.body.desc;
 		centerData.PhoneNo = req.body.pNo;
 		centerData.location = req.body.address;  // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
-	 /*i dont know how to store images*/
-	 centerData.images  =['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
-		centerData.avDept= req.body.department;
+		/*i dont know how to store images*/
+		centerData.images = ['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
+		centerData.avDept = req.body.department;
 
-	await	firebase.firestore()
+		await firebase.firestore()
 			.collection('centres').add(centerData);
 
-let tickets=[];         //find by finding filtering tickets by center id and date
+		let tickets = [];         //find by finding filtering tickets by center id and date
 
-			res.render('main/CentreEmploy.ejs', {
-				center:centerData,
-				tickets:tickets,
-			});
+		res.redirect('/');
 	} catch (err) {
 		console.log(err);
 	}
