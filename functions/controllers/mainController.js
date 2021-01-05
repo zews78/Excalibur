@@ -2,6 +2,7 @@ const { request } = require('express');
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
+const update= require('../utils/update');
 
 // const keywordGenerator = require('../utils/keywordGenerator');
 
@@ -127,7 +128,7 @@ exports.getOneCenter = async (req, res) => {
 		// 	// console.log(items);
 		// 	req_dept.push(items);
 		// 	// return items;
-			
+
 		// });
 		// console.log(xdept);;
 
@@ -247,6 +248,7 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 		}
 		console.log(tickets);
 		console.log(ticketObject);
+		update(centreId,req.body.ticketId);   //we are updating the centre current token using centreId and ticketId
 		// console.log(req.body.ticketId);
 		res.render('main/CentreEmploy.ejs',{
 			tickets,
@@ -262,7 +264,7 @@ exports.postTicket = async (req, res) => {
 
 	try {
 		console.log(req.uid);
-		const ticket = await firebase.firestore()
+		let ticket = await firebase.firestore()
 			.collection('ticket')
 			.add({
 				userId: req.body.userId,
