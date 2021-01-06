@@ -229,6 +229,7 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 		const ticketsSnapshot = await firebase.firestore()
 			.collection('ticket')
 			.where('centre_uid', '==', centreId)
+			// .orderBy('timestamp', 'desc')
 			.get();
 
 		tickets = [];
@@ -238,7 +239,7 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 				...doc.data()
 			});
 		});
-		tickets.sort((a, b) => a.date - b.date);     //sorts it in ascending order
+		Tickets = tickets.sort((a, b) => new Date(a.date) - new Date(b.date));     //sorts it in ascending order
     	// const ticket = await tickets.findById(req.body.ticketId)
 		// const currentToken=tickets.findIndex(x => x==ticket);
 		const ticketObject={
@@ -246,12 +247,13 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 			// currentTicket:ticket,
 			token:req.body.ticketId,
 		}
-		console.log(tickets);
+		// console.log(tickets,'naah');
+		console.log(Tickets,"ordered aana chaiye")
 		console.log(ticketObject);
 		update(centreId,req.body.ticketId);   //we are updating the centre current token using centreId and ticketId
 		// console.log(req.body.ticketId);
 		res.render('main/CentreEmploy.ejs',{
-			tickets,
+			Tickets,
 			ticketObject
 		});
 	} catch (err) {
