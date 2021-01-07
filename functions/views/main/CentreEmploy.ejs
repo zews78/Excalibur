@@ -36,10 +36,11 @@
 
 <div class="container">
 <div class="a">
-
+<h3><%=ticketObject.centre_name%></h3>
+<p><%=ticketObject.centre_location%></p>
 <p><b>Total Custumers today:<span style="font-size: 1.5em;"> <%=Tickets.length%></span></b></p>
 <br>
-<p><b>Current Token:<span style="font-size: 1.5em;"><%=ticketObject.token%></span></b></p>
+<p><b>Current Token:<span style="font-size: 1.5em;"> <%=ticketObject.token%></span></b></p>
 <br>
 <table class="table table-sm">
   <thead>
@@ -54,19 +55,19 @@
   <%function leftFillNum(num, targetLength) {
       return num.toString().padStart(targetLength, 0);
   }%>
-  <%for(var i=0; i< Tickets.length; i++){
+  <%for(var i=0,j=0; i< Tickets.length, j< RegUsers.length; i++, j++){
     if(Tickets[i].id == ticketObject.token){%>
         <tr style="font-size: 22px;
         color: yellowgreen;">
           <th scope="row"><%=leftFillNum(i+1, 2)%></th>
-          <td>Senta Boi</td>
+          <td><%=RegUsers[j]%></td>
           <td><%=Tickets[i].id%></td>
           <td><b>Now</b></td>
         </tr>
     <%}else{%>
       <tr>
         <th scope="row"><%=leftFillNum(i+1, 2)%></th>
-        <td>Senta Boi</td>
+        <td><%=RegUsers[j]%></td>
         <td><%=Tickets[i].id%></td>
         <td><b>@Exp Time</b></td>
       </tr>

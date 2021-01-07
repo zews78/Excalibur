@@ -232,13 +232,34 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 			// .orderBy('timestamp', 'desc')
 			.get();
 
+		
+
+		const reqCentre = await firebase.firestore()
+			.collection('centres')
+			.doc(centreId)
+			.get();
+
+
+		regUsers = [];
 		tickets = [];
 		ticketsSnapshot.forEach(doc => {
-			tickets.push({
-				id: doc.id,
-				...doc.data()
+			if(doc.data().userId){
+				regUsers.push(doc.data().userId);
+				// console.log(doc.data().userId,"bolaa")
+				tickets.push({
+					id: doc.id,
+					...doc.data()
+				});
+			}
 			});
+		RegUsers = [];
+		const promises = regUsers.map(u => firebase.firestore().collection("users").doc(u).get());
+		var results = await Promise.all(promises);
+		results.map(docSnapshot =>{
+			RegUsers.push(docSnapshot.data().name);
+			// console.log(docSnapshot.data(), "shiit");
 		});
+
 		Tickets = tickets.sort((a, b) => new Date(a.date) - new Date(b.date));     //sorts it in ascending order
     	// const ticket = await tickets.findById(req.body.ticketId)
 		// const currentToken=tickets.findIndex(x => x==ticket);
@@ -246,14 +267,19 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 			// tickets:tickets,
 			// currentTicket:ticket,
 			token:req.body.ticketId,
+			centre_name: reqCentre.data().centre_name,
+			centre_location: reqCentre.data().location
 		}
 		// console.log(tickets,'naah');
 		console.log(Tickets,"ordered aana chaiye")
 		console.log(ticketObject);
+		// console.log(RegUsers);
+	
 		update(centreId,req.body.ticketId);   //we are updating the centre current token using centreId and ticketId
 		// console.log(req.body.ticketId);
 		res.render('main/CentreEmploy.ejs',{
 			Tickets,
+			RegUsers,
 			ticketObject
 		});
 	} catch (err) {
