@@ -20,9 +20,6 @@
       </div>
     </div>
   </div>
-
-
-
   <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
       <div class="navbar-header">
@@ -42,21 +39,18 @@
 
           <% if(auth) { %>
           <li>
-
             <form action="/logout" method="POST">
               <button type="submit" class="btnAuth">Logout</button>
             </form>
           </li>
           <% } else { %>
           <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-
           <li>
             <form action="/login" method="GET">
               <button type="submit" class="btnAuth">Login</button>
             </form>
           </li>
           <% } %>
-
           <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
         </ul>
       </div>
