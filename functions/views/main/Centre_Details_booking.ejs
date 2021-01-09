@@ -4,58 +4,7 @@
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
-  <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Select Date and Slot</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-
-        </div>
-      </div>
-    </div>
-  </div>
-  <nav class="navbar navbar-default navbar-fixed-top">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#myPage">EXCELERENTUM</a>
-      </div>
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="/">HOME</a></li>
-          <li><a href="/center">CENTRE</a></li>
-          <li><a href="/user/profile">PROFILE</a></li>
-          <li><a href="/register">REGISTER</a></li>
-
-          <% if(auth) { %>
-          <li>
-            <form action="/logout" method="POST">
-              <button type="submit" class="btnAuth">Logout</button>
-            </form>
-          </li>
-          <% } else { %>
-          <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li>
-            <form action="/login" method="GET">
-              <button type="submit" class="btnAuth">Login</button>
-            </form>
-          </li>
-          <% } %>
-          <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+<%- include('./Delta/navbar') %>
 
   <div class="container-fluid">
     <h2><B><%=cntr_data.centre_name%></b></h2>

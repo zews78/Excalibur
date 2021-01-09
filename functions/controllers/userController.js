@@ -5,7 +5,14 @@ const isAuth = require('../utils/isAuth');
 
 
 
-
+exports.getUser= async (req,res) =>{
+	try {
+		console.log(req.query.uid);
+		res.render('/',{})
+	} catch (e) {
+   console.log(e);
+	}
+}
 
 
 exports.getUserProfile = async (req, res) => {
