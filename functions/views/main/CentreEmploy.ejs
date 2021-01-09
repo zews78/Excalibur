@@ -26,16 +26,46 @@
 
 <div class="container">
 <div class="a">
-
-<p><b>Total Custumers today:<span style="font-size: 1.5em;"> <%=tickets.length%></span></b></p>
+<h3><%=ticketObject.centre_name%></h3>
+<p><%=ticketObject.centre_location%></p>
+<p><b>Total Custumers today:<span style="font-size: 1.5em;"> <%=Tickets.length%></span></b></p>
 <br>
-<p><b>Current Token:<span style="font-size: 1.5em;"><%=ticketObject.token%></span></b></p>
+<p><b>Current Token:<span style="font-size: 1.5em;"> <%=ticketObject.token%></span></b></p>
 <br>
-<ul class="list-group">
-  <%for(var i=0; i< tickets.length; i++){%>
-  <li class="list-group-item" style="padding: 0px;"><%=tickets[i].id%></li>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th scope="col">SNo.</th>
+      <th scope="col">Name</th>
+      <th scope="col">Booking Id</th>
+      <th scope="col">Time</th>
+    </tr>
+  </thead>
+  <tbody>
+  <%function leftFillNum(num, targetLength) {
+      return num.toString().padStart(targetLength, 0);
+  }%>
+  <%for(var i=0,j=0; i< Tickets.length, j< RegUsers.length; i++, j++){
+    if(Tickets[i].id == ticketObject.token){%>
+        <tr style="font-size: 22px;
+        color: yellowgreen;">
+          <th scope="row"><%=leftFillNum(i+1, 2)%></th>
+          <td><%=RegUsers[j]%></td>
+          <td><%=Tickets[i].id%></td>
+          <td><b>Now</b></td>
+        </tr>
+    <%}else{%>
+      <tr>
+        <th scope="row"><%=leftFillNum(i+1, 2)%></th>
+        <td><%=RegUsers[j]%></td>
+        <td><%=Tickets[i].id%></td>
+        <td><b>@Exp Time</b></td>
+      </tr>
+    <%}%>
   <%}%>
-</ul>
+  </tbody>
+</table>
+
 <p><button type="button" class="cancelbtn" >Stop Queue</button></p>
 </div>
 
