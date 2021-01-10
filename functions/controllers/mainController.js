@@ -232,7 +232,7 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 			// .orderBy('timestamp', 'desc')
 			.get();
 
-		
+
 
 		const reqCentre = await firebase.firestore()
 			.collection('centres')
@@ -274,7 +274,7 @@ exports.getOneCenterEymplyeesTicketId =async (req,res)=>{
 		console.log(Tickets,"ordered aana chaiye")
 		console.log(ticketObject);
 		// console.log(RegUsers);
-	
+
 		update(centreId,req.body.ticketId);   //we are updating the centre current token using centreId and ticketId
 		// console.log(req.body.ticketId);
 		res.render('main/CentreEmploy.ejs',{
@@ -417,5 +417,28 @@ exports.postCenter = async (req, res) => {
 		res.redirect('/');
 	} catch (err) {
 		console.log(err);
+	}
+}
+
+exports.postUser=async (req,res)=>{
+	try {
+		const auth = (await isAuth(req))[0];
+		if(req.body.psw!==req.body.pswrepeat){
+			throw new Error('Passwords do not match');
+		}
+		let user=await firebase.firestore()
+			.collection('users').doc(req.params.uid).get();
+
+		let userData={
+			mobile:user.data().mobile,
+		};
+		userData.name=req.body.name;
+		userData.password=req.body.psw;
+		await firebase.firestore()
+			.collection('users').doc(req.params.uid).update(userData);
+
+		res.redirect('/');
+	} catch (e) {
+    console.log(e);
 	}
 }

@@ -16,9 +16,11 @@ exports.getLogin = async (req, res) => {
         		auth: false
         	});
         } else if (page === 2) {
+          const uid=req.query.uid;
         	res.render('auth/SignUp.ejs', {
         		pageTitle: 'Enter some details',
-        		auth: true
+        		auth: true,
+            uid
             });
         } else {
             if(global.redirectTo) {

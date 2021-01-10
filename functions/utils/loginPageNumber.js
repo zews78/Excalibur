@@ -11,12 +11,12 @@ module.exports = async(req) => {
 				.collection('users')
 				.doc(decodedToken.uid)
 				.get();
-			// if (user.data()) {
+			 if (user.data().name) {
 				console.log(user.data());
-			// 	return 3;
-			// } else {
+			 	return 3;
+			 } else {
 			return 2;
-			// }
+			 }
 		} else {
 			return 1;
 		}

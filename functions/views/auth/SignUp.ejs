@@ -4,7 +4,7 @@
 
   <%- include('../main/Delta/navbar') %>
 
-<form method="GET" action="/getUser" >
+<form method="post" action="/signup/<%=uid%>">
   <div class="container">
     <h1>Sign Up</h1>
     <p>Please fill in this form to create an account.</p>
@@ -16,7 +16,7 @@
     <input type="password" placeholder="Enter Password" name="psw" required>
 
     <label for="psw-repeat"><b>Repeat Password</b></label>
-    <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+    <input type="password" placeholder="Repeat Password" name="pswrepeat" required>
     <label>
       <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
     </label>

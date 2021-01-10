@@ -8,7 +8,7 @@ const router = express.Router();
 
 
 
-router.get('/getUser',userController.getUser);
+
 router.get('/profile', isAuth, userController.getUserProfile);
 router.get('/:userId/profile', userController.getUserProfile);
 
