@@ -4,7 +4,7 @@
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
-<%- include('./Delta/navbar') %>
+  <%- include('./Delta/navbar') %>
 
   <div class="container-fluid">
     <h2><B><%=cntr_data.centre_name%></b></h2>
@@ -51,66 +51,69 @@
       </div>
       <div id="menu2" class="tab-pane fade">
         <!-- <h3><b>Fill Out The Form</b></h3> -->
-          <!-- <h2>Select Department</h2> -->
-          <div class="col-sm-7">
-            <div class="row">
-              <div class="col-sm-12 ">
-                <div class="panel panel-default text-left">
-                  <div class="panel-body bg-2">
-                    <p><h2>Book your Appointment</h2></p>
-                  </div>
+        <!-- <h2>Select Department</h2> -->
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-sm-12 ">
+              <div class="panel panel-default text-left">
+                <div class="panel-body bg-2">
+                  <p>
+                  <h2>Book your Appointment</h2>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-            <div class="row">
-              <div class="col-sm-12 ">
-                <div class="panel panel-default text-left">
-                  <div class="panel-body bg-2">
-                    <form method="POST" action="/appointment">
-                      <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
-                      <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
+        </div>
+        <div class="row">
+          <div class="col-sm-12 ">
+            <div class="panel panel-default text-left">
+              <div class="panel-body bg-2">
+                <form method="POST" action="/appointment">
+                  <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
+                  <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
 
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Date</label>
-                        <input type="datetime-local" class="form-control" id="exampleFormControlInput2" name="date">
-                      </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Date</label>
+                    <input type="datetime-local" class="form-control" id="exampleFormControlInput2" name="date">
+                  </div>
 
-                        <div class="form-group">
+                  <div class="form-group">
 
-                        </div>
+                  </div>
 
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Select Department</label>
-                    <select  name="Department">
+                    <select name="Department">
                       <%reqDept.forEach(dept=>{%>
-                        <option value="<%=dept.dept_name%>"><%=dept.dept_name%></option>
+                      <option value="<%=dept.dept_name%>"><%=dept.dept_name%></option>
                       <%})%>
                     </select>
                   </div>
-  <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
-                      </form>
+                  <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
+                </form>
 
-                  </div>
-                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div id="menu4" class="tab-pane fade">
+      <div id="menu4" class="tab-pane fade">
 
-              <div class="col-sm-7">
-                <form class="" action="/center/centerEymployees/<%= cntr_data.id%>" method="GET">  <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
-                <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Enter Center email</label>
-                  <input type="email" >
-               </div>
-               <div class="form-group">
-                 <label for="exampleFormControlTextarea1">password</label>
-                 <input type="password">
-              </div>
-              <button type="submit" name="button">Submit</button>
-                  </form>
-              </div>
+        <div class="col-sm-7">
+          <form class="" action="/center/centerEymployees/<%= cntr_data.id%>" method="GET">
+            <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Enter Center email</label>
+              <input type="email">
             </div>
-<%- include('./Delta/footer') %>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">password</label>
+              <input type="password">
+            </div>
+            <button type="submit" name="button">Submit</button>
+          </form>
+        </div>
+      </div>
+      <%- include('./Delta/footer') %>

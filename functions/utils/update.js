@@ -1,8 +1,9 @@
+const firebase = require('../firebase');
 
-  const firebase = require('../firebase');
-
-  module.exports=async (centerId,token)=>{
-     const tickets =await firebase.firestore()
+module.exports = async (centerId, token) => {
+  const tickets = await firebase.firestore()
     .collection('centres').doc(centerId)
-    .update({ token:token});
-  }
+    .update({
+      token: token
+    });
+}

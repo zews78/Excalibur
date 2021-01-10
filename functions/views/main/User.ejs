@@ -1,174 +1,182 @@
 <%- include('./Delta/header') %>
 
-  <link rel="stylesheet" href="/css/user.css">
+<link rel="stylesheet" href="/css/user.css">
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel" style="font-size:1.5em;">Are You sure You want to cancel this Appointment?</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+  <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel" style="font-size:1.5em;">Are You sure You want to cancel this Appointment?</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
 
+          </button>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+          <button type="button" class="btn btn-success">Yes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
         </button>
+        <a class="navbar-brand" href="#myPage">EXCELERENTUM</a>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-        <button type="button" class="btn btn-success">Yes</button>
+      <div class="collapse navbar-collapse" id="myNavbar">
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/">HOME</a></li>
+          <li><a href="/center">CENTRE</a></li>
+          <li><a href="/user/profile">PROFILE</a></li>
+          <li><a href="/register">REGISTER</a></li>
+
+          <% if(auth) { %>
+          <li>
+
+            <form action="/logout" method="POST">
+              <button type="submit" class="btnAuth">Logout</button>
+            </form>
+          </li>
+          <% } else { %>
+          <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+
+          <li>
+            <form action="/login" method="GET">
+              <button type="submit" class="btnAuth">Login</button>
+            </form>
+          </li>
+          <% } %>
+
+          <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+        </ul>
       </div>
     </div>
-  </div>
-</div>
-
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="#myPage">EXCELERENTUM</a>
-    </div>
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="/">HOME</a></li>
-        <li><a href="/center">CENTRE</a></li>
-        <li><a href="/user/profile">PROFILE</a></li>
-        <li><a href="/register">REGISTER</a></li>
-
-        <% if(auth) { %>
-        <li>
-
-          <form action="/logout" method="POST">
-            <button type="submit" class="btnAuth">Logout</button>
-          </form>
-        </li>
-        <% } else { %>
-        <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-
-        <li>
-          <form action="/login" method="GET">
-            <button type="submit" class="btnAuth">Login</button>
-          </form>
-        </li>
-        <% } %>
-
-        <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
-      </ul>
-    </div>
-  </div>
-</nav>
+  </nav>
   <div class="container-fluid bg-4 text-center">
-  <div class="row">
-    <div class="col-sm-3 well bg-2">
-      <div class="well bg-3">
-        <p><a href="#">My Profile</a></p>
-        <img src="https://image.freepik.com/free-vector/people-profile-icon_24877-40756.jpg" class="img-circle" height="100" width="100" alt="Avatar">
-        <p class="userdetails">Name</p>
+    <div class="row">
+      <div class="col-sm-3 well bg-2">
+        <div class="well bg-3">
+          <p><a href="#">My Profile</a></p>
+          <img src="https://image.freepik.com/free-vector/people-profile-icon_24877-40756.jpg" class="img-circle" height="100" width="100" alt="Avatar">
+          <p class="userdetails">Name</p>
 
+        </div>
+        <div class="alert alert-success fade in ">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
+          <p><strong>Yo!</strong></p>
+          You Have Some Upcoming Appointments!
+        </div>
       </div>
-      <div class="alert alert-success fade in ">
-        <a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
-        <p><strong>Yo!</strong></p>
-        You Have Some Upcoming Appointments!
-      </div>
-      </div>
-    <div class="col-sm-7">
+      <div class="col-sm-7">
 
-      <div class="row">
-        <div class="col-sm-12 ">
-          <div class="panel panel-default text-left">
-            <div class="panel-body bg-2">
-              <p><h2>My Appointments</h2></p>
+        <div class="row">
+          <div class="col-sm-12 ">
+            <div class="panel panel-default text-left">
+              <div class="panel-body bg-2">
+                <p>
+                <h2>My Appointments</h2>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="well bg-2">
+              <p>Centre 1</p>
+              <img src="https://cdn0.iconfinder.com/data/icons/buildings-1/128/40-512.png" class="img-circle" height="55" width="55" alt="Avatar">
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div class="well bg-2">
+              <p>24 Nov</p>
+              <!--date of Appointment-->
+              <p>Radiology</p>
+              <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="well bg-2">
+              <p>Center 2</p>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYIjbHTxX_VmC2CWBu6aTytt11dCI0WPeJl91dQzNiFEUW4A1Rmq92mvC9Rbn9z2zZohj4n8B2EBdH1aBo4YHDagMwJVI6oL4&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55"
+                alt="Avatar">
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div class="well bg-2">
+              <p>24 Nov</p>
+              <!--date of Appointment-->
+              <p>Radiology</p>
+              <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+            </div>
+          </div>
+
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="well bg-2">
+              <p>Centre 3</p>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTmQUdpb1rl8Mh18RkQD0qknPw-v5p0yoz-XnaXsMCj-wjlBmI-NkgMmNZAYsk-DFWJi1EYF-zgMAXjfCs8SjNwauoEEa2KQk&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55"
+                alt="Avatar">
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div class="well bg-2">
+              <p>24 Nov</p>
+              <!--date of Appointment-->
+              <p>Radiology</p>
+              <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="well bg-2">
+              <p>Centre 4</p>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrvqXd8pNsYHg0zqmGrcN1DNgUYYVryimOw&usqp=CAU" class="img-circle" height="55" width="55" alt="Avatar">
+            </div>
+          </div>
+          <div class="col-sm-9">
+            <div class="well bg-2">
+              <p>24 Nov</p>
+              <!--date of Appointment-->
+              <p>Radiology</p>
+              <p>at Center Name</p>
+              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
             </div>
           </div>
         </div>
       </div>
+      <div class="row">
 
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well bg-2">
-           <p>Centre 1</p>
-           <img src="https://cdn0.iconfinder.com/data/icons/buildings-1/128/40-512.png" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well bg-2">
-           <p>Center 2</p>
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYIjbHTxX_VmC2CWBu6aTytt11dCI0WPeJl91dQzNiFEUW4A1Rmq92mvC9Rbn9z2zZohj4n8B2EBdH1aBo4YHDagMwJVI6oL4&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
-          </div>
-        </div>
+        <div class="col-sm-2 well bg-2">
+          <div class="thumbnail bg-3">
 
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well bg-2">
-           <p>Centre 3</p>
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRTmQUdpb1rl8Mh18RkQD0qknPw-v5p0yoz-XnaXsMCj-wjlBmI-NkgMmNZAYsk-DFWJi1EYF-zgMAXjfCs8SjNwauoEEa2KQk&usqp=CAU&ec=45730947" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well bg-2">
-           <p>Centre 4</p>
-           <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBrvqXd8pNsYHg0zqmGrcN1DNgUYYVryimOw&usqp=CAU" class="img-circle" height="55" width="55" alt="Avatar">
-          </div>
-        </div>
-        <div class="col-sm-9">
-          <div class="well bg-2">
-            <p>24 Nov</p>                           <!--date of Appointment-->
-            <p>Radiology</p>
-            <p>at Center Name</p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+            <p>Upcoming Appointments:</p>
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwRlGdLYySZZYg5MEX0KaWowPf9WBaLgQIg&usqp=CAU" alt="Paris" width="100" height="100">
+            <p><strong>Today</strong></p>
+            <p><strong>at Centre Name</strong></p>
+            <p>Estimated Time: 4:00 PM</p>
+            <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
           </div>
         </div>
       </div>
     </div>
-<div class="row">
-
-    <div class="col-sm-2 well bg-2">
-      <div class="thumbnail bg-3">
-
-        <p>Upcoming Appointments:</p>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwRlGdLYySZZYg5MEX0KaWowPf9WBaLgQIg&usqp=CAU" alt="Paris" width="100" height="100">
-        <p><strong>Today</strong></p>
-        <p><strong>at Centre Name</strong></p>
-        <p>Estimated Time: 4:00 PM</p>
-        <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
-      </div>
   </div>
-    </div>
-  </div>
-</div>
-<%- include('./Delta/footer') %>
+  <%- include('./Delta/footer') %>
