@@ -131,14 +131,14 @@
     <div class="row w-100">
       <div class="col-sm-6">
         <h1><strong>Appointment Details</strong></h1>
-        <h2><strong>Ticket Unique Id:</strong><%= ticket_data.ticketId %></h2>
-        <h2><strong>Center Name:</strong><%= ticket_data.centreName %></h2>
-        <h2><strong>Date:</strong><%= ticket_data.date %></h2>
-        <h2><strong>Department:</strong>ticket_data.Department</h2>
+        <h2><strong>Ticket Id:</strong> <%= ticket_data.ticketId %></h2>
+        <h2><strong>Center Name:</strong> <%= ticket_data.centreName %></h2>
+        <h2><strong>Date:</strong> <%= ticket_data.date %></h2>
+        <h2><strong>Department:</strong> <%= ticket_data.Department %></h2>
         <h2><strong>Time :</strong><%= ticket_data.slot %></h2>
       </div>
       <div class="col-sm-6">
-        <img src="<%= ticket_data.img_url %>" alt="">
+        <img style="height: 24vw; width: auto;" src="<%= ticket_data.img_url %>" alt="">
       </div>
     </div>
   </div>

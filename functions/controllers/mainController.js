@@ -173,7 +173,7 @@ exports.getOneCenter = async (req, res) => {
       userId: userId,
       id: centreId
     });
-    // console.log(reqDept.data());
+    // console.log(req_dept);
     // console.log(req.params.centerId);
 
     res.render('main/Centre_Details_booking.ejs', {
@@ -372,10 +372,15 @@ exports.getBooked = async (req, res) => {
     const user = await firebase.firestore()
       .collection('users')
       .doc(ticket.data().userId)
-      .get();
+	  .get();
+	  
+	const department = await firebase.firestore()
+      .collection('departments')
+      .doc(ticket.data().department)
+	  .get();
 
 
-    // console.log(user.data());
+    // console.log(department.data());
     // console.log(centre.data().centre_name);
 
     res.render('main/Delta/booking-confirmation.ejs', {
@@ -384,7 +389,8 @@ exports.getBooked = async (req, res) => {
         img_url: qr_code[0],
         ticketId: req.params.bookingId,
         centreName: centre.data().centre_name,
-        userName: user.data().name
+		userName: user.data().name,
+		Department: department.data().dept_name
       },
       pageTitle: 'Booking Confirmed',
       auth
