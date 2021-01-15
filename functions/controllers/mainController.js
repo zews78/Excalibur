@@ -390,6 +390,8 @@ exports.postTicket = async (req, res) => {
 
           } else {
 
+            let bookinitial=dData.bookedSlots[item][0].slice(0,10);
+            let checkInitial=bookinitial.localeCompare(req.body.date);
             let book = time.slice(0, 10); //checking the date
             const check = book.localeCompare(req.body.date);
             if (check === -1) {
@@ -398,17 +400,24 @@ exports.postTicket = async (req, res) => {
               dData.bookedSlots[item].push(date);
               dData.bookedSlots[item].sort();
 
+            }else if(checkInitial===1){
+              date = initialTimes.openingTime;
+              slot = initialTimes.openingTime.slice(11);
+              dData.bookedSlots[item].push(date);
+              dData.bookedSlots[item].sort();
             } else {
 
               if (check === 1) {
 
-                dData.bookedSlots[item].forEach((bookedDate, j, array1) => {
-                  let bookedDate1 = bookedDate.slice(0, 10);
-                  const order = bookedDate1.localeCompare(req.body.date);
-                  if (order === 0 && req.body.date.localeCompare(array1[j + 1].slice(0, 10)) === -1) {
-                    time = array1[j];
+                for (var i = 0; i < dData.bookedSlots[item].length; i++) {
+                  let bookedDate = dData.bookedSlots[item][i].slice(0, 10);
+                  const order = bookedDate.localeCompare(req.body.date);
+                  console.log("order is",order);
+                  if(order===1){
+                      time=dData.bookedSlots[item][i-1];
+                    break;
                   }
-                });
+                }
               }
 
               console.log("here time is" ,time);
