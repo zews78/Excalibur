@@ -1,9 +1,13 @@
-const {request} = require('express');
+const {
+  request
+} = require('express');
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
 const update = require('../utils/update');
-const { getSessions } = require('../utils/time');
+const {
+  getSessions
+} = require('../utils/time');
 const nodemailer = require('nodemailer');
 
 // const keywordGenerator = require('../utils/keywordGenerator');
@@ -293,167 +297,218 @@ exports.postTicket = async (req, res) => {
 
   try {
 
-    let dept=await firebase.firestore()
-    .collection('departments')
-    .doc(req.body.Department)
-    .get()
+    let dept = await firebase.firestore()
+      .collection('departments')
+      .doc(req.body.Department)
+      .get()
 
-    let center=await firebase.firestore()
-    .collection('centres')
-    .doc(req.body.centreId)
-    .get()
+    let center = await firebase.firestore()
+      .collection('centres')
+      .doc(req.body.centreId)
+      .get()
 
-    let sessions=center.data().sessions;
-    let session=req.body.session;
+    let sessions = center.data().sessions;
+    let session = req.body.session;
 
     if (!sessions.includes(session)) {
-      return  new Error("This session is not available");
+      return new Error("This session is not available");
     }
 
-    let dData={
+    let dData = {
       ...dept.data(),
     }
 
-    let initialTimes={
-      openingTime:req.body.date+"T"+center.data().openingTime,
-      Morning:req.body.date+"T"+center.data().openingTime,
-      Afternoon:req.body.date+"T"+"12:00",
-      Evening:req.body.date+"T"+"14:00",
+    let initialTimes = {
+      openingTime: req.body.date + "T" + center.data().openingTime,
+      Morning: req.body.date + "T" + center.data().openingTime,
+      Afternoon: req.body.date + "T" + "12:00",
+      Evening: req.body.date + "T" + "14:00",
     }
 
-    let closingTimes={
-      closingTime:req.body.date+"T"+center.data().closingTime,
-      Morning:req.body.date+"T"+"12:00",
-      Afternoon:req.body.date+"T"+"14:00",
-      Evening:req.body.date+"T"+center.data().closingTime,
+    let closingTimes = {
+      closingTime: req.body.date + "T" + center.data().closingTime,
+      Morning: req.body.date + "T" + "12:00",
+      Afternoon: req.body.date + "T" + "14:00",
+      Evening: req.body.date + "T" + center.data().closingTime,
     }
 
-    let absoluteClosingTimes={
-      closingTime:parseInt(center.data().closingTime.slice(0,2))+parseInt(center.data().closingTime.slice(3))/60,
-      Morning:12,
-      Afternoon:14,
-      Evening:parseInt(center.data().closingTime.slice(0,2))+parseInt(center.data().closingTime.slice(3))/60,
+    let absoluteClosingTimes = {
+      closingTime: parseInt(center.data().closingTime.slice(0, 2)) + parseInt(center.data().closingTime.slice(3)) / 60,
+      Morning: 12,
+      Afternoon: 14,
+      Evening: parseInt(center.data().closingTime.slice(0, 2)) + parseInt(center.data().closingTime.slice(3)) / 60,
     }
 
-    let addedTime=5; //5 minutes
+    let addedTime = 5; //5 minutes
     let date;
     let slot;
-    console.log(sessions);
 
-//Incase that bookedSlots doestnt exist
+    //Incase that bookedSlots doestnt exist
 
-if(!dData.bookedSlots){
-  dData.bookedSlots={};
+    if (!dData.bookedSlots) {
 
-   sessions.forEach((item, i,array) => {
+      dData.bookedSlots = {};
 
-     dData.bookedSlots[item]=[];
+      sessions.forEach((item, i, array) => {
 
-     if(array[0]===session && item===session){
+        dData.bookedSlots[item] = [];
 
-       date=initialTimes.openingTime;
-       slot=initialTimes.openingTime.slice(11);
-       dData.bookedSlots[item].push(date);
+        if (array[0] === session && item === session) {
 
-     }else if(item===session){
+          date = initialTimes.openingTime;
+          slot = initialTimes.openingTime.slice(11);
+          dData.bookedSlots[item].push(date);
 
-       date=initialTimes[item];
-       slot=initialTimes[item].slice(11);
-       dData.bookedSlots[item].push(date);
+        } else if (item === session) {
 
-     }
+          date = initialTimes[item];
+          slot = initialTimes[item].slice(11);
+          dData.bookedSlots[item].push(date);
 
-   });
+        }
 
- }else {  //if bookedSlots exists then
+      });
 
-  sessions.forEach((item, i,array) => {
+    } else { //if bookedSlots exists then
+      console.log(dData.bookedSlots);
 
-    if (array[0]===session && item===session) {
+      sessions.forEach((item, i, array) => {
 
-      let index=dData.bookedSlots[item].length-1;
-      console.log("index is",index);
+        if (array[0] === session && item === session) {
 
-      if(index===-1){
+          let index = dData.bookedSlots[item].length - 1;
+          console.log("index is", index);
+          let time = dData.bookedSlots[item][index];
+          console.log("time is", time);
 
-        date=initialTimes.openingTime;
-        slot=initialTimes.openingTime.slice(11);
-        dData.bookedSlots[item].push(date);
+          if (!time[index]) { //if it doest even exists
 
-      }else {
+            date = initialTimes.openingTime;
+            slot = initialTimes.openingTime.slice(11);
+            dData.bookedSlots[item].push(date);
+            dData.bookedSlots[item].sort();
 
-      let time=dData.bookedSlots[item][index];
-      console.log("time is",time);
-      let hours=parseInt(time.slice(11,13));
-      let minutes=parseInt(time.slice(14));
-      minutes+=addedTime;
-      let absoluteTime=hours+minutes/60;
-      if(minutes>60){
-        hours+=1;
-        minutes=minutes%60;
-      }
-      if(hours<10){
-        hours="0"+hours;
-      }
-      if(minutes<10){
-        minutes="0"+minutes;
-      }
+          } else {
 
-      if(absoluteTime<absoluteClosingTimes.closingTime){
-        date=req.body.date+"T"+hours+":"+minutes;
-        slot=hours+":"+minutes;
-        dData.bookedSlots[item].push(date);
-      }else{
-        throw new Error("This session is not available")
-      }
+            let book = time.slice(0, 10); //checking the date
+            const check = book.localeCompare(req.body.date);
+            if (check === -1) {
+              date = initialTimes.openingTime;
+              slot = initialTimes.openingTime.slice(11);
+              dData.bookedSlots[item].push(date);
+              dData.bookedSlots[item].sort();
+
+            } else {
+
+              if (check === 1) {
+
+                dData.bookedSlots[item].forEach((bookedDate, j, array1) => {
+                  let bookedDate1 = bookedDate.slice(0, 10);
+                  const order = bookedDate1.localeCompare(req.body.date);
+                  if (order === 0 && req.body.date.localeCompare(array1[j + 1].slice(0, 10)) === -1) {
+                    time = array1[j];
+                  }
+                });
+              }
+
+              console.log("here time is" ,time);
+              let hours = parseInt(time.slice(11, 13));
+              let minutes = parseInt(time.slice(14));
+              minutes += addedTime;
+              console.log(hours);
+              console.log(minutes);
+              let absoluteTime = hours + minutes/60;
+              if (minutes > 60) {
+                hours += 1;
+                minutes = minutes % 60;
+              }
+              if (hours < 10) {
+                hours = "0" + hours;
+              }
+              if (minutes < 10) {
+                minutes = "0" + minutes;
+              }
+
+              if (absoluteTime < absoluteClosingTimes.closingTime) {
+                date = req.body.date + "T" + hours + ":" + minutes;
+                slot = hours + ":" + minutes;
+                dData.bookedSlots[item].push(date);
+                dData.bookedSlots[item].sort();
+              } else {
+                console.log(absoluteTime);
+                console.log(absoluteClosingTimes.closingTime);
+                throw new Error("This session is not available")
+              }
+            }
+          }
+        } else if (item === session) {
+
+          let index = dData.bookedSlots[item].length - 1;
+          console.log("index is", index);
+          let time = dData.bookedSlots[item][index];
+          console.log("time is", time);
+
+          if (!time[index]) { //if it doesnt even exists
+
+            date = initialTimes[item];
+            slot = initialTimes[item].slice(11);
+            dData.bookedSlots[item].push(date);
+            dData.bookedSlots[item].sort();
+
+          } else {
+            let book = time.slice(0, 10); //checking the date
+            const check = book.localeCompare(req.body.date);
+            if (check === -1) { //if last stored date is less than the given date
+              date = initialTimes.openingTime;
+              slot = initialTimes.openingTime.slice(11);
+              dData.bookedSlots[item].push(date);
+              dData.bookedSlots[item].sort();
+
+            } else {
+
+              if (check === 1) { //if last stored date is bigger than given date
+
+                dData.bookedSlots[item].forEach((bookedDate, j, array1) => {
+                  let bookedDate1 = bookedDate.slice(0, 10);
+                  const order = bookedDate1.localeCompare(req.body.date);
+                  if (order === 0 && req.body.date.localeCompare(array[j + 1].slice(0, 10)) === -1) {
+                    time = array[j];
+                  }
+                });
+              }
+
+              let hours = parseInt(time.slice(11, 13));
+              let minutes = parseInt(time.slice(14));
+              minutes += addedTime;
+              let absoluteTime = hours + minutes / 60;
+              if (minutes > 60) {
+                hours += 1;
+                minutes = minutes % 60;
+              }
+              if (hours < 10) {
+                hours = "0" + hours;
+              }
+              if (minutes < 10) {
+                minutes = "0" + minutes;
+              }
+
+              if (absoluteTime < absoluteClosingTimes[item]) {
+
+                date = req.body.date + "T" + hours + ":" + minutes;
+                slot = hours + ":" + minutes;
+                dData.bookedSlots[item].push(date);
+                dData.bookedSlots[item].sort();
+              } else {
+                throw new Error("This session is not available")
+              }
+            }
+          }
+        }
+      })
     }
-
-    }else if (item===session){
-
-      let index=dData.bookedSlots[item].length-1;
-      console.log("index is",index);
-
-      if(index===-1){
-
-        date=initialTimes[item];
-        slot=initialTimes[item].slice(11);
-        dData.bookedSlots[item].push(date);
-
-      }else {
-      let time=dData.bookedSlots[item][index];
-      console.log("time is",time);
-      let hours=parseInt(time.slice(11,13));
-      let minutes=parseInt(time.slice(14));
-      minutes+=addedTime;
-      let absoluteTime=hours+minutes/60;
-      if(minutes>60){
-        hours+=1;
-        minutes=minutes%60;
-      }
-      if(hours<10){
-        hours="0"+hours;
-      }
-      if(minutes<10){
-        minutes="0"+minutes;
-      }
-
-      if (absoluteTime<absoluteClosingTimes[item]) {
-
-        date=req.body.date+"T"+hours+":"+minutes;
-        slot=hours+":"+minutes;
-        dData.bookedSlots[item].push(date);
-      }else{
-        throw new Error("This session is not available")
-      }
-     }
-    }
-
-  });
-
-}
-const newDept=await firebase.firestore()
-.collection('departments')
-.doc(req.body.Department).set(dData); //overwriting the department document
+    const newDept = await firebase.firestore()
+      .collection('departments')
+      .doc(req.body.Department).set(dData); //overwriting the department document
 
     let ticket = await firebase.firestore()
       .collection('ticket')
@@ -531,12 +586,12 @@ exports.getBooked = async (req, res) => {
     const user = await firebase.firestore()
       .collection('users')
       .doc(ticket.data().userId)
-	  .get();
+      .get();
 
-	const department = await firebase.firestore()
+    const department = await firebase.firestore()
       .collection('departments')
       .doc(ticket.data().department)
-	  .get();
+      .get();
 
     // Send Email
     const transporter = nodemailer.createTransport({
@@ -549,10 +604,10 @@ exports.getBooked = async (req, res) => {
 
     const mailOption = {
       from: 'no_reply@gmail.com',
-      to: 'shariquealam52@gmail.com',//////Set the email ID Cannot find it
+      to: 'shariquealam52@gmail.com', //////Set the email ID Cannot find it
       subject: 'Appointment Booked',
-      text: 'Hi' + user.data().name + ' your appointment is Booked With Excelerentum for '+centre.data().centre_name + 'and department' + department.data().dept_name + 'and your booking id is' + req.params.bookingId ,
-      html:'<h1>Booking Confirmed<h1>'
+      text: 'Hi' + user.data().name + ' your appointment is Booked With Excelerentum for ' + centre.data().centre_name + 'and department' + department.data().dept_name + 'and your booking id is' + req.params.bookingId,
+      html: '<h1>Booking Confirmed<h1>'
     };
 
     transporter.sendMail(mailOption, function(err, data) {
@@ -571,8 +626,8 @@ exports.getBooked = async (req, res) => {
         img_url: qr_code[0],
         ticketId: req.params.bookingId,
         centreName: centre.data().centre_name,
-		userName: user.data().name,
-		Department: department.data().dept_name
+        userName: user.data().name,
+        Department: department.data().dept_name
       },
       pageTitle: 'Booking Confirmed',
       auth
@@ -597,9 +652,9 @@ exports.postCenter = async (req, res) => {
     /*i dont know how to store images*/
     centerData.images = ['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
 
-    centerData.sessions=getSessions(req.body.openingTime,req.body.closingTime);
-    centerData.openingTime=req.body.openingTime;
-    centerData.closingTime=req.body.closingTime;
+    centerData.sessions = getSessions(req.body.openingTime, req.body.closingTime);
+    centerData.openingTime = req.body.openingTime;
+    centerData.closingTime = req.body.closingTime;
 
     let dData = {};
     let id;
