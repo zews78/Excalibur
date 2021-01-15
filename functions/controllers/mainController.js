@@ -1,10 +1,9 @@
-const {
-  request
-} = require('express');
+const {request} = require('express');
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
 const update = require('../utils/update');
+const { getSessions } = require('../utils/time');
 
 // const keywordGenerator = require('../utils/keywordGenerator');
 
@@ -292,7 +291,8 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
 exports.postTicket = async (req, res) => {
 
   try {
-    console.log(req.uid);
+    console.log('post ticket',req.body.userId);
+    req.body.session
     let ticket = await firebase.firestore()
       .collection('ticket')
       .add({
@@ -373,7 +373,7 @@ exports.getBooked = async (req, res) => {
       .collection('users')
       .doc(ticket.data().userId)
 	  .get();
-	  
+
 	const department = await firebase.firestore()
       .collection('departments')
       .doc(ticket.data().department)
@@ -438,17 +438,15 @@ exports.postCenter = async (req, res) => {
     /*i dont know how to store images*/
     centerData.images = ['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
 
-
-
-
+    centerData.sessions=getSessions(req.body.openingTime,req.body.closingTime);
+    centerData.openingTime=req.body.openingTime;
+    centerData.closingTime=req.body.closingTime;
 
     let dData = {};
     let id;
     let department;
 
-    console.log(req.body.department);
     centerData.avDept = [];
-
 
     for (let i = 0; i < req.body.department.length; i++) {
       department = await firebase.firestore()
@@ -457,7 +455,6 @@ exports.postCenter = async (req, res) => {
       console.log(id);
       centerData.avDept.push(id);
       dData.dept_name = req.body.department[i];
-      dData.operating_time = "9 to 10";
       await department.set(dData);
     }
 
