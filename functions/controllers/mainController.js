@@ -379,7 +379,30 @@ exports.getBooked = async (req, res) => {
       .doc(ticket.data().department)
 	  .get();
 
+    // Send Email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'debuggers.nitkkr@gmail.com',
+        pass: '11915110'
+      }
+    });
 
+    const mailOption = {
+      from: 'no_reply@gmail.com',
+      to: 'shariquealam52@gmail.com',//////Set the email ID Cannot find it
+      subject: 'Appointment Booked',
+      text: req.params.bookingId + 'Your Appointment is Booked With',
+      html:''
+    };
+
+    transporter.sendMail(mailOption, function(err, data) {
+      if (err) {
+        console.log('Error' + err);
+      } else {
+        console.log('Message Sent!');
+      }
+    });
     // console.log(department.data());
     // console.log(centre.data().centre_name);
 

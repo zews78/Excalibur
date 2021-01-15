@@ -10,7 +10,7 @@
     "dev": "nodemon server.js -e js,ejs,css,json"
   },
   "engines": {
-    "node": "8"
+    "node": "10"
   },
   "main": "index.js",
   "dependencies": {
