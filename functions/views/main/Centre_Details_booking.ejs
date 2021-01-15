@@ -74,14 +74,9 @@
                   <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
 
                   <div class="form-group">
-                    <label for="exampleFormControlInput1">Date</label>
-                    <input type="datetime-local" class="form-control" id="exampleFormControlInput2" name="date">
+                    <label>Date</label>
+                    <input type="date" class="form-control" name="date" id="date">
                   </div>
-
-                  <div class="form-group">
-
-                  </div>
-
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Select Department</label>
                     <select name="Department">
@@ -90,6 +85,15 @@
                       <%}%>
                     </select>
                   </div>
+                  <div class="form-group">
+                    <label>Sessions</label>
+                    <select name="session">
+                      <%for(var i=0; i< cntr_data.sessions.length; i++){%>
+                      <option ><%=cntr_data.sessions[i]%></option>
+                      <%}%>
+                    </select>
+                  </div>
+
                   <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
                 </form>
 
@@ -103,17 +107,17 @@
 
         <div class="col-sm-7">
           <form class="" action="/center/centerEymployees/<%= cntr_data.id%>" method="GET">
-            <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">Enter Center email</label>
-              <input type="email">
+
+                      <div class="form-group">
+                        <label for="exampleFormControlTextarea1">Enter Center email</label>
+                        <input type="email">
+                      </div>
+                      <div class="form-group">
+                        <label for="exampleFormControlTextarea1">password</label>
+                        <input type="password">
+                      </div>
+                      <button type="submit" name="button">Submit</button>
+                </form>
+              </div>
             </div>
-            <div class="form-group">
-              <label for="exampleFormControlTextarea1">password</label>
-              <input type="password">
-            </div>
-            <button type="submit" name="button">Submit</button>
-          </form>
-        </div>
-      </div>
-      <%- include('./Delta/footer') %>
+            <%- include('./Delta/footer') %>

@@ -31,8 +31,8 @@
           <div class="form-group">
             <label >Select Category</label>
             <select class="form-control" id="category" name="domain">
-              <option value='Banks'>Banks</option>
               <option value='Hospitals'>Hospitals</option>
+              <option value='Banks'>Banks</option>
               <option value='Government Offices'>Government Offices</option>
               <option value='Restraunt'>Restraunt</option>
               <option value='Salons/Spa'>Salons/Spas</option>
@@ -51,10 +51,18 @@
           </div>
           <%}else{%>
           <div class="form-group">
-            <label for="exampleFormControlInput1">Number of Counters</label>
+            <label >Number of Counters</label>
             <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="counterNo">
           </div>
           <%}%>
+          <div class="form-group">
+            <label >Opening Time</label>
+            <input type="time" class="form-control" name="openingTime" value="09:00:00" >
+          </div>
+          <div class="form-group">
+            <label >Closing Time</label>
+            <input type="time" class="form-control" name="closingTime" value="10:00:00">  <!--wasnt working before because maybe i didnd specify the seconds-->
+          </div>
           <div class="custom-file">
             <label class="custom-file-label" for="customFile">Upload a picture</label>
             <input type="file" class="custom-file-input" id="customFile" name="img">
