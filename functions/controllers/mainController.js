@@ -4,6 +4,7 @@ const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
 const update = require('../utils/update');
 const { getSessions } = require('../utils/time');
+const nodemailer = require('nodemailer');
 
 // const keywordGenerator = require('../utils/keywordGenerator');
 
@@ -392,8 +393,8 @@ exports.getBooked = async (req, res) => {
       from: 'no_reply@gmail.com',
       to: 'shariquealam52@gmail.com',//////Set the email ID Cannot find it
       subject: 'Appointment Booked',
-      text: req.params.bookingId + 'Your Appointment is Booked With',
-      html:''
+      text: 'Hi' + user.data().name + ' your appointment is Booked With Excelerentum for '+centre.data().centre_name + 'and department' + department.data().dept_name + 'and your booking id is' + req.params.bookingId ,
+      html:'<h1>Booking Confirmed<h1>'
     };
 
     transporter.sendMail(mailOption, function(err, data) {
