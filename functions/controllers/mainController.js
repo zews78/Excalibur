@@ -4,6 +4,7 @@ const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
 const update = require('../utils/update');
 const { getSessions } = require('../utils/time');
+const nodemailer = require('nodemailer');
 
 // const keywordGenerator = require('../utils/keywordGenerator');
 
@@ -537,7 +538,30 @@ exports.getBooked = async (req, res) => {
       .doc(ticket.data().department)
 	  .get();
 
+    // Send Email
+    const transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'debuggers.nitkkr@gmail.com',
+        pass: '11915110'
+      }
+    });
 
+    const mailOption = {
+      from: 'no_reply@gmail.com',
+      to: 'shariquealam52@gmail.com',//////Set the email ID Cannot find it
+      subject: 'Appointment Booked',
+      text: 'Hi' + user.data().name + ' your appointment is Booked With Excelerentum for '+centre.data().centre_name + 'and department' + department.data().dept_name + 'and your booking id is' + req.params.bookingId ,
+      html:'<h1>Booking Confirmed<h1>'
+    };
+
+    transporter.sendMail(mailOption, function(err, data) {
+      if (err) {
+        console.log('Error' + err);
+      } else {
+        console.log('Message Sent!');
+      }
+    });
     // console.log(department.data());
     // console.log(centre.data().centre_name);
 

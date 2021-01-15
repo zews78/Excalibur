@@ -298,16 +298,16 @@
         <div class="row">
           <div class="col-sm-3">
             <div class="well bg-2">
-              <p>Centre <%=i%></p>
-              <img src="https://cdn0.iconfinder.com/data/icons/buildings-1/128/40-512.png" class="img-circle" height="55" width="55" alt="Avatar">
+              <p>Centre <%=i+1%></p>
+              <img src="<%=req_ticket[i].qrcode%>" height="116" width="116" alt="Avatar">
             </div>
           </div>
           <div class="col-sm-9">
             <div class="well bg-2">
               <p>Date: <%=req_ticket[i].date%></p>
               <!--date of Appointment-->
-              <p><%=req_ticket[i].department%></p>
-              <p>at Centre ID: <%=req_ticket[i].centre_uid%></p>
+              <p>Department: <%=req_ticket[i].department%></p>
+              <p>Centre: <%=myCntr[i]%></p>
               <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
             </div>
           </div>
