@@ -18,11 +18,7 @@ const getSessions=(openingTime,closingTime)=>{
   return sessions;
 }
 
-var myDate = "2020-11-28";
-
-let toTimestamp = strDate => Date.parse(strDate)
-console.log(toTimestamp("2020-11-28")/1000)
 
 module.exports={
-  getSessions,
+  getSessions
 }

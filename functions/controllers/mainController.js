@@ -291,28 +291,186 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
 exports.postTicket = async (req, res) => {
 
   try {
-    console.log('post ticket',req.body.userId);
-    req.body.session
+
+    let dept=await firebase.firestore()
+    .collection('departments')
+    .doc(req.body.Department)
+    .get()
+
+    let center=await firebase.firestore()
+    .collection('centres')
+    .doc(req.body.centreId)
+    .get()
+
+    let sessions=center.data().sessions;
+    let session=req.body.session;
+
+    if (!sessions.includes(session)) {
+      return  new Error("This session is not available");
+    }
+
+    let dData={
+      ...dept.data(),
+    }
+
+    let initialTimes={
+      openingTime:req.body.date+"T"+center.data().openingTime,
+      Morning:req.body.date+"T"+center.data().openingTime,
+      Afternoon:req.body.date+"T"+"12:00",
+      Evening:req.body.date+"T"+"14:00",
+    }
+
+    let closingTimes={
+      closingTime:req.body.date+"T"+center.data().closingTime,
+      Morning:req.body.date+"T"+"12:00",
+      Afternoon:req.body.date+"T"+"14:00",
+      Evening:req.body.date+"T"+center.data().closingTime,
+    }
+
+    let absoluteClosingTimes={
+      closingTime:parseInt(center.data().closingTime.slice(0,2))+parseInt(center.data().closingTime.slice(3))/60,
+      Morning:12,
+      Afternoon:14,
+      Evening:parseInt(center.data().closingTime.slice(0,2))+parseInt(center.data().closingTime.slice(3))/60,
+    }
+
+    let addedTime=5; //5 minutes
+    let date;
+    let slot;
+    console.log(sessions);
+
+//Incase that bookedSlots doestnt exist
+
+if(!dData.bookedSlots){
+  dData.bookedSlots={};
+
+   sessions.forEach((item, i,array) => {
+
+     dData.bookedSlots[item]=[];
+
+     if(array[0]===session && item===session){
+
+       date=initialTimes.openingTime;
+       slot=initialTimes.openingTime.slice(11);
+       dData.bookedSlots[item].push(date);
+
+     }else if(item===session){
+
+       date=initialTimes[item];
+       slot=initialTimes[item].slice(11);
+       dData.bookedSlots[item].push(date);
+
+     }
+
+   });
+
+ }else {  //if bookedSlots exists then
+
+  sessions.forEach((item, i,array) => {
+
+    if (array[0]===session && item===session) {
+
+      let index=dData.bookedSlots[item].length-1;
+      console.log("index is",index);
+
+      if(index===-1){
+
+        date=initialTimes.openingTime;
+        slot=initialTimes.openingTime.slice(11);
+        dData.bookedSlots[item].push(date);
+
+      }else {
+
+      let time=dData.bookedSlots[item][index];
+      console.log("time is",time);
+      let hours=parseInt(time.slice(11,13));
+      let minutes=parseInt(time.slice(14));
+      minutes+=addedTime;
+      let absoluteTime=hours+minutes/60;
+      if(minutes>60){
+        hours+=1;
+        minutes=minutes%60;
+      }
+      if(hours<10){
+        hours="0"+hours;
+      }
+      if(minutes<10){
+        minutes="0"+minutes;
+      }
+
+      if(absoluteTime<absoluteClosingTimes.closingTime){
+        date=req.body.date+"T"+hours+":"+minutes;
+        slot=hours+":"+minutes;
+        dData.bookedSlots[item].push(date);
+      }else{
+        throw new Error("This session is not available")
+      }
+    }
+
+    }else if (item===session){
+
+      let index=dData.bookedSlots[item].length-1;
+      console.log("index is",index);
+
+      if(index===-1){
+
+        date=initialTimes[item];
+        slot=initialTimes[item].slice(11);
+        dData.bookedSlots[item].push(date);
+
+      }else {
+      let time=dData.bookedSlots[item][index];
+      console.log("time is",time);
+      let hours=parseInt(time.slice(11,13));
+      let minutes=parseInt(time.slice(14));
+      minutes+=addedTime;
+      let absoluteTime=hours+minutes/60;
+      if(minutes>60){
+        hours+=1;
+        minutes=minutes%60;
+      }
+      if(hours<10){
+        hours="0"+hours;
+      }
+      if(minutes<10){
+        minutes="0"+minutes;
+      }
+
+      if (absoluteTime<absoluteClosingTimes[item]) {
+
+        date=req.body.date+"T"+hours+":"+minutes;
+        slot=hours+":"+minutes;
+        dData.bookedSlots[item].push(date);
+      }else{
+        throw new Error("This session is not available")
+      }
+     }
+    }
+
+  });
+
+}
+const newDept=await firebase.firestore()
+.collection('departments')
+.doc(req.body.Department).set(dData); //overwriting the department document
+
     let ticket = await firebase.firestore()
       .collection('ticket')
       .add({
         userId: req.body.userId,
         // centre_name: req.body.centre_name,
         centre_uid: req.body.centreId,
-        date: req.body.date,
-        // slot: req.body.slot,
-        department: req.body.Department
+        date,
+        department: req.body.Department,
+        slot,
       });
     console.log(req.body);
-    // console.log(ticket.id);
     res.redirect('/booked/' + ticket.id);
   } catch (err) {
     console.log(err);
   }
 
 };
-
-
 
 exports.getSignup = async (req, res) => {
 
