@@ -17,6 +17,7 @@ router.get('/booked/:bookingId', mainController.getBooked);
 
 router.post('/appointment', mainController.postTicket);
 router.post('/submitCenter', mainController.postCenter);
+router.post('/availableSlots',mainController.postAvailableSlots);
 
 router.post('/signup/:uid', isAuth, mainController.postUser);
 

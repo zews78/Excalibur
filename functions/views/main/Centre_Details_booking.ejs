@@ -16,6 +16,7 @@
       <li><a data-toggle="tab" href="#menu2">Book An Appointment</a></li>
       <li><a data-toggle="tab" href="#menu3">Reviews</a></li>
       <li><a data-toggle="tab" href="#menu4">For Center Eymployee</a></li>
+      <li><a data-toggle="tab" href="#menu5">Current Active Tokens</a></li>
 
     </ul>
 
@@ -57,9 +58,7 @@
             <div class="col-sm-12 ">
               <div class="panel panel-default text-left">
                 <div class="panel-body bg-2">
-                  <p>
                   <h2>Book your Appointment</h2>
-                  </p>
                 </div>
               </div>
             </div>
@@ -78,22 +77,22 @@
                     <input type="date" class="form-control" name="date" id="date">
                   </div>
                   <div class="form-group">
-                    <label for="exampleFormControlInput1">Select Department</label>
+                    <label >Select Department</label>
                     <select name="Department">
                       <%for(var i=0; i< reqDept.length; i++){%>
                       <option value="<%=cntr_data.avDept[i]%>"><%=reqDept[i].dept_name%></option>
                       <%}%>
                     </select>
                   </div>
-                  <div class="form-group">
+                  <!--<div class="form-group">
                     <label>Sessions</label>
                     <select name="session">
-                      <%for(var i=0; i< cntr_data.sessions.length; i++){%>
-                      <option value="<%=cntr_data.sessions[i]%>"><%=cntr_data.sessions[i]%></option>
-                      <%}%>
+                      <%//for(var i=0; i< cntr_data.sessions.length; i++){%>
+                      <option value="<%//=cntr_data.sessions[i]%>"><%//=cntr_data.sessions[i]%></option>
+                      <%//}%>
                     </select>
                   </div>
-
+-->
                   <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
                 </form>
 
@@ -120,4 +119,12 @@
                 </form>
               </div>
             </div>
+            <div id="menu5" class="tab-pane fade">
+
+              <div class="col-sm-7">
+                <%for(var i=0; i< reqDept.length; i++){%>
+                <h1 style="color:white;"><%=reqDept[i].dept_name%>: <%= reqDept[i].currentToken%></h1>
+                <%}%>
+                    </div>
+                  </div>
             <%- include('./Delta/footer') %>

@@ -1,0 +1,79 @@
+<%- include('./Delta/header') %>
+
+<script src="https://unpkg.com/dayjs@1.8.21/dayjs.min.js"></script>
+<script src="https://unpkg.com/dayjs@1.8.21/plugin/customParseFormat.js"></script>
+<script src="https://unpkg.com/dayjs@1.8.21/plugin/isSameOrBefore.js"></script>
+
+
+<%- include('./Delta/navbar') %>
+
+   <h2><%=resObj.date%></h2>
+
+     <form class="" action="/availableSlots" method="post">
+           <input type="text" name="date" value="<%=resObj.date%>" style="display: none;">
+           <input type="text" name="center" value="<%=resObj.centerId%>" style="display: none;">
+           <input type="text" name="department" value="<%=resObj.deptId%>" style="display: none;">
+           <input type="text" name="user" value="<%=resObj.userId%>" style="display: none;">
+
+     </form>
+     <footer class="text-center">
+       <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+         <span class="glyphicon glyphicon-chevron-up"></span>
+       </a><br><br>
+       <p>All Rights Reserved @Excelerentum</p>
+     </footer>
+
+     <script>
+
+       dayjs.extend(window.dayjs_plugin_customParseFormat);
+       dayjs.extend(window.dayjs_plugin_isSameOrBefore);
+       dayjs().format();
+
+       let $form=getElementsByTagName('form');
+       let openingTime=dayjs(<%=resObj.openingTime%>,"YYYY-MM-DDTHH:mm");
+       let closingTime=dayjs(<%=resObj.closingTime%>,"YYYY-MM-DDTHH:mm");
+       let time=openingTime;
+       let bookedSlots=[];
+
+      while(time.isSameOrBefore(closingTime)){
+
+       let button=document.createElement("BUTTON");
+
+       if(time.$H<10){
+         time.$H="0"+time.$H;
+       }
+       if(time.$M<10){
+         time.$M="0"+time.$M;
+       }
+
+       let text=time.$H+":"+time.$m;
+
+       let value=time.$y+"-"+time.$M+"-"+time.$D+"T"+text;
+
+       button.value=value;
+
+       button.innerHTML=text;
+
+       button.type="submit";
+
+       button.setAttribute('name','slot');
+
+       if(<%=resObj.dateExists%>){
+
+        bookedSlots=<%=resObj.bookedSlots%>
+
+        if(bookedSlots.includes(value)) {
+          button.setAttribute('disabled','disabled');
+            }
+       }
+       $form.appendChild(button);
+
+       time.add(averageTime,'m');
+
+     }
+
+
+     </script>
+
+</body>
+</html>
