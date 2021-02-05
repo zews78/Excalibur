@@ -5,9 +5,7 @@ const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
 const update = require('../utils/update');
-const {
-  getSessions
-} = require('../utils/time');
+
 const nodemailer = require('nodemailer');
 
 var dayjs = require('dayjs')
@@ -302,6 +300,8 @@ exports.postTicket = async (req, res) => {
 
   try {
 
+    const auth = (await isAuth(req))[0];
+
     let dept = await firebase.firestore()
       .collection('departments')
       .doc(req.body.Department)
@@ -332,28 +332,36 @@ exports.postTicket = async (req, res) => {
       openingTime,                    //date format
       closingTime,
       averageTime,                    //date format
-      date
-      dateExists:false
+      date,
+      auth,
+      dateExists:false,
+      bookedSlots:false
     }
 
+
     if(!dData.bookedSlots){                 //no date exists
+      console.log("this shit is running");
       dData.bookedSlots={
         justCreated:true
       };
     }else{
       let dates=Object.keys(dData.bookedSlots);
       if(dates.includes(date)){               //date already exists
-        resObj.bookedSlots=dData.bookedSlots.date;
+        resObj.bookedSlots=dData.bookedSlots[date];
         resObj.dateExists=true;
-        dData.dateExists=true;
+        dData.bookedSlots.dateExists=true;
         }
+      }
+      console.log(dData);
         const newDept = await firebase.firestore()
           .collection('departments')
           .doc(req.body.Department).set(dData); //overwriting the department document
 
+
+console.log(resObj);
     res.render('main/availableSlots',resObj)
 
-  } catch (err) {
+} catch (err) {
     console.log(err);
   }
 
@@ -365,7 +373,7 @@ exports.postAvailableSlots=async (req,res)=>{
 
     let dept = await firebase.firestore()
       .collection('departments')
-      .doc(req.body.department)
+      .doc(req.body.departmentId)
       .get()
 
     let dData = {
@@ -375,26 +383,45 @@ exports.postAvailableSlots=async (req,res)=>{
     let token=0;
 
     if(dData.bookedSlots.justCreated || !dData.bookedSlots.dateExists){
-      dData.bookedSlots.date=[];
-      dData.bookedSlots.date.push(req.body.slot);
+      dData.bookedSlots[date]=[];
+      dData.bookedSlots[date].push(req.body.slot);
       token=1;
     }else{
-       dData.bookedSlots.date.push(req.body.slot);
-       dData.bookedSlots.date.sort();
-       token=dData.bookedSlots.date.findIndex((slot)=>slot===req.body.slot);
+       dData.bookedSlots[date].push(req.body.slot);
+       dData.bookedSlots[date].sort();
+       token=dData.bookedSlots[date].findIndex((slot)=>slot===req.body.slot);
+       token+=1;
+       //a function that get all the tickets having the same department id and date and sets their token accordingly
+       let ticketsRef = await firebase.firestore()
+       .collection('ticket');
+       let tickets=await ticketsRef.where('department', '==',req.body.departmentId)
+       .where('date','==',date).get()
+       if (tickets.empty) {
+         console.log('No matching documents.');
+         return;
+       }
+      tickets.forEach(async (doc) => {
+         let newToken=dData.bookedSlots[date].findIndex((slot)=>slot===doc.data().slot);
+         newToken+=1;
+
+         let ticket=await ticketsRef.doc(doc.id)
+         .update({
+           token:newToken,
+         })
+       });
     }
     dData.bookedSlots.justCreated=false;
     dData.bookedSlots.dateExists=false;
 
     const newDept = await firebase.firestore()
       .collection('departments')
-      .doc(req.body.Department).set(dData); //overwriting the department document
+      .doc(req.body.departmentId).set(dData); //overwriting the department document
 
     let tData = {
       userId: req.body.userId,
       // centre_name: req.body.centre_name,
-      centre_uid: req.body.centreId,
-      department: req.body.Department,
+      centre_uid: req.body.centerId,
+      department: req.body.departmentId,
       date,
       slot:req.body.slot,
       token
@@ -403,12 +430,11 @@ exports.postAvailableSlots=async (req,res)=>{
     let ticket = await firebase.firestore()
       .collection('ticket')
       .add(tData);
-    console.log(req.body);
 
     res.redirect('/booked/' + ticket.id);
 
   } catch (e) {
-    console.log(e.message);
+    console.log(e);
   }
 }
 

@@ -7,21 +7,15 @@
 
 <%- include('./Delta/navbar') %>
 
-   <h2><%=resObj.date%></h2>
+   <h2><%=date%></h2>
 
-     <form class="" action="/availableSlots" method="post">
-           <input type="text" name="date" value="<%=resObj.date%>" style="display: none;">
-           <input type="text" name="center" value="<%=resObj.centerId%>" style="display: none;">
-           <input type="text" name="department" value="<%=resObj.deptId%>" style="display: none;">
-           <input type="text" name="user" value="<%=resObj.userId%>" style="display: none;">
+     <form id="myForm" action="/availableSlots" method="post">
+           <input type="text" name="date" value="<%=date%>" style="display: none;">
+           <input type="text" name="centerId" value="<%=centerId%>" style="display: none;">
+           <input type="text" name="departmentId" value="<%=deptId%>" style="display: none;">
+           <input type="text" name="userId" value="<%=userId%>" style="display: none;">
 
      </form>
-     <footer class="text-center">
-       <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
-         <span class="glyphicon glyphicon-chevron-up"></span>
-       </a><br><br>
-       <p>All Rights Reserved @Excelerentum</p>
-     </footer>
 
      <script>
 
@@ -29,49 +23,62 @@
        dayjs.extend(window.dayjs_plugin_isSameOrBefore);
        dayjs().format();
 
-       let $form=getElementsByTagName('form');
-       let openingTime=dayjs(<%=resObj.openingTime%>,"YYYY-MM-DDTHH:mm");
-       let closingTime=dayjs(<%=resObj.closingTime%>,"YYYY-MM-DDTHH:mm");
-       let time=openingTime;
-       let bookedSlots=[];
+function load() {
 
-      while(time.isSameOrBefore(closingTime)){
+
+       let $form=document.getElementById('myForm')
+       let openingTime=dayjs("<%=openingTime%>","YYYY-MM-DDTHH:mm");
+       let closingTime=dayjs("<%=closingTime%>","YYYY-MM-DDTHH:mm");
+       let time=openingTime;
+       let bookedSlotss=[];
+       let condition=time.isSameOrBefore(closingTime)
+
+      while(condition){
 
        let button=document.createElement("BUTTON");
+       let hour=time.$H;
+       let minute=time.$m;
 
        if(time.$H<10){
-         time.$H="0"+time.$H;
+         hour="0"+time.$H;
        }
-       if(time.$M<10){
-         time.$M="0"+time.$M;
+       if(time.$m<10){
+         minute="0"+time.$m;
        }
 
-       let text=time.$H+":"+time.$m;
+       let text=hour+":"+minute;
 
        let value=time.$y+"-"+time.$M+"-"+time.$D+"T"+text;
 
        button.value=value;
 
-       button.innerHTML=text;
+       var textnode = document.createTextNode(text);
+
+       button.append(textnode);
 
        button.type="submit";
 
        button.setAttribute('name','slot');
 
-       if(<%=resObj.dateExists%>){
 
-        bookedSlots=<%=resObj.bookedSlots%>
+       if(<%=dateExists%>){
 
-        if(bookedSlots.includes(value)) {
+        bookedSlotss=<%- JSON.stringify(bookedSlots) %>;
+
+        if(bookedSlotss.includes(value)) {
           button.setAttribute('disabled','disabled');
             }
        }
-       $form.appendChild(button);
+       $form.append(button);
 
-       time.add(averageTime,'m');
+       time=time.add(<%=averageTime%>,'m');
+       condition=time.isSameOrBefore(closingTime)
+       console.log(time,condition);
 
      }
 
+   }
+   load();
 
      </script>
 
