@@ -20,6 +20,7 @@ router.post('/submitCenter', mainController.postCenter);
 router.post('/availableSlots',mainController.postAvailableSlots);
 
 router.post('/signup/:uid', isAuth, mainController.postUser);
+router.post('/cancelAppointment',isAuth,mainController.deleteTicket);
 
 
 module.exports = router;

@@ -204,6 +204,9 @@
       line-height: 2.3;
       margin: 9px;
     }
+    .canBtn{
+
+    }
   </style>
 </head>
 
@@ -221,8 +224,10 @@
           </button>
         </div>
         <div class="modal-footer">
+          <form  action="/cancelAppointment" method="post">
+            <button type="submit" class="btn btn-success" id="ticketId" name="ticketId">Yes</button>
+          </form>
           <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-          <button type="button" class="btn btn-success">Yes</button>
         </div>
       </div>
     </div>
@@ -308,7 +313,9 @@
               <!--date of Appointment-->
               <p>Department: <%=req_ticket[i].department%></p>
               <p>Centre: <%=myCntr[i]%></p>
-              <button class="btn btn-danger" data-toggle="modal" data-target="#exampleModal">Cancel Appointment</button>
+              <form action="/cancelAppointment" method="post">
+                <button class="btn btn-danger canBtn" type="submit" value="<%=req_ticket[i].id%>" name="ticketId">Cancel Appointment</button>
+              </form>
             </div>
           </div>
         </div>
@@ -369,6 +376,17 @@ $(document).ready(function(){
     } // End if
   });
 })
+
+/*const canBtn=document.getElementsByClassName('canBtn');
+const subBtn=document.getElementById('ticketId');
+console.log(canBtn);
+for(int i=0;i<canBtn.length;i++) {
+  canBtn[i].addEventListener('click',()=>{
+    console.log(btn);
+    subBtn.value=canBtn[i].value;
+  });
+}
+*/
 </script>
 
 </body>

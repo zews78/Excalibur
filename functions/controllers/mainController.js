@@ -4,7 +4,7 @@ const {
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
-const update = require('../utils/update');
+const { updateToken,updateSlots } = require('../utils/update');
 
 const nodemailer = require('nodemailer');
 
@@ -283,7 +283,7 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
     console.log(ticketObject);
     // console.log(RegUsers);
 
-    update(req.body.ticketId); //we are updating the centre current token using centreId and ticketId
+    updateToken(req.body.ticketId); //we are updating the centre current token using centreId and ticketId
     // console.log(req.body.ticketId);
     res.render('main/CentreEmploy.ejs', {
       Tickets,
@@ -321,8 +321,6 @@ exports.postTicket = async (req, res) => {
     let openingTime=date+"T"+center.data().openingTime;
     let closingTime=date+"T"+center.data().closingTime
 
-
-  //  let absoluteClosingTimes =parseInt(center.data().closingTime.slice(0, 2)) + parseInt(center.data().closingTime.slice(3)) / 60;
 
     let resObj={
       pageTitle:'Available Slots',
@@ -391,25 +389,9 @@ exports.postAvailableSlots=async (req,res)=>{
        dData.bookedSlots[date].sort();
        token=dData.bookedSlots[date].findIndex((slot)=>slot===req.body.slot);
        token+=1;
-       //a function that get all the tickets having the same department id and date and sets their token accordingly
-       let ticketsRef = await firebase.firestore()
-       .collection('ticket');
-       let tickets=await ticketsRef.where('department', '==',req.body.departmentId)
-       .where('date','==',date).get()
-       if (tickets.empty) {
-         console.log('No matching documents.');
-         return;
-       }
-      tickets.forEach(async (doc) => {
-         let newToken=dData.bookedSlots[date].findIndex((slot)=>slot===doc.data().slot);
-         newToken+=1;
 
-         let ticket=await ticketsRef.doc(doc.id)
-         .update({
-           token:newToken,
-         })
-       });
     }
+    updateSlots(dData,req.body.departmentId,date);  //to update the slots of all the other tickets
     dData.bookedSlots.justCreated=false;
     dData.bookedSlots.dateExists=false;
 
@@ -611,6 +593,42 @@ exports.postUser = async (req, res) => {
       .collection('users').doc(req.params.uid).update(userData);
 
     res.redirect('/');
+  } catch (e) {
+    console.log(e);
+  }
+}
+exports.deleteTicket = async (req,res) =>{
+  try {
+    const auth = (await isAuth(req))[0];
+    const ticketId=req.body.ticketId;
+    console.log(req.body);
+    const ticket=await firebase.firestore()
+          .collection('ticket').doc(ticketId).get();
+    let tData={
+      ...ticket.data()
+    }
+    let dept = await firebase.firestore()
+      .collection('departments')
+      .doc(tData.department)
+      .get()
+
+    let dData = {
+      ...dept.data(),
+    }
+    const index=dData.bookedSlots[tData.date].findIndex((slot)=>slot===tData.slot);
+    dData.bookedSlots[tData.date].splice(index,1);
+    dData.bookedSlots[tData.date].sort();
+    updateSlots(dData,tData.department,tData.date);
+
+    const newDept = await firebase.firestore()
+      .collection('departments')
+      .doc(tData.department).set(dData); //overwriting the department document
+
+      const res = await ticket.delete();
+
+      res.redirect('/');
+
+
   } catch (e) {
     console.log(e);
   }
