@@ -607,6 +607,7 @@ exports.deleteTicket = async (req,res) =>{
     let tData={
       ...ticket.data()
     }
+    console.log(tData.date);
     let dept = await firebase.firestore()
       .collection('departments')
       .doc(tData.department)
@@ -624,7 +625,8 @@ exports.deleteTicket = async (req,res) =>{
       .collection('departments')
       .doc(tData.department).set(dData); //overwriting the department document
 
-      const res = await ticket.delete();
+      const re = await firebase.firestore()
+            .collection('ticket').doc(ticketId).delete();
 
       res.redirect('/');
 

@@ -32,10 +32,11 @@ exports.getUserProfile = async (req, res) => {
     if (!reqTicket.empty) {
       reqTicket.forEach(ticket => {
         let ticketData = ticket.data();
+        ticketData.id=ticket.id;
         my_centres.push(ticketData.centre_uid);
         req_ticket.push(ticketData);
 
-        // ticketData.id = []        
+        // ticketData.id = []
         QRCode.toDataURL(ticket.id, function(err, url) {
           //'url' stores the url of the generated qr code
           ticketData.qrcode = url;
