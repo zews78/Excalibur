@@ -21,6 +21,9 @@ router.post('/availableSlots',mainController.postAvailableSlots);
 
 router.post('/signup/:uid', isAuth, mainController.postUser);
 router.post('/cancelAppointment',isAuth,mainController.deleteTicket);
+router.post('/stopQueue',isAuth,mainController.stopQueue);
+router.post('/restartQueue',isAuth,mainController.restartQueue);
+
 
 
 module.exports = router;

@@ -4,7 +4,7 @@ const {
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
-const { updateToken,updateSlots } = require('../utils/update');
+const { updateToken,updateSlots,stopQueue,restartQueue } = require('../utils/update');
 
 const nodemailer = require('nodemailer');
 
@@ -276,7 +276,8 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
       // currentTicket:ticket,
       token: req.body.ticketId,
       centre_name: reqCentre.data().centre_name,
-      centre_location: reqCentre.data().location
+      centre_location: reqCentre.data().location,
+  //    deapartment:                               only display tickets with same date and dept id and pass dept id
     }
     // console.log(tickets,'naah');
     console.log(Tickets, "ordered aana chaiye")
@@ -348,7 +349,9 @@ exports.postTicket = async (req, res) => {
         resObj.bookedSlots=dData.bookedSlots[date];
         resObj.dateExists=true;
         dData.bookedSlots.dateExists=true;
-        }
+      }else{
+        dData.bookedSlots.dateExists=false;
+      }
       }
       console.log(dData);
         const newDept = await firebase.firestore()
@@ -379,8 +382,8 @@ exports.postAvailableSlots=async (req,res)=>{
     }
     let date=req.body.date;
     let token=0;
-
-    if(dData.bookedSlots.justCreated || !dData.bookedSlots.dateExists){
+console.log(dData.bookedSlots);
+    if(dData.bookedSlots.justCreated || !(dData.bookedSlots.dateExists)){
       dData.bookedSlots[date]=[];
       dData.bookedSlots[date].push(req.body.slot);
       token=1;
@@ -633,5 +636,26 @@ exports.deleteTicket = async (req,res) =>{
 
   } catch (e) {
     console.log(e);
+  }
+}
+
+exports.stopQueue=  (req,res)=>{
+const response=stopQueue(req.body.department);
+if(response.status){
+  console.log(response);
+  res.send({message:response.status})
+}
+else{
+  res.send({error:response.error})
+}
+}
+exports.restartQueue= (req,res)=>{
+  const response=restartQueue(req.body.department);
+  if(response.status){
+    console.log(response);
+    res.send({message:response.status})
+  }
+  else{
+    res.send({error:response.error})
   }
 }
