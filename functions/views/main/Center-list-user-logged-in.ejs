@@ -59,17 +59,13 @@
   <div class="container w-100 mt-3 mb-0 p-0">
     <ul id="categories" class="m-0 p-0 w-100">
 
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Banks</button>
-      </li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Hospitals</button>
-      </li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Government
-          Offices</button></li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Restraunt</button>
-      </li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)">Salons/Spas</button></li>
-
-
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="All">All</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Bank">Banks</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Hospital">Hospitals</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Government Offices">Government
+      Offices</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Restraunt">Restraunt</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Salon">Salons/Spas</button></li>
     </ul>
   </div>
   <div class="container w-100  mx-auto mt-0" style="background-color: rgba(41, 43, 44,0.9);">
@@ -99,6 +95,7 @@
           </ul>
         </li>
         <li class="list-group-item"><i class='fas fa-phone fa-rotate-90'></i> +91 0123456789</li>
+        <li class="list-group-item type" style="display:none;"><%=Cntr[i].domain%></li>
       </ul>
       <div class="card-body">
         <a href="/center/<%= Cntr[i].id %>" class="btn w-100" style="background-color: rgba(41, 43, 44,0.9);color:white;">Book Now</a>
@@ -120,6 +117,20 @@
 
       }
       a.classList.add('animation1')
+
+      let category=a.value;
+      let card=document.getElementsByClassName('Cards');
+      let type=document.getElementsByClassName('type');
+
+      for(let i=0;i<card.length;i++){
+        card[i].style.display="inline-block";
+      }
+      for(let i=0;i<card.length;i++){
+        if(category==="All"){}
+        else if(category!==type[i].innerHTML){
+        card[i].style.display="none";
+      }
+    }
     }
   </script>
 
