@@ -1,11 +1,11 @@
 
-var admin = require("firebase-admin");
+const admin = require("firebase-admin");
 
-var serviceAccount = require("./serviceAccountKey.json");
+const serviceAccount = require("./serviceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://excelerentum.firebaseio.com"
+  databaseURL: 'https://excellerentum.firebaseio.com'
 });
 
 module.exports = admin;
