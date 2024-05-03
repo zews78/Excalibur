@@ -173,10 +173,12 @@
     .form-control {
       border-radius: 0;
     }
+
     textarea {
       resize: none;
     }
-    .btnAuth{
+
+    .btnAuth {
       line-height: 2.3;
       margin: 9px;
     }
@@ -188,7 +190,8 @@
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -224,30 +227,32 @@
           <li><a href="/register">REGISTER</a></li>
 
           <% if(auth) { %>
-          <li>
+            <li>
 
-            <form action="/logout" method="POST">
-              <button type="submit" class="btnAuth">Logout</button>
-            </form>
-          </li>
-          <% } else { %>
-          <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+              <form action="/logout" method="POST">
+                <button type="submit" class="btnAuth">Logout</button>
+              </form>
+            </li>
+            <% } else { %>
+              <li><a href="/signup"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
 
-          <li>
-            <form action="/login" method="GET">
-              <button type="submit" class="btnAuth">Login</button>
-            </form>
-          </li>
-          <% } %>
+              <li>
+                <form action="/login" method="GET">
+                  <button type="submit" class="btnAuth">Login</button>
+                </form>
+              </li>
+              <% } %>
 
-          <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
+                <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
         </ul>
       </div>
     </div>
   </nav>
 
   <div class="container-fluid">
-    <h2><B><%=cntr_data.centre_name%></b></h2>
+    <h2><B>
+        <%=cntr_data.centre_name%>
+      </b></h2>
     <p>Click on below links to learn more about the centre.</p>
 
     <ul class="nav nav-tabs">
@@ -267,8 +272,12 @@
             <img src="<%=cntr_data.images[0]%>" class="img-responsive" alt="Photo" height="245" width="255"><br>
           </div>
           <div class="col-md-4">
-            <p> <b>Domain:</b> <%=cntr_data.domain%></p>
-            <p><b>Overview:</b><%=cntr_data.centre_desc%> </p>
+            <p> <b>Domain:</b>
+              <%=cntr_data.domain%>
+            </p>
+            <p><b>Overview:</b>
+              <%=cntr_data.centre_desc%>
+            </p>
             <p><b>Established:</b> 1997</p>
             <h3><b>Opening Hours</b></h3>
             <p><b>The establishment is functional on</b></p>
@@ -282,8 +291,12 @@
           </div>
           <div class="col-sm-2">
             <h3><b>Contact Information</b></h3>
-            <p><b>Address:</b><%=cntr_data.location%></p>
-            <p><b>Phone:</b><%=cntr_data.PhoneNo%></p>
+            <p><b>Address:</b>
+              <%=cntr_data.location%>
+            </p>
+            <p><b>Phone:</b>
+              <%=cntr_data.PhoneNo%>
+            </p>
             <p><b>Email:</b>email@gmail.com</p>
             <!-- <p><%=cntr_data.id%></p> -->
           </div>
@@ -291,105 +304,113 @@
       </div>
       <div id="menu2" class="tab-pane fade">
         <!-- <h3><b>Fill Out The Form</b></h3> -->
-          <!-- <h2>Select Department</h2> -->
-          <div class="col-sm-7">
-            <div class="row">
-              <div class="col-sm-12 ">
-                <div class="panel panel-default text-left">
-                  <div class="panel-body bg-2">
-                    <p><h2>Book your Appointment</h2></p>
-                  </div>
+        <!-- <h2>Select Department</h2> -->
+        <div class="col-sm-7">
+          <div class="row">
+            <div class="col-sm-12 ">
+              <div class="panel panel-default text-left">
+                <div class="panel-body bg-2">
+                  <p>
+                  <h2>Book your Appointment</h2>
+                  </p>
                 </div>
               </div>
             </div>
           </div>
-            <div class="row">
-              <div class="col-sm-12 ">
-                <div class="panel panel-default text-left">
-                  <div class="panel-body bg-2">
-                    <form method="POST" action="/appointment">
-                      <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
-                      <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
+        </div>
+        <div class="row">
+          <div class="col-sm-12 ">
+            <div class="panel panel-default text-left">
+              <div class="panel-body bg-2">
+                <form method="POST" action="/appointment">
+                  <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
+                  <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
 
-                      <div class="form-group">
-                        <label for="exampleFormControlInput1">Date</label>
-                        <input type="datetime-local" class="form-control" id="exampleFormControlInput2" name="date">
-                      </div>
+                  <div class="form-group">
+                    <label for="exampleFormControlInput1">Date</label>
+                    <input type="datetime-local" class="form-control" id="exampleFormControlInput2" name="date">
+                  </div>
 
-                        <div class="form-group">
-                        
-                        </div>
+                  <div class="form-group">
+
+                  </div>
 
                   <div class="form-group">
                     <label for="exampleFormControlInput1">Select Department</label>
-                    <select  name="Department">
-                      <option value="<%=reqDept.dept_name%>"><%=reqDept.dept_name%></option>
+                    <select name="Department">
+                      <% for(var dept in reqDept){ %>
+                      <option value="<%=reqDept[dept]%>">
+                        <%=reqDept[dept]%>
+                      </option>
+                      <% } %>
                     </select>
                   </div>
-  <button type="submit" class="btn btn-primary mt-5" style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
-                      </form>
+                  <button type="submit" class="btn btn-primary mt-5"
+                    style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
+                </form>
 
-                  </div>
-                </div>
               </div>
             </div>
           </div>
+        </div>
+      </div>
 
-          <div id="menu4" class="tab-pane fade">
+      <div id="menu4" class="tab-pane fade">
 
-              <div class="col-sm-7">
-                <form class="" action="/center/centerEymployees/<%= cntr_data.id%>" method="GET">  <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
-                <div class="form-group">
-                  <label for="exampleFormControlTextarea1">Enter Center email</label>
-                  <input type="email" >
-               </div>
-               <div class="form-group">
-                 <label for="exampleFormControlTextarea1">password</label>
-                 <input type="password">
-              </div>
-              <button type="submit" name="button">Submit</button>
-                  </form>
-              </div>
+        <div class="col-sm-7">
+          <form class="" action="/center/centerEymployees/<%= cntr_data.id%>" method="GET">
+            <!--sharique yahan :centerId ki jagah center id kahan se aaegi?-->
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Enter Center email</label>
+              <input type="email">
             </div>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">password</label>
+              <input type="password">
+            </div>
+            <button type="submit" name="button">Submit</button>
+          </form>
+        </div>
+      </div>
 
-  <!-- Footer -->
-  <footer class="text-center">
-    <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
-      <span class="glyphicon glyphicon-chevron-up"></span>
-    </a><br><br>
-    <p>All Rights Reserved @Excelerentum</p>
-  </footer>
+      <!-- Footer -->
+      <footer class="text-center">
+        <a class="up-arrow" href="#myPage" data-toggle="tooltip" title="TO TOP">
+          <span class="glyphicon glyphicon-chevron-up"></span>
+        </a><br><br>
+        <p>All Rights Reserved @Excelerentum</p>
+      </footer>
 
-  <script>
-    $(document).ready(function () {
-      // Initialize Tooltip
-      $('[data-toggle="tooltip"]').tooltip();
+      <script>
+        $(document).ready(function () {
+          // Initialize Tooltip
+          $('[data-toggle="tooltip"]').tooltip();
 
-      // Add smooth scrolling to all links in navbar + footer link
-      $(".navbar a, footer a[href='#myPage']").on('click', function (event) {
+          // Add smooth scrolling to all links in navbar + footer link
+          $(".navbar a, footer a[href='#myPage']").on('click', function (event) {
 
-        // Make sure this.hash has a value before overriding default behavior
-        if (this.hash !== "") {
+            // Make sure this.hash has a value before overriding default behavior
+            if (this.hash !== "") {
 
-          // Prevent default anchor click behavior
-          event.preventDefault();
+              // Prevent default anchor click behavior
+              event.preventDefault();
 
-          // Store hash
-          var hash = this.hash;
+              // Store hash
+              var hash = this.hash;
 
-          // Using jQuery's animate() method to add smooth page scroll
-          // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
-          $('html, body').animate({
-            scrollTop: $(hash).offset().top
-          }, 900, function () {
+              // Using jQuery's animate() method to add smooth page scroll
+              // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
+              $('html, body').animate({
+                scrollTop: $(hash).offset().top
+              }, 900, function () {
 
-            // Add hash (#) to URL when done scrolling (default click behavior)
-            window.location.hash = hash;
+                // Add hash (#) to URL when done scrolling (default click behavior)
+                window.location.hash = hash;
+              });
+            } // End if
           });
-        } // End if
-      });
-    })
-  </script>
+        })
+      </script>
 
 </body>
 

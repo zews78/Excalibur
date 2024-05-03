@@ -171,12 +171,12 @@ exports.getOneCenter = async (req, res) => {
 		// let Depart = [];
 		// for(i=0; i< center.data().avDept.length; i++){
 		// 	let dept = center.data().avDept[i];
-			let reqDept = await firebase.firestore()
-				.collection('departments')
-				.doc(dept)
-				.get();
+		// 	let reqDept = await firebase.firestore()
+		// 		.collection('departments')
+		// 		.doc(dept)
+		// 		.get();
 		// 	Depart.push(reqDept.data());
-		// 	console.log(Depart);
+		// 	console.log(dept);
 		// }
 		// console.log(Depart);
 
@@ -209,7 +209,7 @@ exports.getOneCenter = async (req, res) => {
 				userId,
 				id: centreId
 			},
-			reqDept: reqDept.data(),
+			reqDept: center.data().avDept,
 			pageTitle: 'Centre-List',
 			auth
 
