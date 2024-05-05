@@ -31,7 +31,7 @@ exports.getCenter = async (req, res) => {
         ...doc.data()
       });
     });
-    console.log(Cntr);
+    // console.log(Cntr);
     res.render('main/Center-list-user-logged-in.ejs', {
       auth,
       pageTitle: 'Center-list',
@@ -175,11 +175,11 @@ exports.getOneCenter = async (req, res) => {
 
 
 
-    console.log({
-      ...center.data(),
-      userId: userId,
-      id: centreId
-    });
+    // console.log({
+    //   ...center.data(),
+    //   userId: userId,
+    //   id: centreId
+    // });
     // console.log(req_dept);
     // console.log(req.params.centerId);
 
@@ -280,8 +280,8 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
   //    deapartment:                               only display tickets with same date and dept id and pass dept id
     }
     // console.log(tickets,'naah');
-    console.log(Tickets, "ordered aana chaiye")
-    console.log(ticketObject);
+    // console.log(Tickets, "ordered aana chaiye")
+    // console.log(ticketObject);
     // console.log(RegUsers);
 
     updateToken(req.body.ticketId); //we are updating the centre current token using centreId and ticketId
@@ -339,7 +339,7 @@ exports.postTicket = async (req, res) => {
 
 
     if(!dData.bookedSlots){                 //no date exists
-      console.log("this shit is running");
+      // console.log("this shit is running");
       dData.bookedSlots={
         justCreated:true
       };
@@ -353,13 +353,13 @@ exports.postTicket = async (req, res) => {
         dData.bookedSlots.dateExists=false;
       }
       }
-      console.log(dData);
+      // console.log(dData);
         const newDept = await firebase.firestore()
           .collection('departments')
           .doc(req.body.Department).set(dData); //overwriting the department document
 
 
-console.log(resObj);
+// console.log(resObj);
     res.render('main/availableSlots',resObj)
 
 } catch (err) {
@@ -382,7 +382,7 @@ exports.postAvailableSlots=async (req,res)=>{
     }
     let date=req.body.date;
     let token=0;
-console.log(dData.bookedSlots);
+// console.log(dData.bookedSlots);
     if(dData.bookedSlots.justCreated || !(dData.bookedSlots.dateExists)){
       dData.bookedSlots[date]=[];
       dData.bookedSlots[date].push(req.body.slot);
@@ -538,15 +538,14 @@ exports.postCenter = async (req, res) => {
     const auth = (await isAuth(req))[0];
     const centerData = {};
     const images = [];
-    images.push(req.body.img);
+    // images.push(req.body.img);
     centerData.domain = req.body.domain;
     centerData.centre_name = req.body.centerName;
     centerData.centre_desc = req.body.desc;
     centerData.PhoneNo = req.body.pNo;
     centerData.location = req.body.address; // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
     /*i dont know how to store images*/
-    centerData.images = ['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
-
+    centerData.images = req.body.img_url == '' ? req.body.img_url : JSON.parse(req.body.img_url);
     centerData.openingTime = req.body.openingTime;
     centerData.closingTime = req.body.closingTime;
 
@@ -560,7 +559,7 @@ exports.postCenter = async (req, res) => {
       department = await firebase.firestore()
         .collection('departments').doc();
       id = department.id;
-      console.log(id);
+      // console.log(id);
       centerData.avDept.push(id);
       dData.dept_name = req.body.department[i];
       dData.currentToken = "Not Assigned";
@@ -604,13 +603,13 @@ exports.deleteTicket = async (req,res) =>{
   try {
     const auth = (await isAuth(req))[0];
     const ticketId=req.body.ticketId;
-    console.log(req.body);
+    // console.log(req.body);
     const ticket=await firebase.firestore()
           .collection('ticket').doc(ticketId).get();
     let tData={
       ...ticket.data()
     }
-    console.log(tData.date);
+    // console.log(tData.date);
     let dept = await firebase.firestore()
       .collection('departments')
       .doc(tData.department)
@@ -642,7 +641,7 @@ exports.deleteTicket = async (req,res) =>{
 exports.stopQueue=  (req,res)=>{
 const response=stopQueue(req.body.department);
 if(response.status){
-  console.log(response);
+  // console.log(response);
   res.send({message:response.status})
 }
 else{
@@ -652,7 +651,7 @@ else{
 exports.restartQueue= (req,res)=>{
   const response=restartQueue(req.body.department);
   if(response.status){
-    console.log(response);
+    // console.log(response);
     res.send({message:response.status})
   }
   else{
