@@ -1,7 +1,11 @@
+
+
 const { request } = require('express');
 const firebase = require('../firebase');
 const isAuth = require('../utils/isAuth');
 const QRCode = require('qrcode');
+
+
 
 // const keywordGenerator = require('../utils/keywordGenerator');
 
@@ -381,27 +385,46 @@ exports.getBooked = async (req, res) => {
 };
 
 exports.postCenter = async (req, res) => {
+	// console.log({req});
+	// const bucket = firebase.storage().bucket();
+	// const blob = bucket.file(req.file.originalname);
+	// const blobStream = blob.createWriteStream();
+  
+	// blobStream.on('error', err => {
+	//   console.error(err);
+	//   res.status(500).send(err);
+	// });
+  
+	// blobStream.on('finish', async () => {
+	//   const publicUrl = format(
+	// 	`https://storage.googleapis.com/${bucket.name}/${blob.name}`
+	//   );
 	try {
-		const auth = (await isAuth(req))[0];
+		// console.log(req);
+		// const auth = (await isAuth(req))[0];
 		const centerData = {};
 		const images = [];
-		images.push(req.body.img);
+		// images.push(publicUrl);
 		centerData.doamin = req.body.domain;
 		centerData.centre_name = req.body.centerName;
 		centerData.centre_desc = req.body.desc;
 		centerData.PhoneNo = req.body.pNo;
 		centerData.location = req.body.address;  // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
 		/*i dont know how to store images*/
-		centerData.images = ['https://firebasestorage.googleapis.com/v0/b/excelerentum.appspot.com/o/geetanjali_salon.jpg?alt=media&token=9640d38e-51b7-47b5-9591-98d09e5ea9c7'];
+		centerData.images = req.body.img_url == '' ? req.body.img_url : JSON.parse(req.body.img_url)
 		centerData.avDept = req.body.department;
-
+		// console.log(publicUrl);
+		// console.log({centerData});
 		await firebase.firestore()
 			.collection('centres').add(centerData);
 
-		let tickets = [];         //find by finding filtering tickets by center id and date
+		// let tickets = [];         //find by finding filtering tickets by center id and date
 
 		res.redirect('/');
 	} catch (err) {
 		console.log(err);
+		res.status(500).send(err);
 	}
-}
+// 	blobStream.end(req.file.buffer);
+// });
+};

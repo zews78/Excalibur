@@ -200,7 +200,7 @@
     <div class="col-lg-6 mt-2 position">
       <h1 class="bg-primary  p-2">Register With Us</h1>
       <div id="form" class="conatiner w-100 mx-auto bg-primary p-3">
-        <form action="/submitCenter" method="POST">
+        <form method="POST" action="/submitCenter" enctype="multipart/form-data">
           <div class="form-group">
             <label for="exampleFormControlInput1">Center Name</label>
             <input type="text" class="form-control" name="centerName">
@@ -227,28 +227,34 @@
               <option value='Salons/Spa'>Salons/Spas</option>
             </select>
           </div>
-          <% let a=2; /*value of above category input*/ if(a==2){ //for hospitals %>
-            <div class="form-group">
-              <label for="exampleFormControlSelect2">Select Departments</label>
-              <select multiple class="form-control" id="exampleFormControlSelect2" name="department">
-                <option>Radiology</option>
-                <option>X-ray center</option>
-                <option>OPD</option>
-                <option>CT-scan</option>
-              </select>
+          <% let a=2 /*value of above category input*/
+          if(a==2){ //for hospitals %>
+          <div class="form-group">
+            <label for="exampleFormControlSelect2">Select Departments</label>
+            <select multiple class="form-control" id="exampleFormControlSelect2" name="department">
+              <option>Radiology</option>
+              <option>X-ray center</option>
+              <option>OPD</option>
+              <option>CT-scan</option>
+            </select>
+          </div>
+          <%}else{%>
+          <div class="form-group">
+            <label for="exampleFormControlInput1">Number of Counters</label>
+            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="counterNo">
+          </div>
+          <%}%>
+          <input type="text" id="img_url" style="display: none;" value="" name="img_url">
+          <div class="custom-file">
+            <label class="custom-file-label" for="customFile">Upload a picture</label>
+            <input type="file" class="custom-file-input" id="addProductImages" name="img" accept=".jpg,.png" multiple data-show-upload="true" data-show-caption="true">
+            <label class="custom-file-label" for="customFile"><i class="fas fa-upload"></i>Upload</label>
+            <div style="display: flex;"><progress style="display: none; margin: 3px;" value="0"
+                    max="100" id="uploader">0%</progress>
+                <p id="prog_shot"></p>
             </div>
-            <%}else{%>
-              <div class="form-group">
-                <label for="exampleFormControlInput1">Number of Counters</label>
-                <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="counterNo">
-              </div>
-              <%}%>
-                <div class="custom-file">
-                  <label class="custom-file-label" for="customFile">Upload a picture</label>
-                  <input type="file" class="custom-file-input" id="customFile" name="img">
-                </div>
-                <button type="submit" class="rounded-pill p-2 mt-3">Submit<i
-                    class="fas fa-arrow-right mx-2"></i></button>
+          </div>
+          <button type="submit" class="rounded-pill p-2 mt-3">Submit<i class="fas fa-arrow-right mx-2"></i></button>
         </form>
       </div>
     </div>
@@ -260,10 +266,106 @@
     <p>All Rights Reserved @Excelerentum</p>
   </footer>
 
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+
   <script>
+<<<<<<< HEAD
     $(document).ready(function () {
       // Initialize Tooltip
       $('[data-toggle="tooltip"]').tooltip();
+=======
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+  apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
+  authDomain: "excellerentum.firebaseapp.com",
+  projectId: "excellerentum",
+  storageBucket: "excellerentum.appspot.com",
+  messagingSenderId: "1051021172847",
+  appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
+  measurementId: "G-TZCL141YVN"
+};
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+</script>
+
+  <script>
+    JSON.stringify(document.getElementById('img_url').value);
+    // JSON.stringify(document.getElementById('specStore').value);
+
+    var img_arr = [];
+    // var i = 0;
+    var fileButton = document.getElementById('addProductImages');
+    var uploader = document.getElementById('uploader');
+    var getId = document.getElementById('prog_shot');
+
+
+    fileButton.addEventListener("change", function(e) {
+        // var i = 0;
+        console.log("i was detected");
+        // var getId = document.getElementById(`prog_shot${i}`);
+        getId.innerText = 'Uploading...';
+        getId.style.color = '#e76f51';
+        uploader.style.display = 'block';
+        //get file 
+        var file = e.target.files[0];
+
+        // create a storage ref
+        var storageRef = firebase.storage().ref('images/' + file.name);
+
+        //upload files
+        var task = storageRef.put(file);
+
+        // console.log(file);
+        // console.log(task);
+        console.log(file.name,"here");
+        //update progress bar
+        task
+            .then(snapshot => snapshot.ref.getDownloadURL())
+            .then((url) => {
+                console.log(url);
+                img_arr.push(url);
+                $('#img_name').append(`<div style="border:1px solid #C3E3FD;color:#011627;margin:4px;padding:1px;border-radius:2px">${file.name}</div>`);
+                console.log(img_arr);
+                document.getElementById('img_url').value = JSON.stringify(img_arr);
+                console.log(document.getElementById('img_url').value);
+
+
+                // document.querySelector('#someImageTagID').src = url;
+            })
+            .catch(console.error);
+        task.on('state_changed',
+            function progress(snapshot) {
+                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                uploader.value = percentage;
+                if (percentage == 100) {
+                    // var getId = document.getElementById(`prog_shot${i}`);
+                    getId.innerText = "Done";
+                    getId.style.color = 'green';
+                }
+
+            },
+            function error(err) {
+                console.log(err);
+            },
+            function complete() {
+                console.log('completed successfully');
+            })
+            // i++;
+    });
+
+
+  $(document).ready(function(){
+    // Initialize Tooltip
+    $('[data-toggle="tooltip"]').tooltip();
+>>>>>>> b3032e84a0b4849d4b0b749bfb12c8bb3bb888e6
 
       // Add smooth scrolling to all links in navbar + footer link
       $(".navbar a, footer a[href='#myPage']").on('click', function (event) {

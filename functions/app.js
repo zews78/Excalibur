@@ -7,10 +7,11 @@ const app = express();
 // Setting public path
 app.use(express.static('public'));
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({extended: false}));
 // parse application/json
 app.use(bodyParser.json());
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({extended: true}));
 // parse cookies
 app.use(cookieParser());
 
