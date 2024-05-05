@@ -60,12 +60,12 @@
     <ul id="categories" class="m-0 p-0 w-100">
 
       <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="All">All</button></li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Bank">Banks</button></li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Hospital">Hospitals</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Banks">Banks</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Hospitals">Hospitals</button></li>
       <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Government Offices">Government
       Offices</button></li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Restraunt">Restraunt</button></li>
-      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Salon">Salons/Spas</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Restraunts">Restraunts</button></li>
+      <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)" value="Salons/Spas">Salons/Spas</button></li>
     </ul>
   </div>
   <div class="container w-100  mx-auto mt-0" style="background-color: rgba(41, 43, 44,0.9);">
@@ -119,6 +119,7 @@
       a.classList.add('animation1')
 
       let category=a.value;
+      console.log(category);
       let card=document.getElementsByClassName('Cards');
       let type=document.getElementsByClassName('type');
 

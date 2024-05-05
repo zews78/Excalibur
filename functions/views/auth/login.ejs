@@ -90,14 +90,13 @@
       <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
       <script>
         const firebaseConfig = {
-          apiKey: "AIzaSyCSDj6vuly7023bfbt9Z6xQ7NAZ63SKVDc",
-          authDomain: "excelerentum.firebaseapp.com",
-          databaseURL: "https://excelerentum.firebaseio.com",
-          projectId: "excelerentum",
-          storageBucket: "excelerentum.appspot.com",
-          messagingSenderId: "645258468237",
-          appId: "1:645258468237:web:8b81d9cd0c5c0d21617bc4",
-          measurementId: "G-TW401BBZ7Z",
+          apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
+          authDomain: "excellerentum.firebaseapp.com",
+          projectId: "excellerentum",
+          storageBucket: "excellerentum.appspot.com",
+          messagingSenderId: "1051021172847",
+          appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
+          measurementId: "G-TZCL141YVN"
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
@@ -111,7 +110,7 @@
               xhr.open("POST", url);
               xhr.setRequestHeader("Content-Type", "application/json");
               xhr.send(JSON.stringify(authResult));
-              xhr.onreadystatechange = function() {
+              xhr.onreadystatechange = function () {
                 if (xhr.readyState == XMLHttpRequest.DONE) {
                   window.location = xhr.responseURL;
                 }
@@ -127,7 +126,7 @@
               badge: "bottomright", // ' bottomright' or 'inline' applies to invisible.
             },
             defaultCountry: "IN",
-          }, ],
+          },],
         };
 
         var ui = new firebaseui.auth.AuthUI(firebase.auth());
@@ -145,12 +144,12 @@
 </footer>
 
 <script>
-  $(document).ready(function() {
+  $(document).ready(function () {
     // Initialize Tooltip
     $('[data-toggle="tooltip"]').tooltip();
 
     // Add smooth scrolling to all links in navbar + footer link
-    $(".navbar a, footer a[href='#myPage']").on('click', function(event) {
+    $(".navbar a, footer a[href='#myPage']").on('click', function (event) {
       // Make sure this.hash has a value before overriding default behavior
       if (this.hash !== "") {
         // Prevent default anchor click behavior
@@ -161,7 +160,7 @@
         // The optional number (900) specifies the number of milliseconds it takes to scroll to the specified area
         $('html, body').animate({
           scrollTop: $(hash).offset().top
-        }, 900, function() {
+        }, 900, function () {
 
           // Add hash (#) to URL when done scrolling (default click behavior)
           window.location.hash = hash;
