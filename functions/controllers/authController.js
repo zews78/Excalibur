@@ -26,7 +26,7 @@ exports.getLogin = async (req, res) => {
     if (global.redirectTo) {
       res.redirect(global.redirectTo);
     } else {
-      res.redirect('/');
+      res.redirect('/center');
     }
   }
   // }

@@ -31,7 +31,7 @@ exports.getCenter = async (req, res) => {
         ...doc.data()
       });
     });
-    // console.log(Cntr);
+    console.log(Cntr);
     res.render('main/Center-list-user-logged-in.ejs', {
       auth,
       pageTitle: 'Center-list',
@@ -539,7 +539,7 @@ exports.postCenter = async (req, res) => {
     const centerData = {};
     const images = [];
     images.push(req.body.img);
-    centerData.doamin = req.body.domain;
+    centerData.domain = req.body.domain;
     centerData.centre_name = req.body.centerName;
     centerData.centre_desc = req.body.desc;
     centerData.PhoneNo = req.body.pNo;
@@ -572,7 +572,7 @@ exports.postCenter = async (req, res) => {
 
     let tickets = []; //find by finding filtering tickets by center id and date
 
-    res.redirect('/');
+    res.redirect('/center');
   } catch (err) {
     console.log(err);
   }
@@ -595,7 +595,7 @@ exports.postUser = async (req, res) => {
     await firebase.firestore()
       .collection('users').doc(req.params.uid).update(userData);
 
-    res.redirect('/');
+    res.redirect('/center');
   } catch (e) {
     console.log(e);
   }
@@ -631,7 +631,7 @@ exports.deleteTicket = async (req,res) =>{
       const re = await firebase.firestore()
             .collection('ticket').doc(ticketId).delete();
 
-      res.redirect('/');
+      res.redirect('/center');
 
 
   } catch (e) {

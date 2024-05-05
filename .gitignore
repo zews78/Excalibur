@@ -66,3 +66,7 @@ node_modules/
 
 config*
 serviceAccountKey.json
+
+functions/.config
+
+functions/node_modules/
