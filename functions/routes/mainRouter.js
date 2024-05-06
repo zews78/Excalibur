@@ -12,6 +12,8 @@ router.post('/center/centerEymployees/ticketId/:centerId', isAuth, mainControlle
 router.post('/submitCenter', mainController.postCenter);
 router.get('/signup', mainController.getSignup);
 router.get('/register', mainController.getRegistered);
+router.post('/create-category', mainController.postCategory);
+
 router.get('/booking', mainController.getAppt);
 router.get('/booked/:bookingId', mainController.getBooked);
 

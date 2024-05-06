@@ -535,7 +535,7 @@ exports.getBooked = async (req, res) => {
 
 exports.postCenter = async (req, res) => {
   try {
-    const auth = (await isAuth(req))[0];
+    const [auth,decodedToken] = (await isAuth(req));
     const centerData = {};
     const images = [];
     // images.push(req.body.img);
@@ -548,6 +548,7 @@ exports.postCenter = async (req, res) => {
     centerData.images = req.body.img_url == '' ? req.body.img_url : JSON.parse(req.body.img_url);
     centerData.openingTime = req.body.openingTime;
     centerData.closingTime = req.body.closingTime;
+    centerData.uid=decodedToken.uid;
 
     let dData = {};
     let id;
@@ -677,3 +678,27 @@ exports.restartQueue= (req,res)=>{
     res.send({error:response.error})
   }
 }
+
+  exports.postCategory = async (req,res) =>{
+    try {
+    const auth = (await isAuth(req))[0];
+    let categoryName=req.body.category?.toLowerCase();
+     let category = await firebase.firestore()
+        .collection('category').doc();
+    const categoryId = category.id;
+    category.categoryName=categoryName;
+    
+    await category.set(dData);
+    
+  
+    const label = capitalizeFirstLetter(categoryName);
+    const value = categoryName;
+  
+    res.json({ label, value });
+  
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+

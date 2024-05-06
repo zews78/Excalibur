@@ -1,174 +1,224 @@
-  <%- include('./Delta/header') %>
+<%- include('./Delta/header') %>
 
   <link rel="stylesheet" href="/css/centerregisterrationform.css">
+  <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
 
   <%- include('./Delta/navbar') %>
 
-  <div class="bg-primary container p-0" id="primaryContainer">
-    <div class="col-lg-6 img position">
-      <img class="image " src="https://as1.ftcdn.net/jpg/02/15/32/30/500_F_215323030_cbEjE1nAKNlr4eFYmcMVmhJMmQEnsUyK.jpg" alt="Responsive image">
-    </div>
-    <div class="col-lg-6 mt-2 position">
-      <h1 class="bg-primary  p-2">Register With Us</h1>
-      <div id="form" class="conatiner w-100 mx-auto bg-primary p-3">
-        <form action="/submitCenter" method="POST">
-          <div class="form-group">
-            <label >Center Name</label>
-            <input type="text" class="form-control" name="centerName">
-          </div>
-          <div class="form-group">
-            <label >Phone NO.</label>
-            <input type="text" class="form-control" name="pNo">
-          </div>
-          <div class="form-group">
-            <label >Address</label>
-            <input type="text" class="form-control" name="address">
-          </div>
-          <div class="form-group">
-            <label >Describe your center</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="desc"></textarea>
-          </div>
-          <div class="form-group">
-            <label >Select Category</label>
-            <select class="form-control" id="category" name="domain">
-              <option value='Hospitals'>Hospitals</option>
-              <option value='Banks'>Banks</option>
-              <option value='Government Offices'>Government Offices</option>
-              <option value='Restraunts'>Restraunts</option>
-              <option value='Salons/Spas'>Salons/Spas</option>
-            </select>
-          </div>
-          <% let a=2 /*value of above category input*/
-          if(a==2){ //for hospitals %>
-          <div class="form-group">
-            <label for="exampleFormControlSelect2">Select Departments</label>
-            <select multiple class="form-control" id="exampleFormControlSelect2" name="department">
-              <option>Radiology</option>
-              <option>X-ray center</option>
-              <option>OPD</option>
-              <option>CT-scan</option>
-            </select>
-          </div>
-          <%}else{%>
-          <div class="form-group">
-            <label >Number of Counters</label>
-            <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="" name="counterNo">
-          </div>
-          <%}%>
-          <div class="form-group">
-            <label >Opening Time</label>
-            <input type="time" class="form-control" name="openingTime" value="09:00:00" >
-          </div>
-          <div class="form-group">
-            <label >Closing Time</label>
-            <input type="time" class="form-control" name="closingTime" value="10:00:00">  <!--wasnt working before because maybe i didnd specify the seconds-->
-          </div>
-
-          <input type="text" id="img_url" style="display: none;" value="" name="img_url">
-          <div class="custom-file">
-            <label class="custom-file-label" for="customFile">Upload a picture</label>
-            <input type="file" class="custom-file-input" id="addProductImages" name="img" accept=".jpg,.png" multiple data-show-upload="true" data-show-caption="true">
-            <!-- <label class="custom-file-label" for="customFile"><i class="fas fa-upload"></i>Upload</label> -->
-            <div style="display: flex;"><progress style="display: none; margin: 3px;" value="0"
-                    max="100" id="uploader">0%</progress>
-                <p id="prog_shot"></p>
+    <div class="bg-primary container p-0" id="primaryContainer">
+      <div class="col-lg-6 img position">
+        <img class="image "
+          src="https://as1.ftcdn.net/jpg/02/15/32/30/500_F_215323030_cbEjE1nAKNlr4eFYmcMVmhJMmQEnsUyK.jpg"
+          alt="Responsive image">
+      </div>
+      <div class="col-lg-6 mt-2 position">
+        <h1 class="bg-primary  p-2">Register With Us</h1>
+        <div id="form" class="conatiner w-100 mx-auto bg-primary p-3">
+          <form action="/submitCenter" method="POST">
+            <div class="form-group">
+              <label>Center Name</label>
+              <input type="text" class="form-control" name="centerName">
             </div>
-          </div>
-          
-          <button type="submit" class="rounded-pill p-2 mt-3">Submit<i class="fas fa-arrow-right mx-2"></i></button>
-        </form>
+            <div class="form-group">
+              <label>Phone NO.</label>
+              <input type="text" class="form-control" name="pNo">
+            </div>
+            <div class="form-group">
+              <label>Address</label>
+              <input type="text" class="form-control" name="address">
+            </div>
+            <div class="form-group">
+              <label>Describe your center</label>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="desc"></textarea>
+            </div>
+            <div class="form-group">
+              <label>Select Category</label>
+              <select class="form-control" id="category" name="domain">
+                <option value='Hospitals'>Hospitals</option>
+                <option value='Banks'>Banks</option>
+                <option value='Government Offices'>Government Offices</option>
+                <option value='Restraunts'>Restraunts</option>
+                <option value='Salons/Spas'>Salons/Spas</option>
+              </select>
+            </div>
+            <% let a=2; if(a==2){ //for hospitals %>
+              <div class="form-group">
+                <label for="exampleFormControlSelect2">Select Departments</label>
+                <select multiple class="form-control" id="exampleFormControlSelect2" name="department">
+                  <option>Radiology</option>
+                  <option>X-ray center</option>
+                  <option>OPD</option>
+                  <option>CT-scan</option>
+                </select>
+              </div>
+              <%}else{%>
+                <div class="form-group">
+                  <label>Number of Counters</label>
+                  <input type="number" class="form-control" id="exampleFormControlInput1" placeholder=""
+                    name="counterNo">
+                </div>
+                <%}%>
+                  <div class="form-group">
+                    <label>Opening Time</label>
+                    <input type="time" class="form-control" name="openingTime" value="09:00:00">
+                  </div>
+                  <div class="form-group">
+                    <label>Closing Time</label>
+                    <input type="time" class="form-control" name="closingTime" value="10:00:00">
+                    <!--wasnt working before because maybe i didnd specify the seconds-->
+                  </div>
+
+                  <input type="text" id="img_url" style="display: none;" value="" name="img_url">
+                  <div class="custom-file">
+                    <label class="custom-file-label" for="customFile">Upload a picture</label>
+                    <input type="file" class="custom-file-input" id="addProductImages" name="img" accept=".jpg,.png"
+                      multiple data-show-upload="true" data-show-caption="true">
+                    <!-- <label class="custom-file-label" for="customFile"><i class="fas fa-upload"></i>Upload</label> -->
+                    <div style="display: flex;"><progress style="display: none; margin: 3px;" value="0" max="100"
+                        id="uploader">0%</progress>
+                      <p id="prog_shot"></p>
+                    </div>
+                  </div>
+
+                  <button type="submit" class="rounded-pill p-2 mt-3">Submit<i
+                      class="fas fa-arrow-right mx-2"></i></button>
+          </form>
+        </div>
       </div>
     </div>
-  </div>
-<%- include('./Delta/footer') %>
+    <%- include('./Delta/footer') %>
 
 
 
-<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+        integrity="sha256-oP6HI9z1XaZNBrJURtAVIlaFf8WvTXRw7vdnbXIVOxo=" crossorigin="anonymous"></script>
 
 
-<!-- TODO: Add SDKs for Firebase products that you want to use
+      <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
 
-  <script>
-    // Your web app's Firebase configuration
-    const firebaseConfig = {
-  apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
-  authDomain: "excellerentum.firebaseapp.com",
-  projectId: "excellerentum",
-  storageBucket: "excellerentum.appspot.com",
-  messagingSenderId: "1051021172847",
-  appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
-  measurementId: "G-TZCL141YVN"
-};
-    // Initialize Firebase
-    firebase.initializeApp(firebaseConfig);
-    firebase.analytics();
-</script>
+      <script>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+          apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
+          authDomain: "excellerentum.firebaseapp.com",
+          projectId: "excellerentum",
+          storageBucket: "excellerentum.appspot.com",
+          messagingSenderId: "1051021172847",
+          appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
+          measurementId: "G-TZCL141YVN"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
 
-  <script>
-    JSON.stringify(document.getElementById('img_url').value);
-    // JSON.stringify(document.getElementById('specStore').value);
+      //   $(document).ready(function () {
+      //     // Initialize Select2
+      //     $('#category').select2({
+      //       placeholder: 'Select an option',
+      //       tags: true,
+      //       tokenSeparators: [',', ' '],
+      //       createTag: function (params) {
+      //         // Convert the new option to lowercase for case-insensitive matching
+      //         var newCategory = params.term.toLowerCase();
 
-    var img_arr = [];
-    // var i = 0;
-    var fileButton = document.getElementById('addProductImages');
-    var uploader = document.getElementById('uploader');
-    var getId = document.getElementById('prog_shot');
+      //         console.log(params);
+      //         // Check if the user pressed Enter (keyCode 13)
+
+      //         // Check if the new option already exists (case-insensitive)
+      //         var optionExists = $(this).find('option[value="' + newCategory + '"]').length > 0;
+
+      //         // If the option doesn't exist, send an AJAX request to create it
+      //         if (!optionExists) {
+      //           $.ajax({
+      //             url: '/create-category',
+      //             type: 'POST',
+      //             data: { category: newCategory },
+      //             success: function (data) {
+      //               // Option created successfully, add it to the Select2 dropdown
+      //               var newOption = new Option(data.label, data.value, true, true);
+      //               $('#category').append(newOption).trigger('change');
+      //             },
+      //             error: function () {
+      //               console.log('Error creating option');
+      //             }
+      //           });
+      //         }
 
 
-    fileButton.addEventListener("change", function(e) {
+      //         // Return null to allow Select2 to create the new option
+      //         return null;
+      //       }
+      //     });
+      //   });
+       </script>
+
+      <script>
+        JSON.stringify(document.getElementById('img_url').value);
+        // JSON.stringify(document.getElementById('specStore').value);
+
+        var img_arr = [];
         // var i = 0;
-        // var getId = document.getElementById(`prog_shot${i}`);
-        getId.innerText = 'Uploading...';
-        getId.style.color = '#e76f51';
-        uploader.style.display = 'block';
-        //get file 
-        var file = e.target.files[0];
+        var fileButton = document.getElementById('addProductImages');
+        var uploader = document.getElementById('uploader');
+        var getId = document.getElementById('prog_shot');
 
-        // create a storage ref
-        var storageRef = firebase.storage().ref('images/' + file.name);
 
-        //upload files
-        var task = storageRef.put(file);
+        fileButton.addEventListener("change", function (e) {
+          // var i = 0;
+          // var getId = document.getElementById(`prog_shot${i}`);
+          getId.innerText = 'Uploading...';
+          getId.style.color = '#e76f51';
+          uploader.style.display = 'block';
+          //get file 
+          var file = e.target.files[0];
 
-        // console.log(file);
-        // console.log(task);
-        console.log(file.name,"here");
-        //update progress bar
-        task
+          // create a storage ref
+          var storageRef = firebase.storage().ref('images/' + file.name);
+
+          //upload files
+          var task = storageRef.put(file);
+
+          // console.log(file);
+          // console.log(task);
+          console.log(file.name, "here");
+          //update progress bar
+          task
             .then(snapshot => snapshot.ref.getDownloadURL())
             .then((url) => {
-                console.log(url);
-                img_arr.push(url);
-                $('#img_name').append(`<div style="border:1px solid #C3E3FD;color:#011627;margin:4px;padding:1px;border-radius:2px">${file.name}</div>`);
-                console.log(img_arr);
-                document.getElementById('img_url').value = JSON.stringify(img_arr);
-                console.log(document.getElementById('img_url').value);
+              console.log(url);
+              img_arr.push(url);
+              $('#img_name').append(`<div style="border:1px solid #C3E3FD;color:#011627;margin:4px;padding:1px;border-radius:2px">${file.name}</div>`);
+              console.log(img_arr);
+              document.getElementById('img_url').value = JSON.stringify(img_arr);
+              console.log(document.getElementById('img_url').value);
 
 
-                // document.querySelector('#someImageTagID').src = url;
+              // document.querySelector('#someImageTagID').src = url;
             })
             .catch(console.error);
-        task.on('state_changed',
+          task.on('state_changed',
             function progress(snapshot) {
-                var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                uploader.value = percentage;
-                if (percentage == 100) {
-                    // var getId = document.getElementById(`prog_shot${i}`);
-                    getId.innerText = "Done";
-                    getId.style.color = 'chartreuse';
-                }
+              var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+              uploader.value = percentage;
+              if (percentage == 100) {
+                // var getId = document.getElementById(`prog_shot${i}`);
+                getId.innerText = "Done";
+                getId.style.color = 'chartreuse';
+              }
 
             },
             function error(err) {
-                console.log(err);
+              console.log(err);
             },
             function complete() {
-                console.log('completed successfully');
+              console.log('completed successfully');
             })
-            // i++;
-    });
-  </script>
+          // i++;
+        });
+      </script>
