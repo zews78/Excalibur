@@ -554,6 +554,24 @@ exports.postCenter = async (req, res) => {
     let department;
 
     centerData.avDept = [];
+    // console.log(typeof req.body.department);
+    // process.exit(0);
+
+    if(typeof req.body.department == 'string'){
+
+      
+      department = await firebase.firestore()
+        .collection('departments').doc();
+      id = department.id;
+      // console.log(id);
+      centerData.avDept.push(id);
+      dData.dept_name = req.body.department;
+      dData.currentToken = "Not Assigned";
+      await department.set(dData);
+    }else{
+
+   
+    
 
     for (let i = 0; i < req.body.department.length; i++) {
       department = await firebase.firestore()
@@ -565,6 +583,7 @@ exports.postCenter = async (req, res) => {
       dData.currentToken = "Not Assigned";
       await department.set(dData);
     }
+  }
 
     await firebase.firestore()
       .collection('centres').add(centerData);
