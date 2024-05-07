@@ -168,3 +168,11 @@ textarea {
 }
 
 /* vertical line */
+
+
+.flexDashboard{
+  display: inline-flex;
+  justify-content: space-between;
+  align-items: end;
+  width: 100%;
+}

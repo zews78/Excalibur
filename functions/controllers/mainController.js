@@ -93,7 +93,7 @@ exports.getHome = async (req, res) => {
 
 exports.getOneCenter = async (req, res) => {
   try {
-    const auth = (await isAuth(req))[0];
+    const [auth,decodedToken] = (await isAuth(req));
     const centreId = req.params.centerId;
     const center = await firebase.firestore()
       .collection('centres')
@@ -109,6 +109,14 @@ exports.getOneCenter = async (req, res) => {
     // console.log(userId);
     let dept = center.data().avDept;
     var req_dept = [];
+
+    let isCenterEmployee=false;
+
+    let mappedUID=center.data().uid;
+
+    if(mappedUID==decodedToken.uid){
+      isCenterEmployee=true;
+    }
 
     // const getItems = (x, callback) => {
     // 	let itemRefs = x.map(id => {
@@ -183,6 +191,8 @@ exports.getOneCenter = async (req, res) => {
     // console.log(req_dept);
     // console.log(req.params.centerId);
 
+   
+
     res.render('main/Centre_Details_booking.ejs', {
       cntr_data: {
         ...center.data(),
@@ -191,8 +201,8 @@ exports.getOneCenter = async (req, res) => {
       },
       reqDept: req_dept,
       pageTitle: 'Centre-List',
-      auth
-
+      auth,
+      isCenterEmployee
     });
   } catch (err) {
     console.log(err);
@@ -279,10 +289,7 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
       centre_location: reqCentre.data().location,
   //    deapartment:                               only display tickets with same date and dept id and pass dept id
     }
-    // console.log(tickets,'naah');
-    // console.log(Tickets, "ordered aana chaiye")
-    // console.log(ticketObject);
-    // console.log(RegUsers);
+   
 
     updateToken(req.body.ticketId); //we are updating the centre current token using centreId and ticketId
     // console.log(req.body.ticketId);
@@ -659,7 +666,8 @@ exports.deleteTicket = async (req,res) =>{
 }
 
 exports.stopQueue=  (req,res)=>{
-const response=stopQueue(req.body.department);
+  console.log(req.body);
+const response=stopQueue(req.body.ticketId);
 if(response.status){
   // console.log(response);
   res.send({message:response.status})
@@ -669,7 +677,7 @@ else{
 }
 }
 exports.restartQueue= (req,res)=>{
-  const response=restartQueue(req.body.department);
+  const response=restartQueue(req.body.ticketId);
   if(response.status){
     // console.log(response);
     res.send({message:response.status})

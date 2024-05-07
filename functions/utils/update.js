@@ -1,6 +1,7 @@
 const firebase = require('../firebase');
 
 const updateToken = async (ticketId) => {
+
   const  ticket= await firebase.firestore()
     .collection('ticket').doc(ticketId)
     .get();
@@ -9,28 +10,38 @@ const updateToken = async (ticketId) => {
    .collection('departments').doc(ticket.data().department)
    .get();
    const lastToken= department.data().currentToken;
+   console.log(lastToken,'lasttoken');
   let dept=await firebase.firestore()
   .collection('departments').doc(ticket.data().department)
   .update({
     currentToken:ticket.data().token,
-    lastToken
+    lastToken:lastToken
   })
 }
 
-const stopQueue=async (deptId) =>{
+const stopQueue=async (ticketId) =>{
    try {
-    const dept=await firebase.firestore()
-   .collection('departments').doc(deptId)
+     const  ticket= await firebase.firestore()
+    .collection('ticket').doc(ticketId)
+    .get();
+  
+    const department=await firebase.firestore()
+   .collection('departments').doc(ticket.data().department)
    .get();
-   const lastToken= dept.data().lastToken;
-
+   const lastToken= department.data().currentToken; 
    const message=`The Queue is currently stopped . Last Token was :${lastToken}`;
 
+
+   let updateObj={
+    currentToken:message,
+  }
+     if(isValidInteger(lastToken)==0){
+     updateObj['lastToken']=lastToken;
+     }
+
    let newDept=await firebase.firestore()
-   .collection('departments').doc(deptId)
-   .update({
-     currentToken:message,
-   })
+   .collection('departments').doc(ticket.data().department)
+   .update(updateObj);
    return {status:"Correct"};
    } catch (e) {
    console.log(e);
@@ -38,18 +49,22 @@ const stopQueue=async (deptId) =>{
    }
 }
 
-const restartQueue=async (deptId) =>{
+const restartQueue=async (ticketId) =>{
    try {
-    const dept=await firebase.firestore()
-   .collection('departments').doc(deptId)
+    const  ticket= await firebase.firestore()
+    .collection('ticket').doc(ticketId)
+    .get();
+  
+    const department=await firebase.firestore()
+   .collection('departments').doc(ticket.data().department)
    .get();
-   const lastToken= dept.data().lastToken;
+   const lastToken= department.data().lastToken;
 
 
    const message=`The Queue is being restarted.Last Token was :${lastToken}`;
 
    let newDept=await firebase.firestore()
-   .collection('departments').doc(deptId)
+   .collection('departments').doc(ticket.data().department)
    .update({
      currentToken:message,
    })
@@ -85,6 +100,11 @@ const updateSlots= async (dData,deptId,date)=>{
 } catch (e) {
   console.log(e);
 }
+}
+
+function isValidInteger(input) {
+  const value = parseInt(input, 10); // 10 is the radix (base) for decimal numbers
+  return !isNaN(value) && isFinite(value);
 }
 module.exports={
   updateToken,
