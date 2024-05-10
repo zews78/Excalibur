@@ -8,6 +8,11 @@ const { updateToken,updateSlots,stopQueue,restartQueue } = require('../utils/upd
 
 const nodemailer = require('nodemailer');
 
+const algoliasearch = require('algoliasearch');
+const client = algoliasearch('073MO4F17T', '674ea92d57045777ad62cca9913d7bbb');
+const index = client.initIndex('center_collection');
+
+
 var dayjs = require('dayjs')
 var customParseFormat = require('dayjs/plugin/customParseFormat')
 dayjs.extend(customParseFormat)
@@ -15,6 +20,23 @@ dayjs().format()
 
 // const keywordGenerator = require('../utils/keywordGenerator');
 
+
+exports.test = async (req, res) => {
+  // const centerData1 = { objectID: '1', name: 'Object 1' };
+  //save the data to algolia
+  centerData1 = {}
+  centerData1.centre_name = req.body.centerName;
+  centerData1.domain = req.body.domain;
+  centerData1.centre_desc = req.body.desc;
+  console.log(centerData1);
+  index.saveObject(centerData1, {'autoGenerateObjectIDIfNotExist': true})
+  .then(({ objectID }) => {
+    console.log(objectID);
+  })
+  .catch(err => {
+    console.log(err);
+  });
+}
 
 exports.getCenter = async (req, res) => {
   // const auth = (await isAuth(req))[0];
@@ -596,9 +618,24 @@ exports.postCenter = async (req, res) => {
     await firebase.firestore()
       .collection('centres').add(centerData);
 
+    //save the data to algolia
+    centerData_algolia = {}
+    centerData_algolia.centre_name = req.body.centerName;
+    centerData_algolia.domain = req.body.domain;
+    centerData_algolia.centre_desc = req.body.desc;
+    // console.log(centerData_algolia);
+    index.saveObject(centerData_algolia, {'autoGenerateObjectIDIfNotExist': true})
+    .then(({ objectID }) => {
+      console.log(objectID);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
     let tickets = []; //find by finding filtering tickets by center id and date
 
     res.redirect('/center');
+
   } catch (err) {
     console.log(err);
   }

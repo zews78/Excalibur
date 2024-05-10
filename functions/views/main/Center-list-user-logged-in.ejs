@@ -60,6 +60,7 @@
   </nav>
   <div class="container w-75 mx-auto my-4">
     <input type="text" name="searchbar" class="search w-100 rounded-pill p-3" placeholder="Search...">
+    <ul id="results"></ul>
   </div>
 
   <div class="container w-100 mt-3 mb-0 p-0">
@@ -124,6 +125,15 @@
 
     </div>
   </div>
+  <script
+  src="https://cdn.jsdelivr.net/npm/algoliasearch@4.23.3/dist/algoliasearch-lite.umd.js"
+  integrity="sha256-1QNshz86RqXe/qsCBldsUu13eAX6n/O98uubKQs87UI="
+  crossorigin="anonymous"
+></script>
+  <script type="module">
+    // search only version
+    import algoliasearch from 'https://cdn.jsdelivr.net/npm/algoliasearch@4.23.3/dist/algoliasearch-lite.esm.browser.js';
+    </script>
 
   <script type="text/javascript">
     function change(a) {
@@ -154,6 +164,52 @@
         }
       }
     }
+// Default version
+// import algoliasearch from 'algoliasearch/lite';
+
+// Search-only version
+// import algoliasearch from 'algoliasearch/lite';
+// const algoliasearch = require('algoliasearch');
+
+
+// const client = algoliasearch('QZCF2LFNAL', '46d49116287cd5c937de5f81d6c1525b');
+// const index = client.initIndex('zews');
+
+
+const client = algoliasearch('073MO4F17T', '674ea92d57045777ad62cca9913d7bbb');
+const index = client.initIndex('center_collection');
+
+//this for testing purpose only
+// const record = { objectID: 1, name: 'test_index' }
+// index.saveObject(record).wait()
+
+// Search the index and print the results
+// index
+//   .search('test_record')
+//   .then(({ hits }) => console.log(hits[0]))
+
+
+    document.querySelector('input[name="searchbar"]').addEventListener('input', (event) => {
+  index.search(event.target.value)
+    .then(({ hits }) => {
+      // Display the hits in the console. You should replace this with your own display logic.
+      console.log(hits);
+      
+      const resultsElement = document.querySelector('#results');
+      resultsElement.innerHTML = '';
+
+      // Create a list item for each hit and append it to the results element
+      hits.forEach(hit => {
+        const listItem = document.createElement('li');
+        listItem.textContent = hit.centre_name; // Replace 'centre_name' with the property you want to display
+        resultsElement.appendChild(listItem);
+      });
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  console.log("event.target.value", event.target.value);
+});
 
 
   </script>
