@@ -1,3 +1,5 @@
+
+<link rel="stylesheet" href="/css/centerlist.css">
 <!Doctype html>
 <html lang="en">
 
@@ -58,10 +60,26 @@
       </ul>
     </div>
   </nav>
-  <div class="container w-75 mx-auto my-4">
+  <!-- <div class="container w-75 mx-auto my-4">
     <input type="text" name="searchbar" class="search w-100 rounded-pill p-3" placeholder="Search...">
     <ul id="results"></ul>
+  </div> -->
+
+  <div class="container w-75 mx-auto my-4">
+    <div class="search-container">
+      <div class="search-box">
+        <input type="text" name="searchbar" class="search w-100 rounded-pill p-3" placeholder="search...">
+      </div>
+      <ul class="search-results" id="results">
+      </ul>
+    </div>
   </div>
+
+
+
+
+
+
 
   <div class="container w-100 mt-3 mb-0 p-0">
     <ul id="categories" class="m-0 p-0 w-100">
@@ -202,6 +220,8 @@ const index = client.initIndex('center_collection');
       hits.forEach(hit => {
         const listItem = document.createElement('li');
         listItem.textContent = hit.centre_name; // Replace 'centre_name' with the property you want to display
+        listItem.id = hit.objectID; // Set the id of the li element to hit.id
+        listItem.className = "result-item";
         resultsElement.appendChild(listItem);
       });
     })
@@ -209,6 +229,24 @@ const index = client.initIndex('center_collection');
       console.log(err);
     });
   console.log("event.target.value", event.target.value);
+});
+
+
+//route to center details
+document.addEventListener('DOMContentLoaded', (event) => {
+    document.querySelector('#results').addEventListener('click', function(event) {
+        let target = event.target;
+        while (target.nodeName !== 'LI' && target.nodeName !== 'BODY') {
+            target = target.parentNode;
+        }
+        if (target.nodeName === 'LI') {
+            console.log("result was clicked");
+            let objectID = target.id; // Get the id of the li element
+            if (objectID) {
+                window.location.href = '/center/' + objectID;
+            }
+        }
+    });
 });
 
 

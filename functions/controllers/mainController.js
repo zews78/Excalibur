@@ -615,16 +615,17 @@ exports.postCenter = async (req, res) => {
     }
   }
 
-    await firebase.firestore()
+    let docRef = await firebase.firestore()
       .collection('centres').add(centerData);
 
     //save the data to algolia
     centerData_algolia = {}
+    centerData_algolia.objectID = docRef.id;
     centerData_algolia.centre_name = req.body.centerName;
     centerData_algolia.domain = req.body.domain;
     centerData_algolia.centre_desc = req.body.desc;
     // console.log(centerData_algolia);
-    index.saveObject(centerData_algolia, {'autoGenerateObjectIDIfNotExist': true})
+    index.saveObject(centerData_algolia)
     .then(({ objectID }) => {
       console.log(objectID);
     })
