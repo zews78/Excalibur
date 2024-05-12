@@ -19,92 +19,93 @@
 
             <a class="btn btn-default " href="/center/centerEymployees/<%= cntr_data.id%>">Go To Dashboard
             </a>
+            <% } %>
         </div>
-        <% } %>
-          <ul class="nav nav-tabs">
 
-            <li><a data-toggle="tab" href="#menu1">General Information</a></li>
-            <li><a data-toggle="tab" href="#menu2">Book An Appointment</a></li>
-            <li><a data-toggle="tab" href="#menu3">Reviews</a></li>
-            <li><a data-toggle="tab" href="#menu4">Current Active Tokens</a></li>
+        <ul class="nav nav-tabs">
 
-          </ul>
+          <li><a data-toggle="tab" href="#menu1">General Information</a></li>
+          <li><a data-toggle="tab" href="#menu2">Book An Appointment</a></li>
+          <li><a data-toggle="tab" href="#menu3">Reviews</a></li>
+          <li><a data-toggle="tab" href="#menu4">Current Active Tokens</a></li>
 
-          <div class="tab-content">
-            <div id="menu1" class="tab-pane fade in active">
-              <h3><b>General Info</b></h3>
-              <div class="row">
-                <div class="col-md-4">
-                  <img src="<%=cntr_data.images[0]%>" class="img-responsive" alt="Photo" height="245" width="255"><br>
-                </div>
-                <div class="col-md-4">
-                  <p> <b>Domain:</b>
-                    <%=cntr_data.domain%>
-                  </p>
-                  <p><b>Overview:</b>
-                    <%=cntr_data.centre_desc%>
-                  </p>
+        </ul>
 
-                  <h3><b>Opening Hours</b></h3>
-                  <p><b>The establishment is functional on</b></p>
-                  <p><b>Monday:-</b> 10:00 Am - 7:00 Pm</p>
-                  <p><b>Tuesday:- </b>10:00 Am - 7:00 Pm</p>
-                  <p><b>Wednesday:- </b>10:00 Am - 7:00 Pm</p>
-                  <p><b>Thursday:- </b>10:00 Am - 7:00 Pm</p>
-                  <p><b>Friday:- </b>10:00 Am - 7:00 Pm</p>
-                  <p><b>Saturday:- </b>10:00 Am - 7:00 Pm</p>
-                  <p><b>Sunday:- </b>Closed</p>
-                </div>
-                <div class="col-sm-2">
-                  <h3><b>Contact Information</b></h3>
-                  <p><b>Address:</b>
-                    <%=cntr_data.location%>
-                  </p>
-                  <p><b>Phone:</b>
-                    <%=cntr_data.PhoneNo%>
-                  </p>
-                  <p><b>Email:</b>email@gmail.com</p>
-                  <!-- <p><%=cntr_data.id%></p> -->
-                </div>
+        <div class="tab-content">
+          <div id="menu1" class="tab-pane fade in active">
+            <h3><b>General Info</b></h3>
+            <div class="row">
+              <div class="col-md-4">
+                <img src="<%=cntr_data.images[0]%>" class="img-responsive" alt="Photo" height="245" width="255"><br>
+              </div>
+              <div class="col-md-4">
+                <p> <b>Domain:</b>
+                  <%=cntr_data.domain%>
+                </p>
+                <p><b>Overview:</b>
+                  <%=cntr_data.centre_desc%>
+                </p>
+
+                <h3><b>Opening Hours</b></h3>
+                <p><b>The establishment is functional on</b></p>
+                <p><b>Monday:-</b> 10:00 Am - 7:00 Pm</p>
+                <p><b>Tuesday:- </b>10:00 Am - 7:00 Pm</p>
+                <p><b>Wednesday:- </b>10:00 Am - 7:00 Pm</p>
+                <p><b>Thursday:- </b>10:00 Am - 7:00 Pm</p>
+                <p><b>Friday:- </b>10:00 Am - 7:00 Pm</p>
+                <p><b>Saturday:- </b>10:00 Am - 7:00 Pm</p>
+                <p><b>Sunday:- </b>Closed</p>
+              </div>
+              <div class="col-sm-2">
+                <h3><b>Contact Information</b></h3>
+                <p><b>Address:</b>
+                  <%=cntr_data.location%>
+                </p>
+                <p><b>Phone:</b>
+                  <%=cntr_data.PhoneNo%>
+                </p>
+                <p><b>Email:</b>email@gmail.com</p>
+                <!-- <p><%=cntr_data.id%></p> -->
               </div>
             </div>
-            <div id="menu2" class="tab-pane fade">
-              <!-- <h3><b>Fill Out The Form</b></h3> -->
-              <!-- <h2>Select Department</h2> -->
-              <div class="col-sm-7">
-                <div class="row">
-                  <div class="col-sm-12 ">
-                    <div class="panel panel-default text-left">
-                      <div class="panel-body bg-2">
-                        <h2>Book your Appointment</h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+          </div>
+          <div id="menu2" class="tab-pane fade">
+            <!-- <h3><b>Fill Out The Form</b></h3> -->
+            <!-- <h2>Select Department</h2> -->
+            <div class="col-sm-7">
               <div class="row">
                 <div class="col-sm-12 ">
                   <div class="panel panel-default text-left">
                     <div class="panel-body bg-2">
-                      <form method="POST" action="/appointment">
-                        <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
-                        <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
+                      <h2>Book your Appointment</h2>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-12 ">
+                <div class="panel panel-default text-left">
+                  <div class="panel-body bg-2">
+                    <form method="POST" action="/appointment">
+                      <input type="text" value="<%= cntr_data.id %>" style="display: none;" name="centreId">
+                      <input type="text" value="<%= cntr_data.userId %>" style="display: none;" name="userId">
 
-                        <div class="form-group">
-                          <label>Date</label>
-                          <input type="date" class="form-control" name="date" id="date">
-                        </div>
-                        <div class="form-group">
-                          <label>Select Department</label>
-                          <select name="Department">
-                            <%for(var i=0; i< reqDept.length; i++){%>
-                              <option value="<%=cntr_data.avDept[i]%>">
-                                <%=reqDept[i].dept_name%>
-                              </option>
-                              <%}%>
-                          </select>
-                        </div>
-                        <!--<div class="form-group">
+                      <div class="form-group">
+                        <label>Date</label>
+                        <input type="date" class="form-control" name="date" id="date">
+                      </div>
+                      <div class="form-group">
+                        <label>Select Department</label>
+                        <select name="Department">
+                          <%for(var i=0; i< reqDept.length; i++){%>
+                            <option value="<%=cntr_data.avDept[i]%>">
+                              <%=reqDept[i].dept_name%>
+                            </option>
+                            <%}%>
+                        </select>
+                      </div>
+                      <!--<div class="form-group">
                     <label>Sessions</label>
                     <select name="session">
                       <%//for(var i=0; i< cntr_data.sessions.length; i++){%>
@@ -113,24 +114,24 @@
                     </select>
                   </div>
 -->
-                        <button type="submit" class="btn btn-primary mt-5"
-                          style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
-                      </form>
+                      <button type="submit" class="btn btn-primary mt-5"
+                        style="width:25vw;margin:0 auto;margin-top:5vh;">Book Now</button>
+                    </form>
 
-                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div id="menu4" class="tab-pane fade">
+          <div id="menu4" class="tab-pane fade">
 
-              <div class="col-sm-7">
-                <%for(var i=0; i< reqDept.length; i++){%>
-                  <h1 style="color:white;">
-                    <%=reqDept[i].dept_name%>: <%= reqDept[i].currentToken%>
-                  </h1>
-                  <%}%>
-              </div>
+            <div class="col-sm-7">
+              <%for(var i=0; i< reqDept.length; i++){%>
+                <h1 style="color:white;">
+                  <%=reqDept[i].dept_name%>: <%= reqDept[i].currentToken%>
+                </h1>
+                <%}%>
             </div>
-            <%- include('./Delta/footer') %>
+          </div>
+          <%- include('./Delta/footer') %>
