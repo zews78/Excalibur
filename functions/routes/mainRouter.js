@@ -27,5 +27,8 @@ router.post('/stopQueue',isAuth,mainController.stopQueue);
 router.post('/restartQueue',isAuth,mainController.restartQueue);
 
 
+router.post('/test', mainController.test);
+
+
 
 module.exports = router;
