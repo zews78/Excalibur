@@ -76,12 +76,12 @@
                       multiple data-show-upload="true" data-show-caption="true">
                     <!-- <label class="custom-file-label" for="customFile"><i class="fas fa-upload"></i>Upload</label> -->
                     <div style="display: flex;"><progress style="display: none; margin: 3px;" value="0" max="100"
-                        id="uploader">0%</progress>
-                      <p id="prog_shot"></p>
+                        id="uploader">0%</progress><br>
+                      <span id="uploadStatus"></span><p id="prog_shot"></p>
                     </div>
                   </div>
 
-                  <button type="submit" class="rounded-pill p-2 mt-3">Submit<i
+                  <button type="submit" class="rounded-pill p-2 mt-3" id="submit-button">Submit<i
                       class="fas fa-arrow-right mx-2"></i></button>
           </form>
         </div>
@@ -172,6 +172,8 @@
         fileButton.addEventListener("change", function (e) {
           // var i = 0;
           // var getId = document.getElementById(`prog_shot${i}`);
+          document.getElementById('submit-button').disabled = true;
+          document.getElementById('uploadStatus').innerText = 'Status- ';
           getId.innerText = 'Uploading...';
           getId.style.color = '#e76f51';
           uploader.style.display = 'block';
@@ -197,7 +199,9 @@
               console.log(img_arr);
               document.getElementById('img_url').value = JSON.stringify(img_arr);
               console.log(document.getElementById('img_url').value);
-
+              getId.innerText = "Done";
+              document.getElementById('submit-button').disabled = false;
+              getId.style.color = 'chartreuse';
 
               // document.querySelector('#someImageTagID').src = url;
             })
@@ -208,8 +212,8 @@
               uploader.value = percentage;
               if (percentage == 100) {
                 // var getId = document.getElementById(`prog_shot${i}`);
-                getId.innerText = "Done";
-                getId.style.color = 'chartreuse';
+                getId.innerText = "Configuring...";
+                getId.style.color = 'yellow';
               }
 
             },

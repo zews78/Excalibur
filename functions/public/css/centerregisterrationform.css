@@ -42,6 +42,12 @@ h1 {
   text-align: center;
 }
 
+button[disabled] {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
 .img {
   width: 50%;
   height: 100%;

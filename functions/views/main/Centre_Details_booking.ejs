@@ -34,8 +34,14 @@
             <div id="menu1" class="tab-pane fade in active">
               <h3><b>General Info</b></h3>
               <div class="row">
-                <div class="col-md-4">
-                  <img src="<%=cntr_data.images[0]%>" class="img-responsive" alt="Photo" height="245" width="255"><br>
+                    
+                  <div class="col-md-4">
+                  <%if(cntr_data.images){ %>     
+                  <img src="<%=cntr_data.images[0]%>" class="img-responsive" alt="photo" height="245" width="255"><br>
+                  <%} else{%>
+                    <img src="https://firebasestorage.googleapis.com/v0/b/excellerentum.appspot.com/o/sample_image%2Fdefault_center_img.jpg?alt=media&token=6c815ef1-67f9-4368-b4e3-2ad6c8110cd9" class="img-responsive" alt="photo" height="245" width="255"><br>
+                    <%}%>
+
                 </div>
                 <div class="col-md-4">
                   <p> <b>Domain:</b>
