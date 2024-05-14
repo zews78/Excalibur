@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "buildCommand": "npm run build",
+    "devCommand": "npm start",
+    "installCommand": "npm install",
+    "env": {
+      "PORT": "5000"
+    },
+    "builds": [
+      {
+        "src": "./server.js",
+        "use": "@vercel/node"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/(.*)",
+        "dest": "/"
+      }
+    ]
+}
