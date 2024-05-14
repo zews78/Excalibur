@@ -2,27 +2,9 @@
 
   <link rel="stylesheet" href="/css/centereymployee.css">
 
-  <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
+  <%- include('./Delta/navbar') %>
 
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#myPage">EXCELERENTUM</a>
-        </div>
-        <div class="collapse navbar-collapse" id="myNavbar">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="/">HOME</a></li>
-            <li><a href="/center">CENTRE</a></li>
-            <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
+
 
     <div class="container">
       <div class="a">
@@ -84,70 +66,73 @@
           </tbody>
         </table>
 
-        <p><button id="cancelButton" type="button" class="cancelbtn" onclick="stopqueue('<%=ticketObject.token%>')">Stop Queue</button></p>
-        <p><button id="restartButton" type="button" class="cancelbtn" onclick="restartqueue('<%=ticketObject.token%>')">Restart Queue</button>
+        <p><button id="cancelButton" type="button" class="cancelbtn" onclick="stopqueue('<%=ticketObject.token%>')">Stop
+            Queue</button></p>
+        <p><button id="restartButton" type="button" class="cancelbtn"
+            onclick="restartqueue('<%=ticketObject.token%>')">Restart Queue</button>
         </p>
       </div>
-      <script>
-
-      
-      
+    </div>
+    <script>
 
 
-        const canbtn = document.getElementById('cancelButton');
-        const resbtn = document.getElementById('restartButton');
 
 
+
+      const canbtn = document.getElementById('cancelButton');
+      const resbtn = document.getElementById('restartButton');
+
+
+
+      resbtn.setAttribute('disabled', 'disabled');
+
+
+      function stopqueue(ticketId) {
+        console.log("running", ticketId);
+
+        canbtn.setAttribute('disabled', 'disabled');
+
+        fetch("/stopQueue", {
+          // Adding method type
+          method: "POST",
+          // Adding body or contents to send
+          body: JSON.stringify({
+            // Now you can use the jsVariable in your JavaScript code
+            ticketId: ticketId,
+          }),
+          // Adding headers to the request
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        })
+          .then(response => response.json())
+          .then((data) => {
+            resbtn.removeAttribute('disabled');
+          })
+      }
+
+      function restartqueue(ticketId) {
+        console.log("running", ticketId);
 
         resbtn.setAttribute('disabled', 'disabled');
 
-
-        function stopqueue(ticketId) {
-          console.log("running", ticketId);
-
-          canbtn.setAttribute('disabled', 'disabled');
-
-          fetch("/stopQueue", {
-            // Adding method type
-            method: "POST",
-            // Adding body or contents to send
-            body: JSON.stringify({
-              // Now you can use the jsVariable in your JavaScript code
-              ticketId: ticketId,
-            }),
-            // Adding headers to the request
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            }
+        fetch("/restartQueue", {
+          // Adding method type
+          method: "POST",
+          // Adding body or contents to send
+          body: JSON.stringify({
+            ticketId: ticketId,
+          }),
+          // Adding headers to the request
+          headers: {
+            "Content-type": "application/json; charset=UTF-8"
+          }
+        })
+          .then(response => response.json())
+          .then((data) => {
+            canbtn.removeAttribute('disabled');
           })
-            .then(response => response.json())
-            .then((data) => {
-              resbtn.removeAttribute('disabled');
-            })
-        }
+      }
 
-        function restartqueue(ticketId) {
-          console.log("running", ticketId);
-
-          resbtn.setAttribute('disabled', 'disabled');
-
-          fetch("/restartQueue", {
-            // Adding method type
-            method: "POST",
-            // Adding body or contents to send
-            body: JSON.stringify({
-              ticketId: ticketId,
-            }),
-            // Adding headers to the request
-            headers: {
-              "Content-type": "application/json; charset=UTF-8"
-            }
-          })
-            .then(response => response.json())
-            .then((data) => {
-              canbtn.removeAttribute('disabled');
-            })
-        }
-
-      </script>
-      <%- include('./Delta/footer') %>
+    </script>
+    <%- include('./Delta/footer') %>
