@@ -70,7 +70,7 @@ button[disabled] {
   padding: 0;
 }
 
-button {
+.btnSubmit {
   background-color: white;
   border-width: 2px;
   border-color: white;
@@ -83,7 +83,7 @@ button {
   margin-bottom: 5%;
 }
 
-button:hover {
+.btnSubmit:hover {
   background-color: blue;
   color: white;
   border: none;

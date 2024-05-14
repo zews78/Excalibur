@@ -253,8 +253,10 @@ exports.getOneCenterEymplyees = async (req, res) => {
     res.render('main/input-id.ejs', {
       center: {
         ...center.data(),
-        id: centreId
+        id: centreId,
+        
       },
+      auth,
       pageTitle: 'enter ticket id',
     });
   } catch (err) {
@@ -265,6 +267,9 @@ exports.getOneCenterEymplyees = async (req, res) => {
 exports.getOneCenterEymplyeesTicketId = async (req, res) => {
   try {
     const centreId = req.params.centerId;
+
+    const auth = (await isAuth(req))[0];
+
 
     const ticketsSnapshot = await firebase.firestore()
       .collection('ticket')
@@ -318,7 +323,8 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
     res.render('main/CentreEmploy.ejs', {
       Tickets,
       RegUsers,
-      ticketObject
+      ticketObject,
+      auth
     });
   } catch (err) {
     console.log(err);
