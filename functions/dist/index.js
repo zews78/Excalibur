@@ -1,11 +1,8 @@
 const app = require('./app');
-
 const port = 5000;
 app.listen(port, () => {
-	console.log(`Server Started on port ${port}`);
+  console.log(`Server Started on port ${port}`);
 });
-
-
 
 // const functions = require('firebase-functions');
 
