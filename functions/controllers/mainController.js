@@ -43,7 +43,7 @@ exports.getCenter = async (req, res) => {
   try {
     const auth = (await isAuth(req))[0];
 
-    var Cntr = [];
+    let Cntr = [];
     const CntrRef = firebase.firestore()
       .collection('centres')
     const snapshot = await CntrRef.get();
@@ -53,11 +53,24 @@ exports.getCenter = async (req, res) => {
         ...doc.data()
       });
     });
+
+
+    let domains=[];
+    const domainsRef = await firebase.firestore()
+      .collection('domains').get();
+      domainsRef.forEach(doc => {
+      domains.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
+
     // console.log(Cntr);
     res.render('main/Center-list-user-logged-in.ejs', {
       auth,
       pageTitle: 'Center-list',
-      Cntr
+      Cntr,
+      domains
     });
   } catch (err) {
     console.log(err);
@@ -472,9 +485,20 @@ exports.getSignup = async (req, res) => {
 exports.getRegistered = async (req, res) => {
   const auth = (await isAuth(req))[0];
 
+  let domains=[];
+  const domainsRef = await firebase.firestore()
+    .collection('domains').get();
+    domainsRef.forEach(doc => {
+    domains.push({
+      id: doc.id,
+      ...doc.data()
+    });
+  });
+
   res.render('main/center-registeration-form.ejs', {
     pageTitle: 'Register',
-    auth
+    auth,
+    domains
 
   });
 };
@@ -574,7 +598,25 @@ exports.postCenter = async (req, res) => {
     const centerData = {};
     const images = [];
     // images.push(req.body.img);
-    centerData.domain = req.body.domain;
+
+    const domainName = req.body.domain;
+    const domains = firebase.firestore().collection('domains');
+    domains
+    .where('name', '==', domainName)
+    .get()
+    .then(async (domainOptions) => {
+      
+      if(domainOptions.empty){
+    
+      await firebase.firestore()
+      .collection('domains')
+      .add({
+        name: domainName});
+    
+    }
+    });
+   
+    centerData.domain = domainName;
     centerData.centre_name = req.body.centerName;
     centerData.centre_desc = req.body.desc;
     centerData.PhoneNo = req.body.pNo;
@@ -603,6 +645,7 @@ exports.postCenter = async (req, res) => {
       centerData.avDept.push(id);
       dData.dept_name = req.body.department;
       dData.currentToken = "Not Assigned";
+      dData.domain= domainName;
       await department.set(dData);
     }else{
 
@@ -617,6 +660,7 @@ exports.postCenter = async (req, res) => {
       centerData.avDept.push(id);
       dData.dept_name = req.body.department[i];
       dData.currentToken = "Not Assigned";
+      dData.domain= domainName;
       await department.set(dData);
     }
   }
@@ -628,7 +672,7 @@ exports.postCenter = async (req, res) => {
     centerData_algolia = {}
     centerData_algolia.objectID = docRef.id;
     centerData_algolia.centre_name = req.body.centerName;
-    centerData_algolia.domain = req.body.domain;
+    centerData_algolia.domain = domainName;
     centerData_algolia.centre_desc = req.body.desc;
     // console.log(centerData_algolia);
     index.saveObject(centerData_algolia)
@@ -731,20 +775,20 @@ exports.restartQueue= (req,res)=>{
   }
 }
 
-  exports.postCategory = async (req,res) =>{
+  exports.postDomain = async (req,res) =>{
     try {
     const auth = (await isAuth(req))[0];
-    let categoryName=req.body.category?.toLowerCase();
-     let category = await firebase.firestore()
-        .collection('category').doc();
-    const categoryId = category.id;
-    category.categoryName=categoryName;
+    let domainName=req.body.domain?.toLowerCase();
+     let domain = await firebase.firestore()
+        .collection('domain').doc();
+    const categoryId = domain.id;
+    domain.domainName=domainName;
     
-    await category.set(dData);
+    await domain.set(dData);
     
   
-    const label = capitalizeFirstLetter(categoryName);
-    const value = categoryName;
+    const label = capitalizeFirstLetter(domainName);
+    const value = domainName;
   
     res.json({ label, value });
   
@@ -752,5 +796,44 @@ exports.restartQueue= (req,res)=>{
       console.log(e);
     }
   }
+
+  exports.getDepartmentOptions = async (req,res) =>{
+    try {
+    const auth = (await isAuth(req))[0];
+    let domainName=req.query.categoryId;
+    const departments = firebase.firestore().collection('departments');
+    departments
+    .where('domain', '==', domainName)
+    .get()
+    .then((departmentOptions) => {
+      let options='';
+      if(!departmentOptions.empty){
+        let storedDeptNames=[];
+      departmentOptions.forEach((doc) => {
+
+        let deptName=doc.data().dept_name;
+        
+        if(!storedDeptNames.includes(deptName)){
+        options+= '<option>'+deptName+'</option>';
+        storedDeptNames.push(deptName);
+        }
+
+      });
+    
+      res.json({success:true, options });
+    
+    }else{      
+        res.json({success:false, msg:'No departments found! </br> Feel Free to add your own.' });
+      }
+    })
+    .catch((error) => {
+      console.log('Error getting documents: ', error);
+    });
+  
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
 
 

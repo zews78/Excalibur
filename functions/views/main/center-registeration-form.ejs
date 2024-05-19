@@ -34,23 +34,23 @@
             </div>
             <div class="form-group">
               <label>Select Category</label>
-              <select class="form-control" id="category" name="domain">
-                <option value='Hospitals'>Hospitals</option>
-                <option value='Banks'>Banks</option>
-                <option value='Government Offices'>Government Offices</option>
-                <option value='Restraunts'>Restraunts</option>
-                <option value='Salons/Spas'>Salons/Spas</option>
+              <select class="form-control select2" id="domain" name="domain"
+                onchange="getDepartmentOptions(this.value)">
+                <% domains.forEach((domain)=> { %>
+                  <option value="<%= domain.name %>">
+                    <%= domain.name %>
+                  </option>
+
+                  <% } ) %>
               </select>
             </div>
             <% let a=2; if(a==2){ //for hospitals %>
-              <div class="form-group">
+              <p id="departmentError" class="hidden"></p>
+              <div id="departmentParent" class="form-group hidden">
                 <label for="exampleFormControlSelect2">Select Departments</label>
-                <select multiple class="form-control" id="exampleFormControlSelect2" name="department">
-                  <option>Radiology</option>
-                  <option>X-ray center</option>
-                  <option>OPD</option>
-                  <option>CT-scan</option>
+                <select multiple class="form-control select2" id="department" name="department">
                 </select>
+
               </div>
               <%}else{%>
                 <div class="form-group">
@@ -77,48 +77,121 @@
                     <!-- <label class="custom-file-label" for="customFile"><i class="fas fa-upload"></i>Upload</label> -->
                     <div style="display: flex;"><progress style="display: none; margin: 3px;" value="0" max="100"
                         id="uploader">0%</progress><br>
-                      <span id="uploadStatus"></span><p id="prog_shot"></p>
+                      <span id="uploadStatus"></span>
+                      <p id="prog_shot"></p>
                     </div>
                   </div>
 
-                  <button type="submit" class="btnSubmit rounded-pill p-2 mt-3" id="submit-button">Submit<i class="fas fa-arrow-right mx-2"></i></button>
+                  <button type="submit" class="btnSubmit rounded-pill p-2 mt-3" id="submit-button">Submit<i
+                      class="fas fa-arrow-right mx-2"></i></button>
           </form>
         </div>
       </div>
     </div>
-   
 
 
 
-      <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
-      <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-      <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtAVIlaFf8WvTXRw7vdnbXIVOxo=" crossorigin="anonymous"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtAVIlaFf8WvTXRw7vdnbXIVOxo=" crossorigin="anonymous"></script>
 
 
-      <!-- TODO: Add SDKs for Firebase products that you want to use
+    <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-      <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
 
-      <script>
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-          apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
-          authDomain: "excellerentum.firebaseapp.com",
-          projectId: "excellerentum",
-          storageBucket: "excellerentum.appspot.com",
-          messagingSenderId: "1051021172847",
-          appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
-          measurementId: "G-TZCL141YVN"
-        };
-        // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+    <script>
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
+        authDomain: "excellerentum.firebaseapp.com",
+        projectId: "excellerentum",
+        storageBucket: "excellerentum.appspot.com",
+        messagingSenderId: "1051021172847",
+        appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
+        measurementId: "G-TZCL141YVN"
+      };
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+      firebase.analytics();
+
+      $(document).ready(function () {
+
+        $('#domain').select2({
+          tags: true
+        });
+
+        $('.select2').on('select2:createSearchChoice', function (e) {
+          const newOption = e.params.term;
+          const existingOptions = $(this).select2('data');
+
+          // Check if the new option already exists
+          const optionExists = existingOptions.some(option => option.text.toLowerCase() === newOption.toLowerCase());
+
+          if (!optionExists) {
+            // Add the new option to the list
+            const newOption = {
+              id: newOption.toLowerCase().replace(/\s+/g, '-'),
+              text: newOption
+            };
+
+            const newOpts = existingOptions.concat(newOption);
+            $(this).select2('data', newOpts);
+          }
+        });
+      });
+
+
+
+      function getDepartmentOptions(categoryId) {
+
+        $.ajax({
+          url: '/getDepartmentOptions',
+          type: 'GET',
+          data: { categoryId: categoryId },
+          success: function (res) {
+            console.log(res);
+            if (res.success == false) {
+
+              $('#departmentError').html(res.msg);
+            
+              if ($('#department').hasClass("select2-hidden-accessible")) {
+                $('#department').select2('destroy');
+              }
+              $('#department').html('');
+              $('#departmentError').removeClass('hidden');
+              $('#departmentParent').removeClass('hidden');
+
+              $('#department').select2({
+                tags: true
+              });
+
+              // $('#department').addClass('hidden');
+
+
+            } else {
+              $('#departmentError').addClass('hidden');
+              $('#department').removeClass('hidden');
+              $('#departmentParent').removeClass('hidden');
+              $('#department').html(res.options);
+              $('#department').select2({
+                tags: true
+              });
+            }
+
+
+          }
+        });
+      }
+
+
 
       //   $(document).ready(function () {
       //     // Initialize Select2
-      //     $('#category').select2({
+      //     $('#domain').select2({
       //       placeholder: 'Select an option',
       //       tags: true,
       //       tokenSeparators: [',', ' '],
@@ -135,13 +208,13 @@
       //         // If the option doesn't exist, send an AJAX request to create it
       //         if (!optionExists) {
       //           $.ajax({
-      //             url: '/create-category',
+      //             url: '/create-domain',
       //             type: 'POST',
-      //             data: { category: newCategory },
+      //             data: { domain: newCategory },
       //             success: function (data) {
       //               // Option created successfully, add it to the Select2 dropdown
       //               var newOption = new Option(data.label, data.value, true, true);
-      //               $('#category').append(newOption).trigger('change');
+      //               $('#domain').append(newOption).trigger('change');
       //             },
       //             error: function () {
       //               console.log('Error creating option');
@@ -155,75 +228,75 @@
       //       }
       //     });
       //   });
-       </script>
+    </script>
 
-      <script>
-        JSON.stringify(document.getElementById('img_url').value);
-        // JSON.stringify(document.getElementById('specStore').value);
+    <script>
+      JSON.stringify(document.getElementById('img_url').value);
+      // JSON.stringify(document.getElementById('specStore').value);
 
-        var img_arr = [];
+      var img_arr = [];
+      // var i = 0;
+      var fileButton = document.getElementById('addProductImages');
+      var uploader = document.getElementById('uploader');
+      var getId = document.getElementById('prog_shot');
+
+
+      fileButton.addEventListener("change", function (e) {
         // var i = 0;
-        var fileButton = document.getElementById('addProductImages');
-        var uploader = document.getElementById('uploader');
-        var getId = document.getElementById('prog_shot');
+        // var getId = document.getElementById(`prog_shot${i}`);
+        document.getElementById('submit-button').disabled = true;
+        document.getElementById('uploadStatus').innerText = 'Status- ';
+        getId.innerText = 'Uploading...';
+        getId.style.color = '#e76f51';
+        uploader.style.display = 'block';
+        //get file 
+        var file = e.target.files[0];
 
+        // create a storage ref
+        var storageRef = firebase.storage().ref('images/' + file.name);
 
-        fileButton.addEventListener("change", function (e) {
-          // var i = 0;
-          // var getId = document.getElementById(`prog_shot${i}`);
-          document.getElementById('submit-button').disabled = true;
-          document.getElementById('uploadStatus').innerText = 'Status- ';
-          getId.innerText = 'Uploading...';
-          getId.style.color = '#e76f51';
-          uploader.style.display = 'block';
-          //get file 
-          var file = e.target.files[0];
+        //upload files
+        var task = storageRef.put(file);
 
-          // create a storage ref
-          var storageRef = firebase.storage().ref('images/' + file.name);
+        // console.log(file);
+        // console.log(task);
+        console.log(file.name, "here");
+        //update progress bar
+        task
+          .then(snapshot => snapshot.ref.getDownloadURL())
+          .then((url) => {
+            console.log(url);
+            img_arr.push(url);
+            $('#img_name').append(`<div style="border:1px solid #C3E3FD;color:#011627;margin:4px;padding:1px;border-radius:2px">${file.name}</div>`);
+            console.log(img_arr);
+            document.getElementById('img_url').value = JSON.stringify(img_arr);
+            console.log(document.getElementById('img_url').value);
+            getId.innerText = "Done";
+            document.getElementById('submit-button').disabled = false;
+            getId.style.color = 'chartreuse';
 
-          //upload files
-          var task = storageRef.put(file);
+            // document.querySelector('#someImageTagID').src = url;
+          })
+          .catch(console.error);
+        task.on('state_changed',
+          function progress(snapshot) {
+            var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            uploader.value = percentage;
+            if (percentage == 100) {
+              // var getId = document.getElementById(`prog_shot${i}`);
+              getId.innerText = "Configuring...";
+              getId.style.color = 'yellow';
+            }
 
-          // console.log(file);
-          // console.log(task);
-          console.log(file.name, "here");
-          //update progress bar
-          task
-            .then(snapshot => snapshot.ref.getDownloadURL())
-            .then((url) => {
-              console.log(url);
-              img_arr.push(url);
-              $('#img_name').append(`<div style="border:1px solid #C3E3FD;color:#011627;margin:4px;padding:1px;border-radius:2px">${file.name}</div>`);
-              console.log(img_arr);
-              document.getElementById('img_url').value = JSON.stringify(img_arr);
-              console.log(document.getElementById('img_url').value);
-              getId.innerText = "Done";
-              document.getElementById('submit-button').disabled = false;
-              getId.style.color = 'chartreuse';
+          },
+          function error(err) {
+            console.log(err);
+          },
+          function complete() {
+            console.log('completed successfully');
+          })
+        // i++;
+      });
+    </script>
 
-              // document.querySelector('#someImageTagID').src = url;
-            })
-            .catch(console.error);
-          task.on('state_changed',
-            function progress(snapshot) {
-              var percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-              uploader.value = percentage;
-              if (percentage == 100) {
-                // var getId = document.getElementById(`prog_shot${i}`);
-                getId.innerText = "Configuring...";
-                getId.style.color = 'yellow';
-              }
-
-            },
-            function error(err) {
-              console.log(err);
-            },
-            function complete() {
-              console.log('completed successfully');
-            })
-          // i++;
-        });
-      </script>
-
-<%- include('./Delta/footer') %>
+    <%- include('./Delta/footer') %>

@@ -32,12 +32,16 @@
 
     <div class="container w-100 mt-3 mb-0 p-0">
       <ul id="categories" class="m-0 p-0 w-100">
+        <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
+          value="All">All</button></li>
+        <% domains.forEach((domain) => { %>
+          <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
+            value="<%= domain.name %>"><%= domain.name %></button></li>
+        <% } )%>
 
-        <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
-            value="All">All</button></li>
-        <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
-            value="Banks">Banks</button></li>
-        <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
+       
+      
+        <!-- <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
             value="Hospitals">Hospitals</button></li>
         <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
             value="Government Offices">Government
@@ -45,7 +49,7 @@
         <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
             value="Restraunts">Restraunts</button></li>
         <li class="mx-3 mb-0"><button type="button" name="button" class="color" onclick="change(this)"
-            value="Salons/Spas">Salons/Spas</button></li>
+            value="Salons/Spas">Salons/Spas</button></li> -->
       </ul>
     </div>
     <div class="container w-100  mx-auto mt-0" style="background-color: rgba(41, 43, 44,0.9);">
