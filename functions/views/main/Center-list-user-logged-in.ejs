@@ -112,7 +112,7 @@
         }
         a.classList.add('animation1')
 
-        let category = a.value;
+        let category = (a.value).trim();
         let card = document.getElementsByClassName('Cards');
         let type = document.getElementsByClassName('type');
 
@@ -120,12 +120,13 @@
           card[i].style.display = "inline-block";
         }
         for (let i = 0; i < card.length; i++) {
-          console.log(type[i].innerHTML);
-          console.log(category == (type[i].innerHTML));
+          let cardCategory=(type[i].innerHTML).trim();
+          console.log(cardCategory);
+          console.log(category == (cardCategory));
 
           if (category === "All") { }
 
-          else if (category != (type[i].innerHTML)) {
+          else if (category != (cardCategory)) {
             card[i].style.display = "none";
           }
         }
