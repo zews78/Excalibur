@@ -34,7 +34,7 @@
           <tbody>
             <%function leftFillNum(num, targetLength) { return num.toString().padStart(targetLength, 0); }%>
               <%for(var i=0,j=0; i< Tickets.length, j< RegUsers.length; i++, j++){
-                if(Tickets[i].id==ticketObject.token){%>
+                if(Tickets[i].token==ticketObject.token){%>
                 <tr style="font-size: 22px;
         color: yellowgreen;">
                   <th scope="row">
@@ -46,7 +46,7 @@
                   <td>
                     <%=Tickets[i].id%>
                   </td>
-                  <td><b>Now</b></td>
+                  <td><b><%=Tickets[i].slot%></b></td>
                 </tr>
                 <%}else{%>
                   <tr>
@@ -59,7 +59,7 @@
                     <td>
                       <%=Tickets[i].id%>
                     </td>
-                    <td><b>@Exp Time</b></td>
+                    <td><b><%=Tickets[i].slot%></b></td>
                   </tr>
                   <%}%>
                     <%}%>

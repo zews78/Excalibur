@@ -1,42 +1,44 @@
+const { request } = require("express");
+const firebase = require("../firebase");
+const isAuth = require("../utils/isAuth");
+const QRCode = require("qrcode");
 const {
-  request
-} = require('express');
-const firebase = require('../firebase');
-const isAuth = require('../utils/isAuth');
-const QRCode = require('qrcode');
-const { updateToken,updateSlots,stopQueue,restartQueue } = require('../utils/update');
+  updateToken,
+  updateSlots,
+  stopQueue,
+  restartQueue,
+} = require("../utils/update");
 
-const nodemailer = require('nodemailer');
+const nodemailer = require("nodemailer");
 
-const algoliasearch = require('algoliasearch');
-const client = algoliasearch('073MO4F17T', '674ea92d57045777ad62cca9913d7bbb');
-const index = client.initIndex('center_collection');
+const algoliasearch = require("algoliasearch");
+const client = algoliasearch("073MO4F17T", "674ea92d57045777ad62cca9913d7bbb");
+const index = client.initIndex("center_collection");
 
-
-var dayjs = require('dayjs')
-var customParseFormat = require('dayjs/plugin/customParseFormat')
-dayjs.extend(customParseFormat)
-dayjs().format()
+var dayjs = require("dayjs");
+var customParseFormat = require("dayjs/plugin/customParseFormat");
+dayjs.extend(customParseFormat);
+dayjs().format();
 
 // const keywordGenerator = require('../utils/keywordGenerator');
-
 
 exports.test = async (req, res) => {
   // const centerData1 = { objectID: '1', name: 'Object 1' };
   //save the data to algolia
-  centerData1 = {}
+  centerData1 = {};
   centerData1.centre_name = req.body.centerName;
   centerData1.domain = req.body.domain;
   centerData1.centre_desc = req.body.desc;
   console.log(centerData1);
-  index.saveObject(centerData1, {'autoGenerateObjectIDIfNotExist': true})
-  .then(({ objectID }) => {
-    console.log(objectID);
-  })
-  .catch(err => {
-    console.log(err);
-  });
-}
+  index
+    .saveObject(centerData1, { autoGenerateObjectIDIfNotExist: true })
+    .then(({ objectID }) => {
+      console.log(objectID);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 exports.getCenter = async (req, res) => {
   // const auth = (await isAuth(req))[0];
@@ -44,39 +46,35 @@ exports.getCenter = async (req, res) => {
     const auth = (await isAuth(req))[0];
 
     let Cntr = [];
-    const CntrRef = firebase.firestore()
-      .collection('centres')
+    const CntrRef = firebase.firestore().collection("centres");
     const snapshot = await CntrRef.get();
-    snapshot.forEach(doc => {
+    snapshot.forEach((doc) => {
       Cntr.push({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       });
     });
 
-
-    let domains=[];
-    const domainsRef = await firebase.firestore()
-      .collection('domains').get();
-      domainsRef.forEach(doc => {
+    let domains = [];
+    const domainsRef = await firebase.firestore().collection("domains").get();
+    domainsRef.forEach((doc) => {
       domains.push({
         id: doc.id,
-        ...doc.data()
+        ...doc.data(),
       });
     });
 
     // console.log(Cntr);
-    res.render('main/Center-list-user-logged-in.ejs', {
+    res.render("main/Center-list-user-logged-in.ejs", {
       auth,
-      pageTitle: 'Center-list',
+      pageTitle: "Center-list",
       Cntr,
-      domains
+      domains,
     });
   } catch (err) {
     console.log(err);
   }
 };
-
 
 // exports.getHelp = async(req, res) => {
 // 	try {
@@ -116,9 +114,9 @@ exports.getHome = async (req, res) => {
     // 	});
     // });
     // console.log(Cntr);
-    res.render('main/home.ejs', {
-      pageTitle: 'Home',
-      auth
+    res.render("main/home.ejs", {
+      pageTitle: "Home",
+      auth,
       // Cntr
     });
   } catch (err) {
@@ -128,29 +126,31 @@ exports.getHome = async (req, res) => {
 
 exports.getOneCenter = async (req, res) => {
   try {
-    const [auth,decodedToken] = (await isAuth(req));
+    const [auth, decodedToken] = await isAuth(req);
     const centreId = req.params.centerId;
-    const center = await firebase.firestore()
-      .collection('centres')
+    const center = await firebase
+      .firestore()
+      .collection("centres")
       .doc(req.params.centerId)
       .get();
 
     // console.log(typeof JSON.parse(dept));
     const userId = req.uid;
-    const reqUser = await firebase.firestore()
-      .collection('users')
+    const reqUser = await firebase
+      .firestore()
+      .collection("users")
       .doc(req.uid)
       .get();
     // console.log(userId);
     let dept = center.data().avDept;
     var req_dept = [];
 
-    let isCenterEmployee=false;
+    let isCenterEmployee = false;
 
-    let mappedUID=center.data().uid;
+    let mappedUID = center.data().uid;
 
-    if(mappedUID==decodedToken.uid){
-      isCenterEmployee=true;
+    if (mappedUID == decodedToken.uid) {
+      isCenterEmployee = true;
     }
 
     // const getItems = (x, callback) => {
@@ -184,10 +184,11 @@ exports.getOneCenter = async (req, res) => {
     // });
     // console.log(xdept);;
 
-
     // const uids = ['abcde...', 'klmno...', 'wxyz...'];
 
-    const promises = dept.map(u => firebase.firestore().collection("departments").doc(u).get());
+    const promises = dept.map((u) =>
+      firebase.firestore().collection("departments").doc(u).get()
+    );
     // const promises = await firebase.firestore()
     // 	.collection('departments')
     // 	.doc(dept)
@@ -207,7 +208,7 @@ exports.getOneCenter = async (req, res) => {
     // function getAllItems()
     // console.log(promises.data());
     var results = await Promise.all(promises);
-    results.map(docSnapshot => {
+    results.map((docSnapshot) => {
       req_dept.push(docSnapshot.data());
       // console.log(docSnapshot.data(), "shiit");
     });
@@ -215,8 +216,6 @@ exports.getOneCenter = async (req, res) => {
     // setTimeout(()=>{
     // 	console.log(req_dept, 'pleeeeeeease');
     // })
-
-
 
     // console.log({
     //   ...center.data(),
@@ -226,18 +225,16 @@ exports.getOneCenter = async (req, res) => {
     // console.log(req_dept);
     // console.log(req.params.centerId);
 
-   
-
-    res.render('main/Centre_Details_booking.ejs', {
+    res.render("main/Centre_Details_booking.ejs", {
       cntr_data: {
         ...center.data(),
         userId,
-        id: centreId
+        id: centreId,
       },
       reqDept: req_dept,
-      pageTitle: 'Centre-List',
+      pageTitle: "Centre-List",
       auth,
-      isCenterEmployee
+      isCenterEmployee,
     });
   } catch (err) {
     console.log(err);
@@ -248,11 +245,11 @@ exports.getOneCenterEymplyees = async (req, res) => {
   try {
     const auth = (await isAuth(req))[0];
     const centreId = req.params.centerId;
-    const center = await firebase.firestore()
-      .collection('centres')
+    const center = await firebase
+      .firestore()
+      .collection("centres")
       .doc(req.params.centerId)
       .get();
-
 
     // console.log(
     // 	{
@@ -263,14 +260,13 @@ exports.getOneCenterEymplyees = async (req, res) => {
     // console.log(reqDept.data());
     // console.log(req.params.centerId);
 
-    res.render('main/input-id.ejs', {
+    res.render("main/input-id.ejs", {
       center: {
         ...center.data(),
         id: centreId,
-        
       },
       auth,
-      pageTitle: 'enter ticket id',
+      pageTitle: "enter ticket id",
     });
   } catch (err) {
     console.log(err);
@@ -283,37 +279,37 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
 
     const auth = (await isAuth(req))[0];
 
-
-    const ticketsSnapshot = await firebase.firestore()
-      .collection('ticket')
-      .where('centre_uid', '==', centreId)
+    const ticketsSnapshot = await firebase
+      .firestore()
+      .collection("ticket")
+      .where("centre_uid", "==", centreId)
       // .orderBy('timestamp', 'desc')
       .get();
 
-
-
-    const reqCentre = await firebase.firestore()
-      .collection('centres')
+    const reqCentre = await firebase
+      .firestore()
+      .collection("centres")
       .doc(centreId)
       .get();
 
-
     regUsers = [];
     tickets = [];
-    ticketsSnapshot.forEach(doc => {
+    ticketsSnapshot.forEach((doc) => {
       if (doc.data().userId) {
         regUsers.push(doc.data().userId);
         // console.log(doc.data().userId,"bolaa")
         tickets.push({
           id: doc.id,
-          ...doc.data()
+          ...doc.data(),
         });
       }
     });
     RegUsers = [];
-    const promises = regUsers.map(u => firebase.firestore().collection("users").doc(u).get());
+    const promises = regUsers.map((u) =>
+      firebase.firestore().collection("users").doc(u).get()
+    );
     var results = await Promise.all(promises);
-    results.map(docSnapshot => {
+    results.map((docSnapshot) => {
       RegUsers.push(docSnapshot.data().name);
       // console.log(docSnapshot.data(), "shiit");
     });
@@ -321,134 +317,183 @@ exports.getOneCenterEymplyeesTicketId = async (req, res) => {
     Tickets = tickets.sort((a, b) => new Date(a.date) - new Date(b.date)); //sorts it in ascending order
     // const ticket = await tickets.findById(req.body.ticketId)
     // const currentToken=tickets.findIndex(x => x==ticket);
+
+
+    const currentTicket = await firebase
+      .firestore()
+      .collection("ticket")
+      .doc(req.body.ticketId)
+      .get();
+
+    
+
     const ticketObject = {
       // tickets:tickets,
       // currentTicket:ticket,
-      token: req.body.ticketId,
+      token: currentTicket.data().token,
       centre_name: reqCentre.data().centre_name,
       centre_location: reqCentre.data().location,
-  //    deapartment:                               only display tickets with same date and dept id and pass dept id
-    }
-   
+      //    deapartment:                               only display tickets with same date and dept id and pass dept id
+    };
 
     updateToken(req.body.ticketId); //we are updating the centre current token using centreId and ticketId
     // console.log(req.body.ticketId);
-    res.render('main/CentreEmploy.ejs', {
+
+    //processing slots for display
+    tickets.map((ticket, index) => {
+      let slot = ticket.slot;
+    
+      // Ensure the slot date string has two digits for the day part.
+      const dateTimeParts = slot.split('T');
+      const datePart = dateTimeParts[0];
+      const timePart = dateTimeParts[1];
+    
+      // Adding leading zero to the day part if necessary.
+      const dateParts = datePart.split('-');
+      if (dateParts[2].length === 1) {
+        dateParts[2] = '0' + dateParts[2];
+      }
+      
+      // Reconstruct the date part.
+      slot = dateParts.join('-') + 'T' + timePart;
+    
+     
+    
+      const dateObj = new Date(slot);
+      if (isNaN(dateObj)) {
+        console.error('Invalid Date:', slot);
+        return;
+      }
+    
+      const formattedTime = dateObj.toLocaleString('en-US', {
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      });
+     
+    
+      tickets[index].slot = formattedTime;
+    });
+    
+
+    res.render("main/CentreEmploy.ejs", {
       Tickets,
       RegUsers,
       ticketObject,
-      auth
+      auth,
     });
   } catch (err) {
     console.log(err);
-
   }
-}
-
-exports.postTicket = async (req, res) => {
-
-  try {
-
-    const auth = (await isAuth(req))[0];
-
-    let dept = await firebase.firestore()
-      .collection('departments')
-      .doc(req.body.Department)
-      .get()
-
-    let center = await firebase.firestore()
-      .collection('centres')
-      .doc(req.body.centreId)
-      .get()
-
-      let dData = {
-        ...dept.data(),
-      }
-
-    let averageTime = 5; //5 minutes
-    let date=req.body.date;
-    let openingTime=date+"T"+center.data().openingTime;
-    let closingTime=date+"T"+center.data().closingTime
-
-
-    let resObj={
-      pageTitle:'Available Slots',
-      userId: req.body.userId,
-      centerId:req.body.centreId,
-      deptId:req.body.Department,
-      openingTime,                    //date format
-      closingTime,
-      averageTime,                    //date format
-      date,
-      auth,
-      dateExists:false,
-      bookedSlots:false
-    }
-
-
-    if(!dData.bookedSlots){                 //no date exists
-      // console.log("this shit is running");
-      dData.bookedSlots={
-        justCreated:true
-      };
-    }else{
-      let dates=Object.keys(dData.bookedSlots);
-      if(dates.includes(date)){               //date already exists
-        resObj.bookedSlots=dData.bookedSlots[date];
-        resObj.dateExists=true;
-        dData.bookedSlots.dateExists=true;
-      }else{
-        dData.bookedSlots.dateExists=false;
-      }
-      }
-      // console.log(dData);
-        const newDept = await firebase.firestore()
-          .collection('departments')
-          .doc(req.body.Department).set(dData); //overwriting the department document
-
-
-// console.log(resObj);
-    res.render('main/availableSlots',resObj)
-
-} catch (err) {
-    console.log(err);
-  }
-
 };
 
-exports.postAvailableSlots=async (req,res)=>{
+exports.postTicket = async (req, res) => {
   try {
     const auth = (await isAuth(req))[0];
 
-    let dept = await firebase.firestore()
-      .collection('departments')
-      .doc(req.body.departmentId)
-      .get()
+    let dept = await firebase
+      .firestore()
+      .collection("departments")
+      .doc(req.body.Department)
+      .get();
+
+    let center = await firebase
+      .firestore()
+      .collection("centres")
+      .doc(req.body.centreId)
+      .get();
 
     let dData = {
       ...dept.data(),
+    };
+
+    let averageTime = 5; //5 minutes
+    let date = req.body.date;
+    let openingTime = date + "T" + center.data().openingTime;
+    let closingTime = date + "T" + center.data().closingTime;
+
+    let resObj = {
+      pageTitle: "Available Slots",
+      userId: req.body.userId,
+      centerId: req.body.centreId,
+      deptId: req.body.Department,
+      openingTime, //date format
+      closingTime,
+      averageTime, //date format
+      date,
+      auth,
+      dateExists: false,
+      bookedSlots: false,
+    };
+
+    if (!dData.bookedSlots) {
+      //no date exists
+      // console.log("this shit is running");
+      dData.bookedSlots = {
+        justCreated: true,
+      };
+    } else {
+      let dates = Object.keys(dData.bookedSlots);
+      if (dates.includes(date)) {
+        //date already exists
+        resObj.bookedSlots = dData.bookedSlots[date];
+        resObj.dateExists = true;
+        dData.bookedSlots.dateExists = true;
+      } else {
+        dData.bookedSlots.dateExists = false;
+      }
     }
-    let date=req.body.date;
-    let token=0;
-// console.log(dData.bookedSlots);
-    if(dData.bookedSlots.justCreated || !(dData.bookedSlots.dateExists)){
-      dData.bookedSlots[date]=[];
+    // console.log(dData);
+    const newDept = await firebase
+      .firestore()
+      .collection("departments")
+      .doc(req.body.Department)
+      .set(dData); //overwriting the department document
+
+    // console.log(resObj);
+    res.render("main/availableSlots", resObj);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+exports.postAvailableSlots = async (req, res) => {
+  try {
+    const auth = (await isAuth(req))[0];
+
+    let dept = await firebase
+      .firestore()
+      .collection("departments")
+      .doc(req.body.departmentId)
+      .get();
+
+    let dData = {
+      ...dept.data(),
+    };
+    let date = req.body.date;
+    let token = 0;
+    // console.log(dData.bookedSlots);
+    if (dData.bookedSlots.justCreated || !dData.bookedSlots.dateExists) {
+      dData.bookedSlots[date] = [];
       dData.bookedSlots[date].push(req.body.slot);
-      token=1;
-    }else{
-       dData.bookedSlots[date].push(req.body.slot);
-       dData.bookedSlots[date].sort();
-       token=dData.bookedSlots[date].findIndex((slot)=>slot===req.body.slot);
-       token+=1;
-
+      token = 1;
+    } else {
+      dData.bookedSlots[date].push(req.body.slot);
+      dData.bookedSlots[date].sort();
+      token = dData.bookedSlots[date].findIndex(
+        (slot) => slot === req.body.slot
+      );
+      token += 1;
     }
-    updateSlots(dData,req.body.departmentId,date);  //to update the slots of all the other tickets
-    dData.bookedSlots.justCreated=false;
-    dData.bookedSlots.dateExists=false;
+    updateSlots(dData, req.body.departmentId, date); //to update the slots of all the other tickets
+    dData.bookedSlots.justCreated = false;
+    dData.bookedSlots.dateExists = false;
 
-    const newDept = await firebase.firestore()
-      .collection('departments')
-      .doc(req.body.departmentId).set(dData); //overwriting the department document
+    const newDept = await firebase
+      .firestore()
+      .collection("departments")
+      .doc(req.body.departmentId)
+      .set(dData); //overwriting the department document
 
     let tData = {
       userId: req.body.userId,
@@ -456,60 +501,52 @@ exports.postAvailableSlots=async (req,res)=>{
       centre_uid: req.body.centerId,
       department: req.body.departmentId,
       date,
-      slot:req.body.slot,
-      token
+      slot: req.body.slot,
+      token,
     };
 
-    let ticket = await firebase.firestore()
-      .collection('ticket')
-      .add(tData);
+    let ticket = await firebase.firestore().collection("ticket").add(tData);
 
-    res.redirect('/booked/' + ticket.id);
-
+    res.redirect("/booked/" + ticket.id);
   } catch (e) {
     console.log(e);
   }
-}
+};
 
 exports.getSignup = async (req, res) => {
-
   const auth = (await isAuth(req))[0];
 
-  res.render('main/signup.ejs', {
-    pageTitle: 'Signup',
-    auth
-
+  res.render("main/signup.ejs", {
+    pageTitle: "Signup",
+    auth,
   });
 };
 
 exports.getRegistered = async (req, res) => {
   const auth = (await isAuth(req))[0];
 
-  let domains=[];
-  const domainsRef = await firebase.firestore()
-    .collection('domains').get();
-    domainsRef.forEach(doc => {
+  let domains = [];
+  const domainsRef = await firebase.firestore().collection("domains").get();
+  domainsRef.forEach((doc) => {
     domains.push({
       id: doc.id,
-      ...doc.data()
+      ...doc.data(),
     });
   });
 
-  res.render('main/center-registeration-form.ejs', {
-    pageTitle: 'Register',
+  res.render("main/center-registeration-form.ejs", {
+    pageTitle: "Register",
     auth,
-    domains
-
+    domains,
   });
 };
 
 exports.getAppt = async (req, res) => {
   const auth = (await isAuth(req))[0];
 
-  res.render('main/booking.ejs', {
-    pageTitle: 'Appointment',
-    auth
-
+  res.render("main/booking.ejs", {
+    pageTitle: "Appointment",
+    auth,
   });
 };
 
@@ -517,75 +554,84 @@ exports.getBooked = async (req, res) => {
   try {
     const auth = (await isAuth(req))[0];
 
-    const ticket = await firebase.firestore()
-      .collection('ticket')
+    const ticket = await firebase
+      .firestore()
+      .collection("ticket")
       .doc(req.params.bookingId)
       .get();
 
     // below is the code to generate a qr code
 
     qr_code = [];
-    QRCode.toDataURL(req.params.bookingId, function(err, url) {
+    QRCode.toDataURL(req.params.bookingId, function (err, url) {
       //'url' stores the url of the generated qr code
       qr_code.push(url);
-    })
+    });
 
-
-
-    const centre = await firebase.firestore()
-      .collection('centres')
+    const centre = await firebase
+      .firestore()
+      .collection("centres")
       .doc(ticket.data().centre_uid)
       .get();
 
-    const user = await firebase.firestore()
-      .collection('users')
+    const user = await firebase
+      .firestore()
+      .collection("users")
       .doc(ticket.data().userId)
       .get();
 
-    const department = await firebase.firestore()
-      .collection('departments')
+    const department = await firebase
+      .firestore()
+      .collection("departments")
       .doc(ticket.data().department)
       .get();
 
     // Send Email
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      service: "gmail",
       auth: {
-        user: 'debuggers.nitkkr@gmail.com',
-        pass: '11915110'
-      }
+        user: "debuggers.nitkkr@gmail.com",
+        pass: "11915110",
+      },
     });
 
     const mailOption = {
-      from: 'no_reply@gmail.com',
-      to: 'shariquealam52@gmail.com', //////Set the email ID Cannot find it
-      subject: 'Appointment Booked',
-      text: 'Hi' + user.data().name + ' your appointment is Booked With Excelerentum for ' + centre.data().centre_name + 'and department' + department.data().dept_name + 'and your booking id is' + req.params.bookingId,
-      html: '<h1>Booking Confirmed<h1>'
+      from: "no_reply@gmail.com",
+      to: "shariquealam52@gmail.com", //////Set the email ID Cannot find it
+      subject: "Appointment Booked",
+      text:
+        "Hi" +
+        user.data().name +
+        " your appointment is Booked With Excelerentum for " +
+        centre.data().centre_name +
+        "and department" +
+        department.data().dept_name +
+        "and your booking id is" +
+        req.params.bookingId,
+      html: "<h1>Booking Confirmed<h1>",
     };
 
-    transporter.sendMail(mailOption, function(err, data) {
+    transporter.sendMail(mailOption, function (err, data) {
       if (err) {
-        console.log('Error' + err);
+        console.log("Error" + err);
       } else {
-        console.log('Message Sent!');
+        console.log("Message Sent!");
       }
     });
     // console.log(department.data());
     // console.log(centre.data().centre_name);
 
-    res.render('main/Delta/booking-confirmation.ejs', {
+    res.render("main/Delta/booking-confirmation.ejs", {
       ticket_data: {
         ...ticket.data(),
         img_url: qr_code[0],
         ticketId: req.params.bookingId,
         centreName: centre.data().centre_name,
         userName: user.data().name,
-        Department: department.data().dept_name
+        Department: department.data().dept_name,
       },
-      pageTitle: 'Booking Confirmed',
-      auth
-
+      pageTitle: "Booking Confirmed",
+      auth,
     });
   } catch (err) {
     console.log(err);
@@ -594,38 +640,35 @@ exports.getBooked = async (req, res) => {
 
 exports.postCenter = async (req, res) => {
   try {
-    const [auth,decodedToken] = (await isAuth(req));
+    const [auth, decodedToken] = await isAuth(req);
     const centerData = {};
     const images = [];
     // images.push(req.body.img);
 
     const domainName = req.body.domain;
-    const domains = firebase.firestore().collection('domains');
+    const domains = firebase.firestore().collection("domains");
     domains
-    .where('name', '==', domainName)
-    .get()
-    .then(async (domainOptions) => {
-      
-      if(domainOptions.empty){
-    
-      await firebase.firestore()
-      .collection('domains')
-      .add({
-        name: domainName});
-    
-    }
-    });
-   
+      .where("name", "==", domainName)
+      .get()
+      .then(async (domainOptions) => {
+        if (domainOptions.empty) {
+          await firebase.firestore().collection("domains").add({
+            name: domainName,
+          });
+        }
+      });
+
     centerData.domain = domainName;
     centerData.centre_name = req.body.centerName;
     centerData.centre_desc = req.body.desc;
     centerData.PhoneNo = req.body.pNo;
     centerData.location = req.body.address; // if tima bacha take this input auto matically via an Appointment for now i have added a field in the form asking for it
     /*i dont know how to store images*/
-    centerData.images = req.body.img_url == '' ? req.body.img_url : JSON.parse(req.body.img_url);
+    centerData.images =
+      req.body.img_url == "" ? req.body.img_url : JSON.parse(req.body.img_url);
     centerData.openingTime = req.body.openingTime;
     centerData.closingTime = req.body.closingTime;
-    centerData.uid=decodedToken.uid;
+    centerData.uid = decodedToken.uid;
 
     let dData = {};
     let id;
@@ -635,205 +678,205 @@ exports.postCenter = async (req, res) => {
     // console.log(typeof req.body.department);
     // process.exit(0);
 
-    if(typeof req.body.department == 'string'){
-
-      
-      department = await firebase.firestore()
-        .collection('departments').doc();
+    if (typeof req.body.department == "string") {
+      department = await firebase.firestore().collection("departments").doc();
       id = department.id;
       // console.log(id);
       centerData.avDept.push(id);
       dData.dept_name = req.body.department;
       dData.currentToken = "Not Assigned";
-      dData.domain= domainName;
+      dData.domain = domainName;
       await department.set(dData);
-    }else{
-
-   
-    
-
-    for (let i = 0; i < req.body.department.length; i++) {
-      department = await firebase.firestore()
-        .collection('departments').doc();
-      id = department.id;
-      // console.log(id);
-      centerData.avDept.push(id);
-      dData.dept_name = req.body.department[i];
-      dData.currentToken = "Not Assigned";
-      dData.domain= domainName;
-      await department.set(dData);
+    } else {
+      for (let i = 0; i < req.body.department.length; i++) {
+        department = await firebase.firestore().collection("departments").doc();
+        id = department.id;
+        // console.log(id);
+        centerData.avDept.push(id);
+        dData.dept_name = req.body.department[i];
+        dData.currentToken = "Not Assigned";
+        dData.domain = domainName;
+        await department.set(dData);
+      }
     }
-  }
 
-    let docRef = await firebase.firestore()
-      .collection('centres').add(centerData);
+    let docRef = await firebase
+      .firestore()
+      .collection("centres")
+      .add(centerData);
 
     //save the data to algolia
-    centerData_algolia = {}
+    centerData_algolia = {};
     centerData_algolia.objectID = docRef.id;
     centerData_algolia.centre_name = req.body.centerName;
     centerData_algolia.domain = domainName;
     centerData_algolia.centre_desc = req.body.desc;
     // console.log(centerData_algolia);
-    index.saveObject(centerData_algolia)
-    .then(({ objectID }) => {
-      console.log(objectID);
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    index
+      .saveObject(centerData_algolia)
+      .then(({ objectID }) => {
+        console.log(objectID);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     let tickets = []; //find by finding filtering tickets by center id and date
 
-    res.redirect('/center');
-
+    res.redirect("/center");
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 exports.postUser = async (req, res) => {
   try {
     const auth = (await isAuth(req))[0];
     if (req.body.psw !== req.body.pswrepeat) {
-      throw new Error('Passwords do not match');
+      throw new Error("Passwords do not match");
     }
-    let user = await firebase.firestore()
-      .collection('users').doc(req.params.uid).get();
+    let user = await firebase
+      .firestore()
+      .collection("users")
+      .doc(req.params.uid)
+      .get();
 
     let userData = {
       mobile: user.data().mobile,
     };
     userData.name = req.body.name;
     userData.password = req.body.psw;
-    await firebase.firestore()
-      .collection('users').doc(req.params.uid).update(userData);
+    await firebase
+      .firestore()
+      .collection("users")
+      .doc(req.params.uid)
+      .update(userData);
 
-    res.redirect('/center');
+    res.redirect("/center");
   } catch (e) {
     console.log(e);
   }
-}
-exports.deleteTicket = async (req,res) =>{
+};
+exports.deleteTicket = async (req, res) => {
   try {
     const auth = (await isAuth(req))[0];
-    const ticketId=req.body.ticketId;
+    const ticketId = req.body.ticketId;
     // console.log(req.body);
-    const ticket=await firebase.firestore()
-          .collection('ticket').doc(ticketId).get();
-    let tData={
-      ...ticket.data()
-    }
+    const ticket = await firebase
+      .firestore()
+      .collection("ticket")
+      .doc(ticketId)
+      .get();
+    let tData = {
+      ...ticket.data(),
+    };
     // console.log(tData.date);
-    let dept = await firebase.firestore()
-      .collection('departments')
+    let dept = await firebase
+      .firestore()
+      .collection("departments")
       .doc(tData.department)
-      .get()
+      .get();
 
     let dData = {
       ...dept.data(),
-    }
-    const index=dData.bookedSlots[tData.date].findIndex((slot)=>slot===tData.slot);
-    dData.bookedSlots[tData.date].splice(index,1);
+    };
+    const index = dData.bookedSlots[tData.date].findIndex(
+      (slot) => slot === tData.slot
+    );
+    dData.bookedSlots[tData.date].splice(index, 1);
     dData.bookedSlots[tData.date].sort();
-    updateSlots(dData,tData.department,tData.date);
+    updateSlots(dData, tData.department, tData.date);
 
-    const newDept = await firebase.firestore()
-      .collection('departments')
-      .doc(tData.department).set(dData); //overwriting the department document
+    const newDept = await firebase
+      .firestore()
+      .collection("departments")
+      .doc(tData.department)
+      .set(dData); //overwriting the department document
 
-      const re = await firebase.firestore()
-            .collection('ticket').doc(ticketId).delete();
+    const re = await firebase
+      .firestore()
+      .collection("ticket")
+      .doc(ticketId)
+      .delete();
 
-      res.redirect('/center');
-
-
+    res.redirect("/center");
   } catch (e) {
     console.log(e);
   }
-}
+};
 
-exports.stopQueue=  (req,res)=>{
+exports.stopQueue = (req, res) => {
   console.log(req.body);
-const response=stopQueue(req.body.ticketId);
-if(response.status){
-  // console.log(response);
-  res.send({message:response.status})
-}
-else{
-  res.send({error:response.error})
-}
-}
-exports.restartQueue= (req,res)=>{
-  const response=restartQueue(req.body.ticketId);
-  if(response.status){
+  const response = stopQueue(req.body.ticketId);
+  if (response.status) {
     // console.log(response);
-    res.send({message:response.status})
+    res.send({ message: response.status });
+  } else {
+    res.send({ error: response.error });
   }
-  else{
-    res.send({error:response.error})
+};
+exports.restartQueue = (req, res) => {
+  const response = restartQueue(req.body.ticketId);
+  if (response.status) {
+    // console.log(response);
+    res.send({ message: response.status });
+  } else {
+    res.send({ error: response.error });
   }
-}
+};
 
-  exports.postDomain = async (req,res) =>{
-    try {
+exports.postDomain = async (req, res) => {
+  try {
     const auth = (await isAuth(req))[0];
-    let domainName=req.body.domain?.toLowerCase();
-     let domain = await firebase.firestore()
-        .collection('domain').doc();
+    let domainName = req.body.domain?.toLowerCase();
+    let domain = await firebase.firestore().collection("domain").doc();
     const categoryId = domain.id;
-    domain.domainName=domainName;
-    
+    domain.domainName = domainName;
+
     await domain.set(dData);
-    
-  
+
     const label = capitalizeFirstLetter(domainName);
     const value = domainName;
-  
+
     res.json({ label, value });
-  
-    } catch (e) {
-      console.log(e);
-    }
+  } catch (e) {
+    console.log(e);
   }
+};
 
-  exports.getDepartmentOptions = async (req,res) =>{
-    try {
+exports.getDepartmentOptions = async (req, res) => {
+  try {
     const auth = (await isAuth(req))[0];
-    let domainName=req.query.categoryId;
-    const departments = firebase.firestore().collection('departments');
+    let domainName = req.query.categoryId;
+    const departments = firebase.firestore().collection("departments");
     departments
-    .where('domain', '==', domainName)
-    .get()
-    .then((departmentOptions) => {
-      let options='';
-      if(!departmentOptions.empty){
-        let storedDeptNames=[];
-      departmentOptions.forEach((doc) => {
+      .where("domain", "==", domainName)
+      .get()
+      .then((departmentOptions) => {
+        let options = "";
+        if (!departmentOptions.empty) {
+          let storedDeptNames = [];
+          departmentOptions.forEach((doc) => {
+            let deptName = doc.data().dept_name;
 
-        let deptName=doc.data().dept_name;
-        
-        if(!storedDeptNames.includes(deptName)){
-        options+= '<option>'+deptName+'</option>';
-        storedDeptNames.push(deptName);
+            if (!storedDeptNames.includes(deptName)) {
+              options += "<option>" + deptName + "</option>";
+              storedDeptNames.push(deptName);
+            }
+          });
+
+          res.json({ success: true, options });
+        } else {
+          res.json({
+            success: false,
+            msg: "No departments found! </br> Feel Free to add your own.",
+          });
         }
-
+      })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
       });
-    
-      res.json({success:true, options });
-    
-    }else{      
-        res.json({success:false, msg:'No departments found! </br> Feel Free to add your own.' });
-      }
-    })
-    .catch((error) => {
-      console.log('Error getting documents: ', error);
-    });
-  
-    } catch (e) {
-      console.log(e);
-    }
+  } catch (e) {
+    console.log(e);
   }
-
-
-
+};
