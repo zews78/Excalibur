@@ -5,7 +5,7 @@ const cookieParser = require('cookie-parser');
 const app = express();
 
 // Setting public path
-app.use(express.static('public'), express.static('public/css'));
+app.use(express.static('public'), express.static('public/css'), express.static('public/images'));
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({
