@@ -1,0 +1,612 @@
+
+/* Include only the relevant CSS here */
+
+
+body {
+    margin: 0;
+    line-height: normal;
+}
+
+.filter-child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    border-radius: 56px;
+    background-color: #000;
+}
+.distance {
+    margin: 0;
+}
+.distance-ratings-price-container {
+    position: absolute;
+    width: 44.65%;
+    top: 14.29%;
+    left: 11.64%;
+    line-height: 40px;
+    display: inline-block;
+}
+.filter-item {
+    position: absolute;
+    height: 15.54%;
+    width: 6.18%;
+    top: 42.27%;
+    right: 10.3%;
+    bottom: 42.2%;
+    left: 83.52%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: contain;
+}
+.filter {
+    width: 100%;
+    position: relative;
+    height: 56px;
+    overflow: hidden;
+    text-align: left;
+    font-size: 20px;
+    color: #fff;
+    font-family: Roboto;
+}
+
+
+
+
+.image-4-icon {
+    position: absolute;
+    height: 67.18%;
+    width: 92.44%;
+    top: 2.57%;
+    right: 3.72%;
+    bottom: 30.25%;
+    left: 3.84%;
+    border-radius: 28.45px;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
+.apollo-hospital {
+    position: absolute;
+    height: 2.7%;
+    width: 43.45%;
+    top: 74.61%;
+    left: 6.31%;
+    font-size: 24px;
+    line-height: 28.45px;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+.ratings-by-5587 {
+    position: absolute;
+    height: 1.59%;
+    width: 31.08%;
+    top: 79.24%;
+    left: 6.31%;
+    font-size: 12px;
+    line-height: 28.45px;
+    display: flex;
+    align-items: center;
+}
+.star-rating-child {
+    width: 22px;
+    position: relative;
+    border-radius: 1.52px;
+    height: 24.1px;
+}
+.star-rating {
+    position: absolute;
+    height: 3.81%;
+    width: 28.76%;
+    top: 74.06%;
+    right: 6.41%;
+    bottom: 22.14%;
+    left: 64.84%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.vector-icon {
+    width: 11.2px;
+    position: relative;
+    height: 16px;
+}
+.a-1st-floor {
+    width: 258.8px;
+    position: relative;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+.address {
+    position: absolute;
+    height: 5.55%;
+    width: 68.37%;
+    top: 83.33%;
+    right: 25.32%;
+    bottom: 11.11%;
+    left: 8%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 8px;
+}
+.vector-icon1 {
+    width: 14px;
+    position: relative;
+    height: 14px;
+}
+.div {
+    position: relative;
+    line-height: 15px;
+}
+
+.centre-cards {
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 10px 50px 1px rgba(25, 37, 50, 0.1), 0px 3px 7px -3px rgba(25, 37, 50, 0.1), 0px 6px 12px -2px rgba(25, 37, 50, 0.1);
+    height: 578px;
+    text-align: left;
+    font-size: 14px;
+    color: #8c8889;
+    font-family: Roboto;
+}
+
+
+
+
+
+.centre-tab-child {
+    position: absolute;
+    height: 100%;
+    width: 98.4%;
+    top: 0%;
+    right: 1.6%;
+    bottom: 0%;
+    left: 0%;
+    border-radius: 40px;
+    background-color: #000;
+  }
+  
+  .centre-tab-item {
+    position: absolute;
+    height: 67.04%;
+    width: 11.28%;
+    top: 16.49%;
+    right: 86.05%;
+    bottom: 16.47%;
+    left: 2.67%;
+    border-radius: 24px;
+    background-color: #fff;
+  }
+  
+  .home {
+    position: relative;
+  }
+  
+  .text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    color: #000;
+  }
+  
+  .text1 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  
+  .text-parent {
+    position: absolute;
+    height: 32.12%;
+    width: 86.32%;
+    top: 33.78%;
+    right: 6.95%;
+    bottom: 34.1%;
+    left: 6.73%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .centre-tab {
+    width: 100%;
+    position: relative;
+    height: 71.6px;
+    text-align: left;
+    font-size: 20px;
+    color: #fff;
+    font-family: Roboto;
+  }
+
+.rectangle-div {
+    /* width: 1512px; */
+height: 2700.984px;
+top: -20vh;
+flex-shrink: 0;
+border-radius: 68px 68px 0px 0px;
+background: var(--white, #FFF);
+
+/* width: 100%; */
+position: relative;
+border-radius: 40px;
+/* background-color: #fff; */
+/* height: 578px; */
+
+/* M3/Elevation Dark/5 */
+/* box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px 0px rgba(0, 0, 0, 0.30);
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 8px 12px 6px rgba(0, 0, 0, 0.15), 0px 4px 4px rgba(0, 0, 0, 0.3);
+    /* border-radius: 68px 68px 0px 0px; */
+    /* background-color: #fff; */
+    /* height: 2701px; */
+}
+
+
+
+.carousal-centers-child {
+    position: absolute;
+    height: 101.61%;
+    width: 100%;
+    top: -0.81%;
+    right: 0%;
+    bottom: -0.81%;
+    left: 0%;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+    mix-blend-mode: normal;
+}
+.book-offices-at {
+    position: absolute;
+    height: 6.19%;
+    width: 26.46%;
+    top: 40.15%;
+    left: 11.39%;
+    display: inline-block;
+}
+.cowork-52 {
+    position: absolute;
+    top: 27.85%;
+    left: 11.39%;
+    font-size: 64px;
+    font-weight: 600;
+}
+.book-now {
+    position: relative;
+    line-height: 15px;
+}
+.book-now-button {
+    position: absolute;
+    height: 6.46%;
+    top: 50%;
+    bottom: 43.54%;
+    left: calc(50% - 583.75px);
+    box-shadow: 0px 0px 0px 1px rgba(25, 37, 50, 0.1), 0px 3px 7px -3px rgba(25, 37, 50, 0.1), 0px 6px 12px -2px rgba(25, 37, 50, 0.1);
+    border-radius: 24px;
+    background-color: #000;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+.carousal-centers {
+    width: 100%;
+    position: relative;
+    height: 743.2px;
+    text-align: left;
+    font-size: 20px;
+    color: #fff;
+    font-family: Roboto;
+}
+
+.image-4-icon {
+    position: absolute;
+    height: 67.18%;
+    width: 92.44%;
+    top: 2.57%;
+    right: 3.72%;
+    bottom: 30.25%;
+    left: 3.84%;
+    border-radius: 28.45px;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
+.apollo-hospital {
+    position: absolute;
+    height: 2.7%;
+    width: 43.45%;
+    top: 74.61%;
+    left: 6.31%;
+    font-size: 24px;
+    line-height: 28.45px;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+.ratings-by-5587 {
+    position: absolute;
+    height: 1.59%;
+    width: 31.08%;
+    top: 79.24%;
+    left: 6.31%;
+    font-size: 12px;
+    line-height: 28.45px;
+    display: flex;
+    align-items: center;
+}
+.star-rating-child {
+    width: 22px;
+    position: relative;
+    border-radius: 1.52px;
+    height: 24.1px;
+}
+.star-rating {
+    position: absolute;
+    height: 3.81%;
+    width: 28.76%;
+    top: 74.06%;
+    right: 6.41%;
+    bottom: 22.14%;
+    left: 64.84%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.vector-icon {
+    width: 11.2px;
+    position: relative;
+    height: 16px;
+}
+.a-1st-floor {
+    width: 258.8px;
+    position: relative;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.vector-icon1 {
+    width: 14px;
+    position: relative;
+    height: 14px;
+}
+.div {
+    position: relative;
+    line-height: 15px;
+}
+
+.centre-cards {
+    width: 100%;
+    position: relative;
+    box-shadow: 0px 10px 50px 1px rgba(25, 37, 50, 0.1), 0px 3px 7px -3px rgba(25, 37, 50, 0.1), 0px 6px 12px -2px rgba(25, 37, 50, 0.1);
+    height: 578px;
+    text-align: left;
+    font-size: 14px;
+    color: #8c8889;
+    font-family: Roboto;
+    border-radius: 40px;
+}
+
+
+.image-4-icon {
+    position: absolute;
+    height: 67.18%;
+    width: 92.44%;
+    top: 2.57%;
+    right: 3.72%;
+    bottom: 30.25%;
+    left: 3.84%;
+    border-radius: 28.45px;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
+.apollo-hospital {
+    position: absolute;
+    height: 2.7%;
+    width: 43.45%;
+    top: 74.61%;
+    left: 6.31%;
+    font-size: 24px;
+    line-height: 28.45px;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+.ratings-by-5587 {
+    position: absolute;
+    height: 1.59%;
+    width: 31.08%;
+    top: 79.24%;
+    left: 6.31%;
+    font-size: 12px;
+    line-height: 28.45px;
+    display: flex;
+    align-items: center;
+}
+.centre-cards {
+    width: 382.5px;
+    position: relative;
+    box-shadow: 0px 10px 50px 1px rgba(25, 37, 50, 0.1), 0px 3px 7px -3px rgba(25, 37, 50, 0.1), 0px 6px 12px -2px rgba(25, 37, 50, 0.1);
+    height: 578px;
+    margin: 20px;
+}
+.centre-cards-parent {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.search-container {
+    width: 75%;
+    margin: 20px auto;
+    border: 0px solid #ccc;
+}
+.search-box input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 40px;
+    border: 1px solid #ccc;
+}
+.search-results {
+    list-style-type: none;
+    padding: 0;
+}
+.search-results li {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+}
+.search-results li:hover {
+    background-color: #f0f0f0;
+}
+
+
+
+.centre-cards-child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    border-radius: 40px;
+    background-color: #fff;
+}
+.image-4-icon {
+    position: absolute;
+    height: 67.18%;
+    width: 92.44%;
+    top: 2.57%;
+    right: 3.72%;
+    bottom: 30.25%;
+    left: 3.84%;
+    border-radius: 28.45px;
+    max-width: 100%;
+    overflow: hidden;
+    max-height: 100%;
+    object-fit: cover;
+}
+.apollo-hospital {
+    position: absolute;
+    height: 2.7%;
+    width: 43.45%;
+    top: 74.61%;
+    left: 6.31%;
+    font-size: 24px;
+    line-height: 28.45px;
+    color: #000;
+    display: flex;
+    align-items: center;
+}
+.ratings-by-5587 {
+    position: absolute;
+    height: 1.59%;
+    width: 31.08%;
+    top: 79.24%;
+    left: 6.31%;
+    font-size: 12px;
+    line-height: 28.45px;
+    display: flex;
+    align-items: center;
+}
+.star-rating-child {
+    width: 22px;
+    position: relative;
+    border-radius: 1.52px;
+    height: 24.1px;
+}
+.star-rating {
+    position: absolute;
+    height: 3.81%;
+    width: 28.76%;
+    top: 74.06%;
+    right: 6.41%;
+    bottom: 22.14%;
+    left: 64.84%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+.vector-icon {
+    width: 11.2px;
+    position: relative;
+    height: 16px;
+}
+.a-1st-floor {
+    width: 258.8px;
+    position: relative;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.vector-icon1 {
+    width: 14px;
+    position: relative;
+    height: 14px;
+}
+.div {
+    position: relative;
+    line-height: 15px;
+}
+.vector-parent-center {
+    position: absolute;
+    height: 2.21%;
+    width: 34.54%;
+    top: 91.37%;
+    right: 59.15%;
+    bottom: 6.41%;
+    left: 6.31%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.centre-cards {
+    width: 382.5px;
+    position: relative;
+    box-shadow: 0px 10px 50px 1px rgba(25, 37, 50, 0.1), 0px 3px 7px -3px rgba(25, 37, 50, 0.1), 0px 6px 12px -2px rgba(25, 37, 50, 0.1);
+    height: 578px;
+}
+.centre-cards-parent {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 25px;
+    text-align: left;
+    font-size: 14px;
+    color: #8c8889;
+    font-family: Roboto;
+}
+

@@ -7,7 +7,7 @@ body {
   
   
   .footer {
-    width: 1512px;
+    /* width: 1512px; */
     height: 50%;
     flex-shrink: 0;
     /* width: 100%; */
