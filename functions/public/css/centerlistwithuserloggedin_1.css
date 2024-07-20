@@ -408,8 +408,12 @@ border-radius: 40px;
     color: #8c8889;
     font-family: Roboto;
     border-radius: 40px;
+    transition: transform 0.2s ease-in-out;
 }
 
+.centre-cards:hover {
+    transform: scale(1.05);
+}
 
 .image-4-icon {
     position: absolute;
