@@ -1,8 +1,10 @@
+<link rel="stylesheet" href="/css/navbar.css" />
+
 </head>
 
 <body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="50">
 
-  <nav class="navbar navbar-default navbar-fixed-top">
+  <!-- <nav class="navbar navbar-default navbar-fixed-top">
     <div id="myNavbar" class="container-fluid">
       <div class="navbar-header">
         <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -39,4 +41,78 @@
         </ul>
       </div>
     </div>
-  </nav>
+  </nav> -->
+
+  <div class="top-bar">
+    <div class="bookandgo-wrapper">
+      <a href="/"><div class="bookandgo">BookAndGo</div></a>
+    </div>
+    <!-- <div class="search-box-parent">
+        <div class="search-box">
+            <div class="search-box-child"></div>
+            <div class="search-icon"></div>
+            <div class="search-keyword">Search</div>
+        </div>
+    </div> -->
+    <div class="instance-parent">
+        <div class="text-statedark-parent">
+            <div class="text-statedark">
+                <div class="text-statedark-child"></div>
+                <a class="home-navbar" href="/">Home</a>
+            </div>
+            <div class="text-statedark">
+              <div class="text-statedark-child"></div>
+                <a class="home-navbar" href="/center">Centre</a>
+            </div>
+            <div class="text-statedark">
+              <div class="text-statedark-child"></div>
+                <a class="home-navbar" href="/register">Register</a>
+            </div>
+            <div class="text-statedark">
+              <div class="text-statedark-child"></div>  
+                <a class="home-navbar" href="/user/profile">Profile</a>
+            </div>
+        </div>
+        <div class="sign-in-button-parent">
+            <% if(auth) { %>
+            <form class="form-margin-10" action="/logout" method="POST" >
+                <button type="submit" class="sign-in-button">
+              <div class="sign-in">
+                Logout
+              </div>                
+            </button>
+
+            </form>
+            <% } else { %>
+            <a href="/signup" class="sign-in-button">
+                <div class="sign-in">Sign Up</div>
+            </a>
+            <form class="form-margin-10" action="/login" method="GET">
+                <button type="submit" class="sign-in-button">
+                <div class="sign-in">
+                  Login
+                </div>                
+              </button>
+            </form>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+
+
+<script >
+$(document).ready(function() {
+  const links = $('.text-statedark');
+
+  links.on('mouseover', function() {
+    links.find('.text-statedark-child').hide();
+    $(this).find('.text-statedark-child').show();
+  });
+
+  links.on('mouseout', function() {
+    $(this).find('.text-statedark-child').hide();
+  });
+});
+
+</script>

@@ -132,6 +132,64 @@
         var ui = new firebaseui.auth.AuthUI(firebase.auth());
         ui.start("#firebaseui-auth-container", uiConfig);
       </script>
+
+      <!-- <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>
+<link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
+    authDomain: "excellerentum.firebaseapp.com",
+    projectId: "excellerentum",
+    storageBucket: "excellerentum.appspot.com",
+    messagingSenderId: "1051021172847",
+    appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
+    measurementId: "G-TZCL141YVN"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Initialize the FirebaseUI Widget using Firebase.
+  const ui = new firebaseui.auth.AuthUI(firebase.auth());
+
+  const uiConfig = {
+    callbacks: {
+      signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+        const xhr = new XMLHttpRequest();
+        const url = "/login";
+        const loader = document.querySelector(".loader");
+        loader.className = "loader"; // class "loader"
+        xhr.open("POST", url);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.send(JSON.stringify(authResult));
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState == XMLHttpRequest.DONE) {
+            window.location = xhr.responseURL;
+          }
+        };
+        return false;
+      },
+      uiShown: () => {
+        document.querySelector(".loader").style.display = "none";
+      }
+    },
+    signInOptions: [{
+      provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+      recaptchaParameters: {
+        type: "image", // 'audio' or 'image'
+        size: "normal", // 'invisible' or 'compact'
+        badge: "bottomright" // 'bottomright' or 'inline' applies to invisible.
+      },
+      defaultCountry: "US", // Set default country to the US
+      whitelistedCountries: ["US", "+91"] // You can add more countries here
+    }],
+    // Other config options...
+    tosUrl: '<your-tos-url>', // Terms of service url.
+      privacyPolicyUrl: '<your-privacy-policy-url>' // Privacy policy url.
+  };
+
+  // The start method will wait until the DOM is loaded.
+  ui.start('#firebaseui-auth-container', uiConfig);
+</script> -->
     </div>
   </div>
 </div>
