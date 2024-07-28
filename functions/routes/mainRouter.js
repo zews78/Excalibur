@@ -12,17 +12,29 @@ router.post('/center/centerEymployees/ticketId/:centerId', isAuth, mainControlle
 router.post('/submitCenter', mainController.postCenter);
 router.get('/signup', mainController.getSignup);
 router.get('/register', mainController.getRegistered);
+router.post('/create-domain', mainController.postDomain);
+
 router.get('/booking', mainController.getAppt);
 router.get('/booked/:bookingId', mainController.getBooked);
+
+router.get('/getDepartmentOptions',mainController.getDepartmentOptions);
+
 
 router.post('/appointment', mainController.postTicket);
 router.post('/submitCenter', mainController.postCenter);
 router.post('/availableSlots',mainController.postAvailableSlots);
 
+
+
 router.post('/signup/:uid', isAuth, mainController.postUser);
 router.post('/cancelAppointment',isAuth,mainController.deleteTicket);
 router.post('/stopQueue',isAuth,mainController.stopQueue);
 router.post('/restartQueue',isAuth,mainController.restartQueue);
+
+
+
+
+router.post('/test', mainController.test);
 
 
 
