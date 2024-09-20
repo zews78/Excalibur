@@ -64,7 +64,7 @@
           <!-- <li><a href="">HOME</a></li>
         <li><a href="">CENTRE</a></li>
         <li><a href="">REGISTER</a></li> -->
-          <li><a href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+          <li><a href="#"><span class="glyphicon glyphico                                           n-user"></span> Sign Up</a></li>
           <!-- <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
         <li><a href="#"><span class="glyphicon glyphicon-search"></span></a></li> -->
         </ul>
@@ -83,6 +83,13 @@
         <br><br><br>
         <h2 class="text-center my-5">Log in</h2>
         <div id="firebaseui-auth-container"></div>
+<!-- 
+        <form id="loginForm" action="/login" method="post">
+          <input type="email" id="email" placeholder="Enter email" required>
+          <input type="password" id="password" placeholder="Enter password" required>
+          <button type="submit">Login</button>
+      </form> -->
+      <!-- <p id="loginMessage"></p> -->
       </div>
       <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-app.js"></script>
       <script src="https://www.gstatic.com/firebasejs/7.15.5/firebase-auth.js"></script>
@@ -90,7 +97,7 @@
       <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
       <script>
         const firebaseConfig = {
-          apiKey: "AIzaSyC5D0BGirxm4WTNR_zPOQXW-beVb6vNxtQ",
+          apiKey: "AIzaSyCu5caF7aB_gkR8Q-saLrZZ5d8GWGVrQo4",
           authDomain: "excellerentum.firebaseapp.com",
           projectId: "excellerentum",
           storageBucket: "excellerentum.appspot.com",
@@ -98,39 +105,89 @@
           appId: "1:1051021172847:web:2a2dd8e228c5f45703ed9a",
           measurementId: "G-TZCL141YVN"
         };
+
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        const uiConfig = {
-          callbacks: {
-            signInSuccessWithAuthResult: (authResult, redirectUrl) => {
-              const xhr = new XMLHttpRequest();
-              const url = "/login";
-              const loader = document.querySelector(".loader");
-              loader.className = "loader"; // class "loader"
-              xhr.open("POST", url);
-              xhr.setRequestHeader("Content-Type", "application/json");
-              xhr.send(JSON.stringify(authResult));
-              xhr.onreadystatechange = function () {
-                if (xhr.readyState == XMLHttpRequest.DONE) {
-                  window.location = xhr.responseURL;
-                }
-              };
-              return false;
-            },
-          },
-          signInOptions: [{
-            provider: firebase.auth.PhoneAuthProvider.PROVIDER_ID,
-            recaptchaParameters: {
-              type: "image", // 'audio'
-              size: "invisible", // 'invisible' or 'compact'
-              badge: "bottomright", // ' bottomright' or 'inline' applies to invisible.
-            },
-            defaultCountry: "IN",
-          },],
-        };
 
-        var ui = new firebaseui.auth.AuthUI(firebase.auth());
-        ui.start("#firebaseui-auth-container", uiConfig);
+
+
+        
+//   const uiConfig = {
+//   callbacks: {
+//     signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+//       // If the sign-in is successful, proceed with login
+//       const xhr = new XMLHttpRequest();
+//       const url = "/login";
+//       const loader = document.querySelector(".loader");
+//       loader.className = "loader"; // Show loader
+//       xhr.open("POST", url);
+//       xhr.setRequestHeader("Content-Type", "application/json");
+//       xhr.send(JSON.stringify(authResult));
+//       xhr.onreadystatechange = function () {
+//         if (xhr.readyState == XMLHttpRequest.DONE) {
+//           window.location = xhr.responseURL; // Redirect to the login response URL
+//         }
+//       };
+//       return false; // Prevent automatic redirect
+//     },
+//     signInSuccessUrl: '/', // Redirect to homepage after successful login
+//     signInFailure: (error) => {
+//       console.error("Sign-in failed:", error);
+//     },
+//   },
+//   signInOptions: [
+//     {
+//       provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+//       requireDisplayName: false, // No display name for login
+//     },
+//   ],
+//   signInFlow: 'popup', // Use popup for sign-in
+// };
+
+// Initialize the FirebaseUI widget using Firebase.
+// var ui = new firebaseui.auth.AuthUI(firebase.auth());
+// ui.start("#firebaseui-auth-container", uiConfig);
+
+
+
+var uiConfig = {
+      callbacks: {
+        signInSuccessWithAuthResult: function(authResult, redirectUrl) {
+          const idToken = authResult.user.getIdToken();
+          idToken.then(token => {
+            const xhr = new XMLHttpRequest();
+            const url = "/login";
+            xhr.open("POST", url);
+            xhr.setRequestHeader("Content-Type", "application/json");
+            xhr.send(JSON.stringify({
+              idToken: token,
+              provider: 'google'
+            }));
+            xhr.onreadystatechange = function () {
+              if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                  window.location.assign('/center'); // Redirect to dashboard or desired page
+                } else {
+                  console.error('Login failed:', xhr.responseText);
+                }
+              }
+            };
+          });
+          return false; // Prevents redirect.
+        }
+      },
+      signInFlow: 'popup',
+      signInOptions: [
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+        // Add other providers here if needed
+      ],
+      tosUrl: '<your-tos-url>',
+      privacyPolicyUrl: '<your-privacy-policy-url>'
+    };
+
+    // Initialize the FirebaseUI Widget using Firebase.
+    var ui = new firebaseui.auth.AuthUI(firebase.auth());
+    ui.start('#firebaseui-auth-container', uiConfig);
       </script>
 
       <!-- <script src="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.js"></script>

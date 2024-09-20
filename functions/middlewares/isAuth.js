@@ -15,6 +15,7 @@ module.exports = async (req, res, next) => {
     // }
     next();
   } else {
+    console.log('No session cookie found')
     res.redirect('/login');
   }
 };

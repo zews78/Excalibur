@@ -12,7 +12,7 @@ module.exports = async (req) => {
         .doc(decodedToken.uid)
         .get();
       if (user.data().name) {
-        console.log(user.data());
+        console.log("login page no.", user.data());
         return 3;
       } else {
         return 2;

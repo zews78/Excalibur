@@ -70,3 +70,4 @@ serviceAccountKey.json
 functions/.config
 
 functions/node_modules/
+.vercel

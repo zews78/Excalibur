@@ -141,8 +141,8 @@ exports.getOneCenter = async (req, res) => {
       .collection("users")
       .doc(req.uid)
       .get();
-    // console.log(userId);
-    let dept = center.data().avDept;
+    // console.log("center details -", center.data());
+    var dept = center.data().avDept;
     var req_dept = [];
 
     let isCenterEmployee = false;
