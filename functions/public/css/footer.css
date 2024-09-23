@@ -11,6 +11,8 @@ body {
     height: 50%;
     flex-shrink: 0;
     /* width: 100%; */
+    color: #fff;
+    background-color: #000;
     position: relative;
     height: 630px;
     text-align: left;
@@ -71,10 +73,14 @@ body {
   }
   .bookandgoco {
     position: absolute;
-    bottom: 35.85px;
-    left: calc(50% - 88px);
-    line-height: 140.7%;
-  }
+    bottom: 0px;
+    /* left: calc(50% - 88px); */
+    height: 58px;
+    width: 100%;
+    background-color: #343a40;
+    line-height: 323.7%;
+    text-align: center;
+}
   .bookandgo {
     width: 211.9px;
     position: relative;
